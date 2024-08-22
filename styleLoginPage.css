@@ -1,0 +1,121 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 18px;
+}
+
+body {
+    background-color: skyblue;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url("./Feather.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 100% 25%;
+}
+
+
+.overall {
+    width: 400px;
+    height: 550px;
+    padding: 40px;
+    margin: 0;
+    background-color: antiquewhite;
+    border: 1px solid grey;
+    border-radius: 30px;
+}
+
+.overall h1 {
+    font-size: 30px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+
+.input-box {
+    margin-top: 50px;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 5px;
+    background: mintcream;
+    outline: none;
+    border: 0.2px solid;
+    border-radius: 5px;
+    font-size: medium;
+}
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    
+    align-items: center;
+    margin-right: 5px;
+    margin-top: 40px;
+}
+
+.remember-forgot label input {
+    margin: 3px;
+    font-size: large;
+}
+
+.remember-forgot button {
+    border-radius: 5px;
+    
+    border: solid black;
+    height: 30px;
+}
+
+.remember-forgot button:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.submit-button {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0 25px;
+
+}
+
+.submit-button button {
+    width: 100px;
+    font-size: 20pxpx;
+    font-weight: normal;
+    color: #333;
+    border-radius: 5px;
+    border: solid black;
+}
+
+.submit-button button:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.register {
+    font-size: 14.2px;
+    display: flex;
+    justify-content: center;
+}
+
+.register a {
+    color: black;
+    font-weight: 550;
+    font-size: medium;
+    text-decoration: none;
+}
+
+.register a:hover {
+    text-decoration: underline;
+}
+img {
+    float: left;
+}
