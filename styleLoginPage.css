@@ -69,7 +69,7 @@ body {
 
 .remember-forgot button {
     border-radius: 5px;
-    
+    width:160px;
     border: solid black;
     height: 30px;
 }
