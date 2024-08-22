@@ -13,7 +13,7 @@ body {
     justify-content: flex-end;
     align-items: center;
     min-height: 100vh;
-    background-image: url("./Feather.jpg");
+    background-image: url("./F1.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 100% 25%;
@@ -25,9 +25,10 @@ body {
     height: 550px;
     padding: 40px;
     margin: 0;
-    background-color: antiquewhite;
+    background-color: white;
     border: 1px solid grey;
     border-radius: 30px;
+    margin-right: 100px;
 }
 
 .overall h1 {
@@ -46,7 +47,7 @@ body {
 .input-box input {
     width: 100%;
     padding: 5px;
-    background: mintcream;
+    background: #F4F6FC;
     outline: none;
     border: 0.2px solid;
     border-radius: 5px;
@@ -69,13 +70,14 @@ body {
 
 .remember-forgot button {
     border-radius: 5px;
-    width:160px;
-    border: solid black;
+    width: 160px;
+    border: 0.5px solid black;
     height: 30px;
+    background: #F4F6FC;
 }
 
 .remember-forgot button:hover {
-    background-color: lightgrey;
+    background-color: lightgray;
     cursor: pointer;
 }
 
@@ -87,12 +89,14 @@ body {
 }
 
 .submit-button button {
-    width: 100px;
-    font-size: 20px;
+    width: 150px;
+    font-size: 30px;
     font-weight: normal;
     color: #333;
     border-radius: 5px;
     border: solid black;
+    height: 50px;
+    background: #F4F6FC;
 }
 
 .submit-button button:hover {
