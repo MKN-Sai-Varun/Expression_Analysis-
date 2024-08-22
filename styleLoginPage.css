@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: jost,sans-serif;
     font-size: 18px;
 }
 
@@ -43,15 +43,19 @@ body {
     margin-left: 70px;
     margin-right: 70px;
 }
-
+.input-box label{
+    font-size: 14px;
+    font-weight: bold;
+}
 .input-box input {
     width: 100%;
-    padding: 5px;
+    padding: 10px;
     background: #F4F6FC;
     outline: none;
     border: 0.2px solid;
     border-radius: 5px;
-    font-size: medium;
+    font-size: 12px;
+
 }
 
 .remember-forgot {
@@ -85,22 +89,24 @@ body {
     display: flex;
     justify-content: center;
     margin: 40px 0 25px;
-
+    
 }
 
 .submit-button button {
     width: 150px;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: normal;
-    color: #333;
+    font-family: jost,sans-serif;
+    color: hsl(0, 0%, 0%);
     border-radius: 5px;
     border: solid black;
     height: 50px;
-    background: #F4F6FC;
+    background-color: hsla(14, 78%, 54%, 0.75);
+    
 }
 
 .submit-button button:hover {
-    background-color: lightgray;
+    background-color:  hsla(14, 78%, 64%, 0.75);
     cursor: pointer;
 }
 
@@ -111,7 +117,7 @@ body {
 }
 
 .register a {
-    color: black;
+    color: hsla(0, 0%, 10%, 0.281);
     font-weight: 550;
     font-size: medium;
     text-decoration: none;
@@ -122,4 +128,27 @@ body {
 }
 img {
     float: left;
+}
+.password-container {
+    position: relative;
+}
+
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    width: 100%;
+    padding-right: 40px; 
+    box-sizing: border-box;
+}
+
+.password-container .eye {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    
+}
+
+.password-container .eye i {
+    font-size: 18px;
 }
