@@ -75,7 +75,7 @@ body {
 }
 
 .remember-forgot button:hover {
-    background-color: lightgray;
+    background-color: lightgrey;
     cursor: pointer;
 }
 
@@ -88,7 +88,7 @@ body {
 
 .submit-button button {
     width: 100px;
-    font-size: 20pxpx;
+    font-size: 20px;
     font-weight: normal;
     color: #333;
     border-radius: 5px;
