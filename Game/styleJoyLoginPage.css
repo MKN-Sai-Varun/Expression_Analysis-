@@ -14,7 +14,7 @@ body {
     justify-content: flex-end;
     align-items: center;
     min-height: 100vh;
-    background-image: url("./Final_F.jpg");
+    background-image: url("../Final_F.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 100% 25%;
