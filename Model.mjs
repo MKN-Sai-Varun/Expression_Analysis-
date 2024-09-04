@@ -6,7 +6,7 @@ async function query(filename) {
         "https://api-inference.huggingface.co/models/trpakov/vit-face-expression",
         {
             headers: {
-                Authorization: "Bearer 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",
+                Authorization: "Bearer ACCESS TOKEN",
                 "Content-Type": "application/json",
             },
             method: "POST",
