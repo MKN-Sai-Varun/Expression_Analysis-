@@ -57,6 +57,7 @@ h1 {
     cursor: pointer;
     width: 197.2px;
     height: 71.3px;
+    margin-bottom: 10px;
 }
 
 .submit:hover {
