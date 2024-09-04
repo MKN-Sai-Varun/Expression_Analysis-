@@ -1,4 +1,3 @@
-// script.js
 let selectedButton = null;
 
 // Function to handle option selection
@@ -7,7 +6,7 @@ function selectOption(button, isCorrect) {
     if (selectedButton) {
         selectedButton.style.backgroundColor = "#f9f9f9"; // Reset background color
     }
-    
+
     // Set the new selected button
     selectedButton = button;
 
@@ -27,22 +26,30 @@ function submitAnswer() {
             selectedButton.style.backgroundColor = "#E60101"; // Change background color to red for wrong
         }
 
-        // // Disable all buttons after submission
-        // let buttons = document.querySelectorAll('.option');
-        //Change the submit button to the "Next Question" button
-        const submitButton = document.getElementById('submitButton');
-        submitButton.innerText = "Next ";
-        submitButton.onclick = goToNextPage; // Change the function to navigate to the next page
+        // Disable all buttons after submission
+        const buttons = document.querySelectorAll('.choice');
         buttons.forEach(button => {
             button.disabled = true;
         });
 
-        // Disable the submit button to prevent further submission
-        document.getElementById('submitButton').disabled = true;
+        // Change the submit button to the "Next" button
+        const submitButton = document.getElementById('submitButton');
+        submitButton.innerText = "Next";
+        submitButton.disabled = false;
+        submitButton.onclick = goToNextPage; // Change the function to navigate to the next page
+
     } else {
         alert("Please select an option before submitting.");
     }
 }
+
 function goToNextPage() {
-    window.location.href = "./endPage.html"; // Replace with your actual next page file name
+    // Prevent back navigation to this page
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+        window.history.pushState(null, "", window.location.href);
+    };
+
+    // Redirect to the end page
+    window.location.replace("./endPage.html"); // Replace with your actual next page file name
 }
