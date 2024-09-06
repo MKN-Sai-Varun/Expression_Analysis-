@@ -56,9 +56,24 @@ h1{
 .submit:hover{
     background-color: rgb(221, 220, 220);
 }
+
 #nh{
     margin-top: 20px;
 }
 button{
     float: right;
+}
+#container{
+    display:flex;
+    gap:27%;
+    
+}
+#timer{
+    font-size: xx-large;
+    border: 2px solid black;
+    background-color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    border-radius: 10px;
 }
