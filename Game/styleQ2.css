@@ -47,3 +47,20 @@ img{
 button{
     float: right;
 }
+#container{
+    display:flex;
+    gap:12%;
+    height: 50px;
+}
+#timer{
+    font-size: xx-large;
+    border: 2px solid black;
+    background-color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    border-radius: 10px;
+}
+.heading{
+    flex-basis:500px;
+}
