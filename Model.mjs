@@ -11,7 +11,7 @@ async function query(filename) {
             },
             method: "POST",
             body: data,
-        }
+        } 
     );
     const result = await response.json();
     return result;
