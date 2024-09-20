@@ -1,0 +1,52 @@
+/* General styles for the game */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+/* Login Page */
+.input-box {
+    margin: 10px 0;
+}
+
+.password-container {
+    position: relative;
+}
+
+.password-container .eye {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* Play Button Page */
+.playButton {
+    text-align: center;
+}
+
+/* Question Pages */
+.game {
+    text-align: center;
+}
+
+.choices {
+    margin-top: 20px;
+}
+
+.choice {
+    margin: 5px;
+}
+
+/* End Page */
+#endPage {
+    text-align: center;
+}
