@@ -9,7 +9,7 @@
 </head>
 <body>
     <!-- Login Page -->
-    <div class="background">
+    <div id="background">
         <div id="loginPage">
             <h1>Login</h1>
             <div class="input-box">
@@ -32,23 +32,27 @@
             </div>
         </div>
     </div> 
-
+    <div id="timer" ></div>
     <!-- Play Button Page -->
-    <div id="playPage" class="hidden">
+    <div id="playPage" style="display: none;" >
         <div class="images">
             <img class="threeLines" id="image" src="./Assets/threeLines.png" type="button">
             <img class="analysisIcon" id="image" src="./Assets/analysisIcon.png" type="button">
             <img class="gameIcon" id="image" src="./Assets/gameIcon.png" type="button">
         </div>
-        <div class="playButton">
-            <button type="button" onclick="startGame()">Play</button>
+        <div class="container">
+            <button id="playButton" type="button" onclick="startGame()">Play</button>
+            <video id="video" autoplay></video>
+            <canvas id="canvas" style="display:none;"></canvas>
+            <!-- <p id="countdown">Time Remaining: 3:00</p> -->
         </div>
+        
     </div>
 
+    <div id="qustionSection" >
     <!-- Question 1 -->
     <div id="question1" class="hidden">
         <h1>Q1. Fill in the blank</h1>
-        <div id="timer"></div>
         <div class="game">
             <img class="questionImg" src="Assets/parrot.jpg" alt="Centered Image" width="355.1px">
             <p>_ a r r o t</p>
@@ -63,7 +67,6 @@
     <!-- Question 2 -->
     <div id="question2" class="hidden">
         <h1>Q2. Find The Animal</h1>
-        <div id="timer"></div>
         <div class="game">
             <img class="imgQuestion" src="Assets/ComputerLion.png" alt="Centered Image">
             <div class="imgChoices">
@@ -78,7 +81,6 @@
     <!-- Question 3 -->
     <div id="question3" class="hidden">
         <h1>Q3. Guess The Word</h1>
-        <div id="timer"></div>
         <div class="game">
             <img class="image" src="./Assets/SkillMirrorImage.png" width="355.1px">
             <div class="choices">
@@ -92,7 +94,6 @@
     <!-- Question 4 -->
     <div id="question4" class="hidden">
         <h1>Q4. Find the Animal</h1>
-        <div id="timer"></div>
         <div class="game">
             <img class="imgQuestion" src="Assets/ComputerZebra.png" alt="Centered Image">
             <div class="imgChoices">
@@ -107,7 +108,7 @@
     <!-- Question 5 -->
     <div id="question5" class="hidden">
         <h1>Q5. Fill in the blank</h1>
-        <div id="timer"></div>
+        
         <div class="game">
             <img src="./Assets/Horse.png" width="355.1px">
             <p>_ o r s e</p>
@@ -118,6 +119,8 @@
         </div>
         <button id="submitButton" class="submit" type="button" onclick="submitAnswer();">Submit</button>
     </div>
+    
+</div>
 
     <!-- End Page with Confetti -->
     <div id="endPage" class="hidden">
