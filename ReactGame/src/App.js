@@ -11,7 +11,7 @@ import leo from './Assets/Lepord.png';
 import skill from './Assets/SkillMirrorImage.png';
 import tiger from './Assets/Tiger.png';
 import Zebra from './Assets/Zebra.png';
-import { triggerConfetti } from './Confetti.js'; // Import the confetti function
+import { triggerConfetti, stopConfetti} from './Confetti.js'; // Import the confetti function
 import ana from './Assets/analysisIcon.png';
 import game from './Assets/gameIcon.png';
 import line from './Assets/threeLines.png';
@@ -22,7 +22,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState('login');
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [submitted, setSubmitted] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(180); // 3 minutes
+  const [timeLeft, setTimeLeft] = useState(5); // 3 minutes
   const [score, setScore] = useState(0);
   const [passwordVisible, setPasswordVisible] = useState(false)
 
@@ -34,8 +34,9 @@ const togglePasswordVisibility = () => {
     setCurrentPage('play');
   };
   const handleStartGame = () => {
+    setScore(0);
     setCurrentPage('question1');
-    setTimeLeft(180); // Set 3 minutes (180 seconds)
+    setTimeLeft(5); // Set 3 minutes (180 seconds)
   
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => {
@@ -50,6 +51,10 @@ const togglePasswordVisibility = () => {
     }, 1000);
   };
   
+  const handleGoHome = () => {
+    stopConfetti(); // Stop the confetti
+    setCurrentPage('play'); // Navigate back to play
+  };
 
   const handleChoiceClick = (choice) => {
     if (!submitted) {
@@ -280,7 +285,9 @@ const togglePasswordVisibility = () => {
             <div id="endPage">
                 <h1>CONGRATULATIONS!</h1>
                 <h1>Game Completed</h1>
-                {currentPage === 'end' && <div className="endScore">Score: {score}/5</div>}
+                <div className="endScore">Score: {score}/5</div>
+                <button class = "home-button" type="button" onClick={handleGoHome}>Home</button>
+                {currentPage === 'end'}
                 </div>
               )}
               {currentPage === 'TimeUp' && (
@@ -288,6 +295,7 @@ const togglePasswordVisibility = () => {
                 <h1>Time's Up</h1>
                 <h2>You ran out of time. Game Over</h2>
                 <h3>Score: {score}/5</h3>
+                <button class = "home-button" type="button" onClick={handleGoHome}>Home</button>
                 {currentPage === 'TimeUp'}
                 </div>
               )}
