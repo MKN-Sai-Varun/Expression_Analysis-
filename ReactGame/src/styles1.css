@@ -331,3 +331,21 @@ html, body {
 #TimeUpPage h1, #TimeUpPage h2, #TimeUpPage h3 {
     text-align: center;
 }
+
+.home-button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Add padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline block for proper spacing */
+    font-size: 16px; /* Font size */
+    margin: 10px 2px; /* Margin around the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, transform 0.2s; /* Transition effects */
+  }
+  .home-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
