@@ -301,3 +301,7 @@ function formatTime(seconds) {
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 }
+
+function iniModel(){
+    
+}
