@@ -22,7 +22,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState('login');
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [submitted, setSubmitted] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(5); // 3 minutes
+  const [timeLeft, setTimeLeft] = useState(60); // 3 minutes
   const [score, setScore] = useState(0);
   const [passwordVisible, setPasswordVisible] = useState(false)
 
@@ -36,7 +36,7 @@ const togglePasswordVisibility = () => {
   const handleStartGame = () => {
     setScore(0);
     setCurrentPage('question1');
-    setTimeLeft(5); // Set 3 minutes (180 seconds)
+    setTimeLeft(60); // Set 3 minutes (180 seconds)
   
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => {
