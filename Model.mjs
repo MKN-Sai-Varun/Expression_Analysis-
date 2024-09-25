@@ -2,9 +2,11 @@ import fs from 'fs';
 import path from 'path';
 import fetch from 'node-fetch';
 import { MongoClient } from 'mongodb';  // Import MongoDB client
+import dotenv from 'dotenv';
+dotenv.config();
 
 const apiUrl = "https://api-inference.huggingface.co/models/trpakov/vit-face-expression";
-const accessToken = "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";
+const accessToken = process.env.MODEL_KEY;
 const folderPath = './uploads';
 const mongoUri = 'mongodb+srv://user:user@cluster0.es02p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';  // Replace with your MongoDB connection string
 const dbName = 'Model';  // Replace with your database name
