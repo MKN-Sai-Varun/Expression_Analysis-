@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styleQ4.css">
+</head>
+<body>
+    
+    
+    <h1 id="Heading">Q4. Find the animal</h1>
+    <div class="game">
+            <img id="Computer" src="./ComputerZebra.png"> 
+            <div class="choices">
+                <button class="choice" id="choice1" type="button" onclick="selectOption(this, false)">
+                    <img src="./Lepord.png">
+                </button>
+                <button class="choice" id="choice2" type="button" onclick="selectOption(this, false)">
+                    <img src="./Giraffe.png">
+                </button>
+                <button class="choice" id="choice2" type="button" onclick="selectOption(this, true)">
+                    <img src="./Zebra.png">
+                </button>
+            </div>
+    </div>
+    <!-- <button class="submit" type="submit" onclick="submitAnswer()">Submit</button> -->
+    <button id="submitButton" class="submit" type="button" onclick="submitAnswer()">Submit</button>
+    <script src="Q4.js" defer></script>
+</body>
+</html>
