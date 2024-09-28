@@ -24,12 +24,12 @@ function App() {
   const [currentPage, setCurrentPage] = useState('login');
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [submitted, setSubmitted] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [timeLeft, setTimeLeft] = useState(180);
   const [score, setScore] = useState(0);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
-  const videoRef = useRef(null);
+  // eslint-disable-next-line no-unused-vars
   const [cameraActive, setCameraActive] = useState(false);
   const captureInterval = useRef(null);
 
@@ -48,13 +48,18 @@ function App() {
     setTimeLeft(180);
     setIsTimeUp(false); // Reset time up state
     setIsGameOver(false); // Reset game over state
+  
+    // Clear any existing timer if restarting
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
 
-    const timer = setInterval(() => {
+    timerRef.current = setInterval(() => {
       setTimeLeft((prevTime) => {
         if (prevTime > 0) {
           return prevTime - 1;
         } else {
-          clearInterval(timer);
+          clearInterval(timerRef.current); // Clear the timer when time is up
           setIsTimeUp(true);
           setCurrentPage('TimeUp');
           return 0;
@@ -65,6 +70,7 @@ function App() {
     startCamera(); // Start the camera when the game begins
   };
 
+  
   const startCamera = () => {
     console.log("Starting camera...");
     
@@ -91,15 +97,21 @@ function App() {
   }, 5000);
 };
 
+  
+
   const stopImageCapture = () => {
     console.log("Stopping Image Capture...");
     if (captureInterval.current) {
       clearInterval(captureInterval.current);
     }
 
+    
+
     setCameraActive(false);
     Webcam.reset();
   };
+
+  
 
   const captureImage = () => {
     console.log("captureImage function called");
@@ -111,6 +123,8 @@ function App() {
     });
   }
   
+    
+
     const uploadImage = async (base64Image) => {
       console.log("Uploading Image...");
       console.log("Base64 Image Data:", base64Image); // Log the image data
@@ -132,10 +146,14 @@ function App() {
           console.error('Error uploading image:', error.response ? error.response.data : error.message);
       }
     };
+    
+
+
 
     useEffect(() => {
       if (isGameOver || isTimeUp) {
-        stopImageCapture();
+        clearInterval(timerRef.current); // Stop the timer when the game is over or time is up
+        stopImageCapture();// Stop capturing images
       }
     }, [isGameOver, isTimeUp]);
 
@@ -150,6 +168,20 @@ function App() {
         setSelectedChoice(choice);
       }
     };
+
+
+    const handleRunModel = async () => {
+      try {
+        const response = await axios.post('http://localhost:5000/Routes/modelRoutes.js');
+        alert(response.data.message); // Alert the response message
+      } catch (error) {
+        console.error('Error running the model:', error.response ? error.response.data : error.message);
+        alert('Failed to run the model');
+      }
+      
+    };
+
+    const timerRef = useRef(null); // Add a ref to store the timer
 
     const handleSubmit = () => {
       if (submitted) return;
@@ -239,28 +271,31 @@ function App() {
           </div>
         )}
 
+
+        
         {currentPage === 'play' && (
           <div id="playPage">
             <div className="images">
-              <img className="threeLines" id="image" src={line} alt="Three Lines" />
-              <img className="analysisIcon" id="image" src={ana} alt="Analysis Icon" />
-              <img className="gameIcon" id="image" src={game} alt="Game Icon" />
+              <img type="button" className="threeLines" id="image" src={line} alt="Three Lines"></img>
+              <img type="button" className="analysisIcon" id="image" src={ana} alt="Analysis Icon" onClick={handleRunModel}></img>
+              <img type="button" className="gameIcon" id="image" src={game} alt="Game Icon"></img>
             </div>
             <div className="playButton">
-            
               <button type="button" onClick={handleStartGame}>Play</button>
               <div id="my_camera" style={{ opacity: 0 }}></div>
             </div>
           </div>
         )}
-        
+
+
+
         {currentPage.startsWith('question') && (
           <div className="timer">
             Time Left: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
           </div>
         )}
 
-{currentPage === 'question1' && (
+       {currentPage === 'question1' && (
         <div id="question1">
           <h1>Q1. Fill in the blank</h1>
           <div className="game">
@@ -288,7 +323,6 @@ function App() {
           </button>
         </div>
       )}
-
 
         {currentPage === 'question2' && (
           <div id="question2">
