@@ -260,22 +260,35 @@ function App() {
           </div>
         )}
 
-        {currentPage === 'question1' && (
-          <div id="question1">
-            <h1>Q1. Fill in the blank</h1>
-            <div className="game">
-              <img className="questionImg" src={parrot} alt="Parrot" width="355.1px" />
-              <p>_ a r r o t</p>
-              <div className="choices">
-                <button className="imgchoice" onClick={() => handleChoiceClick('d')} style={getChoiceStyle('d', false)}>D</button>
-                <button className="imgchoice" onClick={() => handleChoiceClick('p')} style={getChoiceStyle('p', true)}>P</button>
-                <button className="imgchoice" onClick={() => handleChoiceClick('k')} style={getChoiceStyle('k', false)}>K</button>
-                <button className="imgchoice" onClick={() => handleChoiceClick('m')} style={getChoiceStyle('m', false)}>M</button>
-              </div>
+{currentPage === 'question1' && (
+        <div id="question1">
+          <h1>Q1. Fill in the blank</h1>
+          <div className="game">
+            <img className="questionImg" src={parrot} alt="Parrot" width="355.1px" />
+            <p>_ a r r o t</p>
+            <div className="choices">
+              <button
+                className="choice"
+                onClick={() => handleChoiceClick('p')}
+                style={getChoiceStyle('p', true)} // Correct answer
+              >
+                p
+              </button>
+              <button
+                className="choice"
+                onClick={() => handleChoiceClick('q')}
+                style={getChoiceStyle('q', false)} // Incorrect answer
+              >
+                q
+              </button>
             </div>
-            <button className="submit-button" onClick={handleSubmit}>{submitted ? 'Next Question' : 'Submit'}</button>
           </div>
-        )}
+          <button id="submitButton" className="submit" type="button" onClick={handleSubmit}>
+            Submit
+          </button>
+        </div>
+      )}
+
 
         {currentPage === 'question2' && (
           <div id="question2">
