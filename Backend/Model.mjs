@@ -7,7 +7,7 @@ dotenv.config();
 
 const apiUrl = "https://api-inference.huggingface.co/models/trpakov/vit-face-expression";
 const accessToken = process.env.MODEL_KEY;
-const folderPath = '../Backend/uploads';
+const folderPath = './uploads';
 const mongoUri = process.env.MONGO_URI;  // Replace with your MongoDB connection string
 const dbName = 'Analysis';  // Replace with your database name
 const collectionName = 'g1';  // Replace with your collection name
