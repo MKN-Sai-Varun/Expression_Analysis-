@@ -40,6 +40,7 @@ function App() {
   const handleLogin = () => {
     setCurrentPage('play');
   };
+  
 
   const handleStartGame = () => {
     console.log("Game Started");
@@ -170,16 +171,29 @@ function App() {
     };
 
 
-    const handleRunModel = async () => {
+    const handleButtonClick = async () => {
       try {
-        const response = await axios.post('http://localhost:5000/Routes/modelRoutes.js');
-        alert(response.data.message); // Alert the response message
+          const response = await fetch('http://localhost:5000/trigger-model', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+          });
+
+          const data = await response.json();
+          console.log(data.message); // Handle success response
       } catch (error) {
-        console.error('Error running the model:', error.response ? error.response.data : error.message);
-        alert('Failed to run the model');
+          console.error('Error triggering model:', error);
       }
-      
-    };
+  };
+  const handleExitClick = async () => {
+    handleButtonClick();
+    handleGoHome();
+  }
+
+  const handleGetAnalysisClick = async () => {
+    handleGoHome();
+  }
 
     const timerRef = useRef(null); // Add a ref to store the timer
 
@@ -277,7 +291,7 @@ function App() {
           <div id="playPage">
             <div className="images">
               <img type="button" className="threeLines" id="image" src={line} alt="Three Lines"></img>
-              <img type="button" className="analysisIcon" id="image" src={ana} alt="Analysis Icon" onClick={handleRunModel}></img>
+              <img type="button" className="analysisIcon" id="image" src={ana} alt="Analysis Icon"></img>
               <img type="button" className="gameIcon" id="image" src={game} alt="Game Icon"></img>
             </div>
             <div className="playButton">
@@ -416,7 +430,10 @@ function App() {
             <h1>CONGRATULATIONS!</h1>
             <h1>Game Completed</h1>
             <div className="endScore">Score: {score}/5</div>
-            <button className="home-button" type="button" onClick={handleGoHome}>Home</button>
+            <div className="button-container">
+              <button className="exit-button" type="button" onClick={handleExitClick}>Exit</button>
+              <button className="analysis-button" type="button" onClick={handleGetAnalysisClick}>Get Analysis</button>
+            </div>
             {currentPage === 'end'}
           </div>
         )}
@@ -425,7 +442,8 @@ function App() {
             <h1>Time's Up</h1>
             <h2>You ran out of time. Game Over</h2>
             <h3>Score: {score}/5</h3>
-            <button className="home-button" type="button" onClick={handleGoHome}>Home</button>
+            <button className="exit-button" type="button" onClick={handleExitClick}>Exit</button>
+            <button className="analysis-button" type="button" onClick={handleGetAnalysisClick}>Get Analysis</button>
             {currentPage === 'TimeUp'}
           </div>
         )}
