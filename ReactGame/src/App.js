@@ -309,6 +309,7 @@ function App() {
         {currentPage === 'login' && (
           <div className="background">
             <div id="loginPage">
+              <form>
               <h1>Login</h1>
               <div className="input-box">
                 <label>Username:</label>
@@ -334,6 +335,7 @@ function App() {
               <div className="submit-button">
                 <button type="button" onClick={handleLogin}>Login</button>
               </div>
+              </form>
             </div>
           </div>
         )}
