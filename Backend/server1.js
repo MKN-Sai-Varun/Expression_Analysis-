@@ -10,7 +10,7 @@ app.use(express.json({ limit: '50mb' })); // Allow large payloads for Base64 ima
 
 const screenshotDir = path.join(process.cwd(), 'screenshots');
 if (!fs.existsSync(screenshotDir)) {
-  fs.mkdirSync(screenshotDirDir, { recursive: true });
+  fs.mkdirSync(screenshotDir, { recursive: true });
 }
 
 app.get('/', (req, res) => {
