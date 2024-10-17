@@ -6,7 +6,6 @@ import { processImages } from './Model.mjs';
 const app = express();
 const PORT = 5000;
 
-
 const corsOptions = {
     origin: 'http://localhost:3000', // Allow requests from your React app
     methods: ['GET', 'POST', 'OPTIONS'], // Allow these methods
