@@ -4,6 +4,7 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: #D5BDA9;
+    overflow: hidden;
 }
 
 .hidden {
@@ -53,6 +54,7 @@ html, body {
 #loginPage h1 {
     font-size: 30px;
     text-align: center;
+    justify-content: center;
     margin-top: 25px;
 }
 
@@ -146,20 +148,22 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100vh;  /* Full height to ensure vertical centering */
     background-image: url('./Assets/playBackground.png');
     background-size: cover;
-    background-position: center;
+    flex-direction: column;
+    margin-top: 0%;
+    overflow: hidden; /* Prevent scrolling */
 }
 
 .playButton button {
     font-family: Georgia, 'Times New Roman', Times, serif;
     background-color: #00BF63;
-    border: 3px solid black;
+    border: 100% solid black;
     border-radius: 12px;
-    width: 200px;
-    height: 90px;
-    font-size: 50px;
+    width: 13%;
+    height: 10%;
+    font-size: 300%;
     color: black;
     cursor: pointer;
 }
@@ -168,24 +172,29 @@ html, body {
     background-color: #01ae5a;
 }
 
-.images {
+.images{
     display: flex;
     flex-direction: column;
     margin-left: 0.6%;
-    z-index: 1;
-    position: absolute;
-    top: 0;
+    z-index: 1; /* Keep it above the background */
+    position: absolute; /* Positioning it absolutely */
+    top: 0; /* Align it to the top of the parent */
     left: 0;
+}   
+#image.selected {
+    background-color: grey;
 }
-
 #image {
+    /* margin-top: 15px; */
+    background-color: invisible;
+    width: 60px;
+    height: 60px;
+    justify-content: space-between;
     margin-top: 15px;
     margin-left: 10px;
     width: 50px;
     height: 50px;
 }
-
-
 #image:hover {
     border: 2px solid black;
     cursor: pointer;
@@ -195,32 +204,48 @@ html, body {
 .game {
     text-align: center;
     flex-direction: column;
+    gap: 30px; /* Adjust the gap between elements */
+    flex-grow: 1;
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    height: 100vh;
     position: relative;
     overflow: hidden;
+}
+.SkillImage{
+    margin-top: 2%;
+    margin-bottom: 8%;
+    border: 3px solid black;
+}
+
+h1 {
+    display: flex;
+    margin-bottom: 3%;
+    margin-left: 3%;
 }
 
 .game p {
     font-size: 40px;
 }
-
+.questionImg {
+    margin-bottom: 0%;
+    margin: 0;
+    padding: 0;
+}
 .choices {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 300px;
+    gap: 20rem;
+    /* margin-bottom: 0px; Reduce the bottom margin */
 }
 
 .choice {
     padding: 10px 20px;
-    font-size: 37px;
-    border-radius: 64px;
-    border: 1px solid #333;
-    background-color: #fff;
-    width: 127.3px;
+    font-size: 2.5rem;
+    border-radius: 3rem;
+    border: 0.1rem solid #333;
+    background-color: rgb(255, 255, 255);
+    width: 128px;
     cursor: pointer;
 }
 
@@ -232,30 +257,35 @@ html, body {
     display: flex;
     justify-content: center;
     gap: 4%;
+    margin: 25px 0;
 }
-
+/* img{
+    border: 3px solid black;
+} */
 .imgchoice {
     border: 3px solid black;
     border-radius: 5px;
-    padding: 0;
+    padding: 5px;
     background-color: transparent;
     transition: transform 0.2s ease, border-color 0.2s ease;
     display: inline-block;
+    width: auto;
+    height: auto;
 }
 
-.imgchoice img {
+/* .imgchoice img {
     width: 100%;
     height: auto;
     border-radius: 5px;
     display: block;
-}
+} */
 
 .imgchoice:hover {
     transform: scale(1.05);
+    cursor: pointer;
 }
 
 .submit {
-    justify-content: flex-end;
     font-size: 30px;
     border-radius: 25px;
     border: 3px solid black;
@@ -263,8 +293,8 @@ html, body {
     cursor: pointer;
     width: 197.2px;
     height: 71.3px;
-    margin-bottom: 10px;
-    margin-right: 10px;
+    margin-bottom: 0%;
+    margin-right: 30px;
     float: right;
 }
 
@@ -334,20 +364,49 @@ html, body {
     text-align: center;
 }
 
-.home-button {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    border: none; /* Remove border */
-    padding: 10px 20px; /* Add padding */
-    text-align: center; /* Center text */
-    text-decoration: none; /* Remove underline */
-    display: inline-block; /* Inline block for proper spacing */
-    font-size: 16px; /* Font size */
-    margin: 10px 2px; /* Margin around the button */
-    cursor: pointer; /* Pointer cursor on hover */
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s, transform 0.2s; /* Transition effects */
+.button-container {
+    display: flex; /* Use flexbox to align buttons side by side */
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 50px; /* Add some spacing between the buttons */
+    margin-top: 20px; /* Optional: margin for spacing above the container */
   }
-  .home-button:hover {
-    background-color: #45a049; /* Darker green on hover */
+  
+  .exit-button {
+      background-color: #4CAF50; /* Green background */
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.2s;
   }
+  
+  .exit-button:hover {
+      background-color: #45a049;
+  }
+  
+  .analysis-button {
+      background-color: #008CBA; /* Blue background */
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .analysis-button:hover {
+      background-color: #007BB5;
+  }
+  /* Media Queries */
+    @media (max-width: 768px) {
+        .choices {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+
+
+ 

@@ -9,7 +9,7 @@ import CZebra from './Assets/ComputerZebra.png';
 import giraffe from './Assets/Giraffe.png';
 import horse from './Assets/Horse.png';
 import leo from './Assets/Lepord.png';
-import skill from './Assets/SkillMirrorImage.png';
+import skill from './Assets/Skill1.png';
 import tiger from './Assets/Tiger.png';
 import Zebra from './Assets/Zebra.png';
 import { triggerConfetti, stopConfetti } from './Confetti.js';
@@ -19,7 +19,6 @@ import line from './Assets/threeLines.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Webcam from 'webcamjs';
-import html2canvas from 'html2canvas';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('login');
@@ -33,7 +32,6 @@ function App() {
   // eslint-disable-next-line no-unused-vars
   const [cameraActive, setCameraActive] = useState(false);
   const captureInterval = useRef(null);
-  const screenshotInterval = useRef(null);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -70,66 +68,9 @@ function App() {
       });
     }, 1000);
 
-    screenshotInterval.current = setInterval(() => {
-      if (!isTimeUp && !isGameOver) {
-        captureScreenshot().then((base64Screenshot) => {
-          sendScreenshotToServer(base64Screenshot);
-        });
-      } 
-       
-    }, 5000); // Every 5 seconds
-
     startCamera(); // Start the camera when the game begins
   };
 
-  const captureScreenshot = () => {
-    return new Promise((resolve) => {
-      html2canvas(document.body).then((canvas) => {
-        const base64Screenshot = canvas.toDataURL('image/png');
-        resolve(base64Screenshot);
-      });
-    });
-  };
-
-  const stopScreenshotCapture = () => {
-    console.log("Stopping Screenshot Capture...");
-    
-    // Stop capturing screenshots if interval exists
-    if (screenshotInterval.current) {
-        clearInterval(screenshotInterval.current);
-        screenshotInterval.current = null; // Clear reference
-    }
-    
-    
-
-    console.log("Screenshot capture stopped.");
-};
-  
-
-
-  const sendScreenshotToServer = async (base64Screenshot) => {
-    console.log("Uploading Screenshot...");
-    console.log("Base64 Screenshot Data:", base64Screenshot); // Log the image data
-    try {
-      // Create JSON object
-      const jsonData = {
-        screenshot: base64Screenshot // Send the base64 screenshot data
-      };
-      console.log("JSON Payload:", jsonData);
-  
-      // Make POST request with the base64 screenshot
-      const uploadResponse = await axios.post('http://localhost:4000/screenshots', jsonData, {
-        headers: {
-          'Content-Type': 'application/json', // Specify that it's JSON
-        },
-      });
-  
-      console.log('Screenshot uploaded successfully:', uploadResponse.data.filename);
-    } catch (error) {
-      console.error('Error uploading screenshot:', error.response ? error.response.data : error.message);
-    }
-  };
-  
   
   const startCamera = () => {
     console.log("Starting camera...");
@@ -138,7 +79,7 @@ function App() {
       width: 320,
       height: 240,
       image_format: 'png',
-      
+      jpeg_quality: 90
     });
     
     Webcam.attach('#my_camera');
@@ -164,11 +105,15 @@ function App() {
     if (captureInterval.current) {
       clearInterval(captureInterval.current);
     }
+
+    
+
     setCameraActive(false);
     Webcam.reset();
   };
 
   
+
   const captureImage = () => {
     console.log("captureImage function called");
     
@@ -180,6 +125,7 @@ function App() {
   }
   
     
+
     const uploadImage = async (base64Image) => {
       console.log("Uploading Image...");
       console.log("Base64 Image Data:", base64Image); // Log the image data
@@ -203,11 +149,12 @@ function App() {
     };
     
 
+
+
     useEffect(() => {
       if (isGameOver || isTimeUp) {
         clearInterval(timerRef.current); // Stop the timer when the game is over or time is up
         stopImageCapture();// Stop capturing images
-        stopScreenshotCapture();
       }
     }, [isGameOver, isTimeUp]);
 
@@ -290,7 +237,7 @@ function App() {
       if (selectedChoice === choice) {
         if (submitted) {
           return {
-            border: `7px solid ${isCorrect ? 'green' : 'red'}`,
+            border: `5px solid ${isCorrect ? 'green' : 'red'}`,
             backgroundColor: isCorrect ? 'green' : 'red',
             color: 'white',
           };
@@ -309,7 +256,6 @@ function App() {
         {currentPage === 'login' && (
           <div className="background">
             <div id="loginPage">
-              <form>
               <h1>Login</h1>
               <div className="input-box">
                 <label>Username:</label>
@@ -335,7 +281,6 @@ function App() {
               <div className="submit-button">
                 <button type="button" onClick={handleLogin}>Login</button>
               </div>
-              </form>
             </div>
           </div>
         )}
@@ -420,7 +365,7 @@ function App() {
           <div id="question3">
             <h1>Q3. Guess The Word</h1>
             <div className="game">
-              <img className="image" src={skill} width="355.1px" alt="SkillMirrorImage" />
+              <img className="SkillImage" src={skill} width="355.1px" alt="SkillMirrorImage" />
               <div className="choices">
                 <button className="choice" onClick={() => handleChoiceClick('Skill')} style={getChoiceStyle('Skill', true)}>
                   Skill
