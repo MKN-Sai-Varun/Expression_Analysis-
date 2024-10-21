@@ -213,7 +213,7 @@ html, body {
 }
 .SkillImage{
     margin-top: 2%;
-    margin-bottom: 8%;
+    margin-bottom: 4%;
     border: 3px solid black;
 }
 
@@ -259,11 +259,8 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 4%;
-    /* margin: 0; */
 }
-/* img{
-    border: 3px solid black;
-} */
+
 .imgchoice {
     border: 3px solid black;
     border-radius: 5px;
@@ -271,9 +268,16 @@ h1 {
     background-color: transparent;
     transition: transform 0.2s ease, border-color 0.2s ease;
     display: inline-block;
-    width: auto;
-    height: auto;
+    width: 300px;  /* Adjust width */
+    height: 240px; /* Adjust height */
 }
+
+.imgchoice img {
+    width: 100%;  /* Make sure the image fits within the container */
+    height: 100%; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensures the image fills the container nicely */
+}
+
 
 /* .imgchoice img {
     width: 100%;
