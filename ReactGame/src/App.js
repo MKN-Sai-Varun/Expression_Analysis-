@@ -420,7 +420,7 @@ function App() {
           <div id="question3">
             <h1>Q3. Guess The Word</h1>
             <div className="game">
-              <img className="image" src={skill} width="355.1px" alt="SkillMirrorImage" />
+              <img className="image" src={skill} width="355.1px" alt="SkillImage" />
               <div className="choices">
                 <button className="choice" onClick={() => handleChoiceClick('Skill')} style={getChoiceStyle('Skill', true)}>
                   Skill
