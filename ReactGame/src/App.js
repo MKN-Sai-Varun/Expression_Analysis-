@@ -368,7 +368,7 @@ function App() {
         <div id="question1">
           <h1>Q1. Fill in the blank</h1>
           <div className="game">
-            <img className="questionImg" src={parrot} alt="Parrot" width="355.1px" />
+            <img className="questionImg" src={parrot} alt="Parrot" height="315px"/>
             <p>_ a r r o t</p>
             <div className="choices">
               <button
@@ -397,7 +397,7 @@ function App() {
           <div id="question2">
             <h1>Q2. Find The Animal</h1>
             <div className="game">
-              <img className="imgQuestion" src={Clion} alt="ComputerLion" />
+              <img className="questionImg" src={Clion} alt="ComputerLion" />
               <div className="imgChoices">
                 <button className="imgchoice" onClick={() => handleChoiceClick('Bear')} style={getChoiceStyle('Bear', false)}>
                   <img src={Bear} alt="Bear" />
@@ -420,7 +420,7 @@ function App() {
           <div id="question3">
             <h1>Q3. Guess The Word</h1>
             <div className="game">
-              <img className="image" src={skill} width="355.1px" alt="SkillImage" />
+              <img className="SkillImage" src={skill} width="355.1px" alt="SkillImage" />
               <div className="choices">
                 <button className="choice" onClick={() => handleChoiceClick('Skill')} style={getChoiceStyle('Skill', true)}>
                   Skill
@@ -440,7 +440,7 @@ function App() {
           <div id="question4">
             <h1>Q4. Find the Animal</h1>
             <div className="game">
-              <img src={CZebra} alt="ComputerZebra" />
+              <img className="questionImg" src={CZebra} alt="ComputerZebra" />
               <div className="imgChoices">
                 <button className="imgchoice" onClick={() => handleChoiceClick('Leopard')} style={getChoiceStyle('Leopard', false)}>
                   <img src={leo} alt="Leopard" />
@@ -463,7 +463,7 @@ function App() {
           <div id="question5">
             <h1>Q5. Fill in the blank</h1>
             <div className="game">
-              <img src={horse} width="355.1px" alt="Horse" />
+              <img className="questionImg" src={horse} width="355.1px" alt="Horse" />
               <p>_ o r s e</p>
               <div className="choices">
                 <button className="choice" onClick={() => handleChoiceClick('n')} style={getChoiceStyle('n', false)}>
