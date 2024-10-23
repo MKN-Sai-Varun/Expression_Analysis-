@@ -4,6 +4,10 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: #D5BDA9;
+    background-image: url("./Assets/BackgroundImage.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     overflow: hidden;
 }
 
