@@ -4,7 +4,7 @@ let animationFrameId = null;
 
 export function triggerConfetti() {
     const end = Date.now() + 15 * 1000;
-    const colors = ["#bb0000", "#ffffff"];
+    const colors = ["#800080", "#ffffff"];
 
     (function frame() {
         if (Date.now() < end) {
