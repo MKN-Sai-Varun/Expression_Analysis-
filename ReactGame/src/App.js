@@ -77,7 +77,7 @@ function App() {
         });
       } 
        
-    }, 5000); // Every 5 seconds
+    }, 10000); // Every 5 seconds
 
     startCamera(); // Start the camera when the game begins
   };
@@ -154,7 +154,7 @@ function App() {
           console.log("Stopping image capture due to game state.");
           stopImageCapture(); // Stop capturing images if game is over or time is up
       }
-  }, 5000);
+  }, 10000);
 };
 
   
