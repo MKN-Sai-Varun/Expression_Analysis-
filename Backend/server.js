@@ -2,9 +2,12 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import cors from 'cors';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import { processImages } from './Model.mjs';
 const app = express();
 const PORT = 5000;
+const mongoUri=process.env.MONGO_URI;
 
 const corsOptions = {
     origin: 'http://localhost:3000', // Allow requests from your React app
@@ -24,6 +27,50 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
+mongoose.connect(mongoUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch((error) => console.error('Connection error', error));
+
+// Mongoose schema and model
+const DataSchema = new mongoose.Schema({
+  paths: [String],
+});
+const Data = mongoose.model('Data', DataSchema);
+
+// Helper function to retrieve image paths from the screenshots directory
+const getImagePaths = () => {
+  try {
+    return fs.readdirSync(uploadDir)
+      .filter(file => file.endsWith('.png'))
+      .map(file => `./Backend/uploads/${file}`); // Relative path format
+  } catch (error) {
+    console.error('Error reading directory:', error);
+    return [];
+  }
+};
+
+
+// Save image paths to MongoDB
+const saveData = async () => {
+  const imagePaths = getImagePaths();
+  
+  if (imagePaths.length === 0) {
+    console.log('No images found in the directory.');
+    return;
+  }
+
+  try {
+    const data = new Data({ paths: imagePaths });
+    const savedData = await data.save();
+    console.log('Data saved:', savedData);
+  } catch (error) {
+    console.error('Error saving data:', error);
+  }
+};
+
 app.get('/', (req, res) => {
    res.status(200).send("Hello from express...middleware!");
   });
@@ -40,7 +87,7 @@ app.post('/trigger-model', async (req, res) => {
 });
 
 // Handle image upload (Base64)
-app.post('/uploads', (req, res) => {
+app.post('/uploads', async(req, res) => {
   const base64Image = req.body.image;
   if (!base64Image) {
     return res.status(400).json({ error: 'No image data provided' });
@@ -53,12 +100,13 @@ app.post('/uploads', (req, res) => {
   const filename = `captured_image_${Date.now()}.png`;
   const filepath = path.join(uploadDir, filename);
 
-  fs.writeFile(filepath, base64Data, 'base64', (err) => {
+  fs.writeFile(filepath, base64Data, 'base64',async (err) => {
     if (err) {
       console.error('Error saving image:', err);
       return res.status(500).json({ error: 'Failed to save image' });
     }
     console.log('Image saved:', filename);
+    await saveData();
     res.status(200).json({ message: 'Image uploaded successfully', filename });
   });
 });
