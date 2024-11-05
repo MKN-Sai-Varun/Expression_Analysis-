@@ -5,110 +5,123 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { processImages } from './Model.mjs';
+
+dotenv.config();
 const app = express();
 const PORT = 5000;
-const mongoUri=process.env.MONGO_URI;
+const mongoUri1 = process.env.MONGO_URI1;
+const mongoUri = process.env.MONGO_URI;
 
-const corsOptions = {
-    origin: 'http://localhost:3000', // Allow requests from your React app
-    methods: ['GET', 'POST', 'OPTIONS'], // Allow these methods
-    allowedHeaders: ['Content-Type'], // Allow these headers
-};
 
-app.use(cors(corsOptions));
+// MongoDB Schema and Model for Counter
+const CounterSchema = new mongoose.Schema({
+  value: { type: Number, default: 0 },
+});
+const Counter = mongoose.model('Counter', CounterSchema, 'counters'); // Explicitly specify the collection name as 'counters'
 
-app.use(cors());
-app.use(express.json({ limit: '50mb' })); // Allow large payloads for Base64 images
-app.options('/trigger-model', cors(corsOptions)); // Preflight request
-
-// Create uploads folder if it doesn't exist
-const uploadDir = path.join(process.cwd(), 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-mongoose.connect(mongoUri, {
+// Connect to MongoDB database specified in the URI
+mongoose.connect(mongoUri1, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
 .then(() => console.log('Connected to MongoDB'))
 .catch((error) => console.error('Connection error', error));
 
-// Mongoose schema and model
-const DataSchema = new mongoose.Schema({
-  paths: [String],
-});
-const Data = mongoose.model('Data', DataSchema);
-
-// Helper function to retrieve image paths from the screenshots directory
-const getImagePaths = () => {
-  try {
-    return fs.readdirSync(uploadDir)
-      .filter(file => file.endsWith('.png'))
-      .map(file => `./Backend/uploads/${file}`); // Relative path format
-  } catch (error) {
-    console.error('Error reading directory:', error);
-    return [];
+// Initialize counter in MongoDB if it doesn’t exist
+const initializeCounter = async () => {
+  const existingCounter = await Counter.findOne();
+  if (!existingCounter) {
+    const counter = new Counter({ value: 0 });
+    await counter.save();
   }
 };
+initializeCounter();
 
-
-// Save image paths to MongoDB
-const saveData = async () => {
-  const imagePaths = getImagePaths();
-  
-  if (imagePaths.length === 0) {
-    console.log('No images found in the directory.');
-    return;
-  }
-
-  try {
-    const data = new Data({ paths: imagePaths });
-    const savedData = await data.save();
-    console.log('Data saved:', savedData);
-  } catch (error) {
-    console.error('Error saving data:', error);
-  }
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
 };
 
-app.get('/', (req, res) => {
-   res.status(200).send("Hello from express...middleware!");
-  });
+app.use(cors(corsOptions));
+app.use(express.json({ limit: '50mb' }));
 
-// Trigger model processing
-app.post('/trigger-model', async (req, res) => {
-    try {
-        await processImages();  // Call the function to process images
-        res.status(200).json({ message: 'Model processing triggered successfully' });
-    } catch (error) {
-        console.error("Error triggering model:", error);
-        res.status(500).json({ error: 'Failed to trigger model' });
-    }
+// Directory for saving images
+const uploadDir = path.join(process.cwd(), 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Function to get the current counter value
+const getCurrentCounterValue = async () => {
+  const counterDoc = await Counter.findOne();
+  return counterDoc ? counterDoc.value : null;
+};
+
+// Endpoint to update the counter independently
+app.post('/update-counter', async (req, res) => {
+  try {
+    // Increment the counter by 1
+    const counterDoc = await Counter.findOneAndUpdate(
+      {}, // Match the first document (or create a new one if none exists)
+      { $inc: { value: 1 } }, // Increment the value field by 1
+      { new: true, upsert: true } // Return the updated document
+    );
+    res.status(200).json({ message: 'Counter updated successfully', counter: counterDoc.value });
+  } catch (error) {
+    console.error("Error updating counter:", error);
+    res.status(500).json({ error: 'Failed to update counter' });
+  }
 });
 
-// Handle image upload (Base64)
-app.post('/uploads', async(req, res) => {
+let imageCount = 0;
+
+app.post('/uploads', async (req, res) => {
   const base64Image = req.body.image;
   if (!base64Image) {
     return res.status(400).json({ error: 'No image data provided' });
   }
-  console.log("Received Base64 Image:", base64Image);
-  // Remove Base64 prefix
-  const base64Data = base64Image.replace(/^data:image\/png;base64,/, "");
 
-  // Save the image to the uploads folder
-  const filename = `captured_image_${Date.now()}.png`;
+  // Get the current counter value (the session number)
+  let counterValue;
+  try {
+    counterValue = await getCurrentCounterValue(); // Ensure this function is defined and fetches the session counter
+    if (counterValue === null) {
+      return res.status(500).json({ error: 'Counter not initialized' });
+    }
+  } catch (error) {
+    console.error('Error accessing counter:', error);
+    return res.status(500).json({ error: 'Failed to access counter' });
+  }
+
+  // Increment the image count for unique naming
+  imageCount++;
+
+  // Define the filename with the incremented image count and session value
+  const filename = `Image${imageCount}_Session${counterValue}.png`;
   const filepath = path.join(uploadDir, filename);
 
-  fs.writeFile(filepath, base64Data, 'base64',async (err) => {
+  // Save the image to the uploads folder
+  const base64Data = base64Image.replace(/^data:image\/png;base64,/, "");
+  fs.writeFile(filepath, base64Data, 'base64', async (err) => {
     if (err) {
       console.error('Error saving image:', err);
       return res.status(500).json({ error: 'Failed to save image' });
     }
     console.log('Image saved:', filename);
-    await saveData();
     res.status(200).json({ message: 'Image uploaded successfully', filename });
   });
+});
+
+// Route to trigger model processing (optional, based on your initial setup)
+app.post('/trigger-model', async (req, res) => {
+  try {
+    await processImages(); // Call the function to process images
+    res.status(200).json({ message: 'Model processing triggered successfully' });
+  } catch (error) {
+    console.error("Error triggering model:", error);
+    res.status(500).json({ error: 'Failed to trigger model' });
+  }
 });
 
 // Start the server
