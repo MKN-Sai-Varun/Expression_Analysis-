@@ -13,15 +13,16 @@ import skill from './Assets/Skill1.png';
 import tiger from './Assets/Tiger.png';
 import Zebra from './Assets/Zebra.png';
 import { triggerConfetti, stopConfetti } from './Confetti.js';
-import ana from './Assets/analysisIcon.png';
-import game from './Assets/gameIcon.png';
-import line from './Assets/threeLines.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Webcam from 'webcamjs';
 import html2canvas from 'html2canvas';
+import Navbar from './navbar';
 
 function App() {
+  const [username, setUsername] = useState('');
+const [password, setPassword] = useState('');
+const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState('login');
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [submitted, setSubmitted] = useState(false);
@@ -34,14 +35,29 @@ function App() {
   const [cameraActive, setCameraActive] = useState(false);
   const captureInterval = useRef(null);
   const screenshotInterval = useRef(null);
+    // eslint-disable-next-line no-unused-vars
+  const [hasSubmitted, setHasSubmitted] = useState(false); 
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const handleLogin = () => {
-    setCurrentPage('play');
+  const handleLogin = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+  
+    // Check if either field is empty
+    if (!username || !password) {
+      setError('Both username and password are required.');
+    } else {
+      setError('');
+      // Proceed with further actions, such as API requests
+      console.log('Form submitted:', { username, password });
+  
+      // Move to the next page after successful login
+      setCurrentPage('play');
+    }
   };
+  
   
 
   const handleStartGame = () => {
@@ -244,47 +260,52 @@ function App() {
     handleGoHome();
   }
 
-  const handleGetAnalysisClick = async () => {
-    handleGoHome();
-  }
-
     const timerRef = useRef(null); // Add a ref to store the timer
 
+    const correctAnswers = {
+      question1: 'p',
+      question2: 'Lion',
+      question3: 'Skill',
+      question4: 'Zebra',
+      question5: 'h'
+    };
+  
     const handleSubmit = () => {
-      if (submitted) return;
-
-      if (selectedChoice !== null) {
-        setSubmitted(true);
-
-        const correctAnswers = {
-          question1: 'p',
-          question2: 'Lion',
-          question3: 'Skill',
-          question4: 'Zebra',
-          question5: 'h'
-        };
-
-        if (selectedChoice === correctAnswers[currentPage]) {
-          setScore(prevScore => prevScore + 1);
-        }
-
-        setTimeout(() => {
-          if (currentPage === 'question1') setCurrentPage('question2');
-          else if (currentPage === 'question2') setCurrentPage('question3');
-          else if (currentPage === 'question3') setCurrentPage('question4');
-          else if (currentPage === 'question4') setCurrentPage('question5');
-          else if (currentPage === 'question5') {
-            setCurrentPage('end');
-            triggerConfetti();
-            setIsGameOver(true);
-          }
-          setSubmitted(false);
-          setSelectedChoice(null);
-        }, 1000);
-      } else {
+      if (selectedChoice === null) {
         alert('Please select an option!');
+        return;
+      }
+    
+      // Update score if the answer is correct
+      const isCorrect = selectedChoice === correctAnswers[currentPage];
+      if (isCorrect) {
+        setScore(prevScore => prevScore + 1);
+      }
+    
+      // Mark the question as submitted
+      setSubmitted(true);
+    };
+    
+    const handleNext = () => {
+      // Move to the next question only if the current question has been submitted
+      if (submitted) {
+        if (currentPage === 'question1') setCurrentPage('question2');
+        else if (currentPage === 'question2') setCurrentPage('question3');
+        else if (currentPage === 'question3') setCurrentPage('question4');
+        else if (currentPage === 'question4') setCurrentPage('question5');
+        else if (currentPage === 'question5') {
+          setCurrentPage('end');
+          triggerConfetti(); // Assuming you have this function defined
+          setIsGameOver(true); // Assuming this state is defined
+        }
+      
+        // Reset state for the next question
+        setSelectedChoice(null);
+        setHasSubmitted(false);
+        setSubmitted(false); // Reset submitted state for the next question
       }
     };
+    
 
     const getChoiceStyle = (choice, isCorrect) => {
       if (selectedChoice === choice) {
@@ -309,20 +330,16 @@ function App() {
         {currentPage === 'login' && (
           <div className="background">
             <div id="loginPage">
-              <form>
+              <form id="loginForm">
               <h1>Login</h1>
               <div className="input-box">
                 <label>Username:</label>
-                <input type="text" placeholder="Username" />
+                <input id="user" type="text" placeholder="Username" required value={username} onChange={(e) => setUsername(e.target.value)}/>
               </div>
               <div className="input-box">
-                <label>Password:</label>
+              <label>Password:</label>
                 <div className="password-container">
-                  <input
-                    type={passwordVisible ? "text" : "password"}
-                    id="password"
-                    placeholder="Password"
-                  />
+                  <input type={passwordVisible ? "text" : "password"} id="password" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
                   <span id="togglePassword" className="eye" onClick={togglePasswordVisibility}>
                     <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
                   </span>
@@ -333,8 +350,13 @@ function App() {
                 <button type="button">Forgot Password?</button>
               </div>
               <div className="submit-button">
-                <button type="button" onClick={handleLogin}>Login</button>
+                <button type="button" onClick={handleLogin} class="button">Login</button>
               </div>
+              {error && <p style={{ color: 'red' }}>{error}</p>}
+              <div class="register">
+                <p>Don't have an account?  <a href='/register'>Register</a></p>
+              </div>
+              <p id="message"></p>
               </form>
             </div>
           </div>
@@ -345,9 +367,7 @@ function App() {
         {currentPage === 'play' && (
           <div id="playPage">
             <div className="images">
-              <img type="button" className="threeLines" id="image" src={line} alt="Three Lines"></img>
-              <img type="button" className="analysisIcon" id="image" src={ana} alt="Analysis Icon"></img>
-              <img type="button" className="gameIcon" id="image" src={game} alt="Game Icon"></img>
+            <Navbar />
             </div>
             <div className="playButton">
               <button type="button" onClick={handleStartGame}>Play</button>
@@ -387,9 +407,13 @@ function App() {
               </button>
             </div>
           </div>
-          <button id="submitButton" className="submit" type="button" onClick={handleSubmit}>
+          {/* <button id="submitButton" className="submit" type="button" onClick={handleSubmit}>
             Submit
-          </button>
+          </button> */}
+          <button id="submitButton" className="submit" type="button" onClick={submitted ? handleNext : handleSubmit}>
+  {submitted ? 'Next' : 'Submit'}
+</button>
+
         </div>
       )}
 
@@ -410,9 +434,10 @@ function App() {
                 </button>
               </div>
             </div>
-            <button id="submitButton" className="submit" type="button" onClick={handleSubmit}>
-              Submit
-            </button>
+            <button id="submitButton" className="submit" type="button" onClick={submitted ? handleNext : handleSubmit}>
+  {submitted ? 'Next' : 'Submit'}
+</button>
+
           </div>
         )}
 
@@ -430,9 +455,10 @@ function App() {
                 </button>
               </div>
             </div>
-            <button id="submitButton" className="submit" type="button" onClick={handleSubmit}>
-              Submit
-            </button>
+            <button id="submitButton" className="submit" type="button" onClick={submitted ? handleNext : handleSubmit}>
+  {submitted ? 'Next' : 'Submit'}
+</button>
+
           </div>
         )}
 
@@ -453,9 +479,10 @@ function App() {
                 </button>
               </div>
             </div>
-            <button id="submitButton" className="submit" type="button" onClick={handleSubmit}>
-              Submit
-            </button>
+            <button id="submitButton" className="submit" type="button" onClick={submitted ? handleNext : handleSubmit}>
+  {submitted ? 'Next' : 'Submit'}
+</button>
+
           </div>
         )}
 
@@ -474,9 +501,10 @@ function App() {
                 </button>
               </div>
             </div>
-            <button id="submitButton" className="submit" type="button" onClick={handleSubmit}>
-              Submit
-            </button>
+            <button id="submitButton" className="submit" type="button" onClick={submitted ? handleNext : handleSubmit}>
+  {submitted ? 'Next' : 'Submit'}
+</button>
+
           </div>
         )}
 
@@ -487,7 +515,6 @@ function App() {
             <div className="endScore">Score: {score}/5</div>
             <div className="button-container">
               <button className="exit-button" type="button" onClick={handleExitClick}>Exit</button>
-              <button className="analysis-button" type="button" onClick={handleGetAnalysisClick}>Get Analysis</button>
             </div>
             {currentPage === 'end'}
           </div>
@@ -498,7 +525,6 @@ function App() {
             <h2>You ran out of time. Game Over</h2>
             <h3>Score: {score}/5</h3>
             <button className="exit-button" type="button" onClick={handleExitClick}>Exit</button>
-            <button className="analysis-button" type="button" onClick={handleGetAnalysisClick}>Get Analysis</button>
             {currentPage === 'TimeUp'}
           </div>
         )}
