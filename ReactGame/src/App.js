@@ -37,6 +37,7 @@ const [error, setError] = useState('');
   const screenshotInterval = useRef(null);
     // eslint-disable-next-line no-unused-vars
   const [hasSubmitted, setHasSubmitted] = useState(false); 
+  const [counter, setCounter] = useState(0);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -63,7 +64,24 @@ const [error, setError] = useState('');
 };
 
   
+  const handleCounter = async () => {
+    // Increment counter
+    const newCounterValue = counter + 1;
+    setCounter(newCounterValue);
+
+    try {
+      // Send the new counter value to the backend
+      await axios.post('http://localhost:5000/update-counter', { value: newCounterValue });
+      console.log(`Counter updated to ${newCounterValue}`);
+    } catch (error) {
+      console.error("Error updating counter:", error);
+    }
+  };
   
+  const handlePlayButtonClick = () =>{
+    handleCounter();
+    handleStartGame();
+  }
 
   const handleStartGame = () => {
     console.log("Game Started");
@@ -375,7 +393,7 @@ const [error, setError] = useState('');
             <Navbar />
             </div>
             <div className="playButton">
-              <button type="button" onClick={handleStartGame}>Play</button>
+              <button type="button" onClick={handlePlayButtonClick}>Play</button>
               <div id="my_camera" style={{ opacity: 0 }}></div>
             </div>
           </div>
