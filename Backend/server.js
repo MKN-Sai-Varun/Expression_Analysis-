@@ -8,7 +8,7 @@ import { processImages } from './Model.mjs';
 
 dotenv.config();
 const app = express();
-const PORT = 5000;
+const PORT = 7000;
 const mongoUri1 = process.env.MONGO_URI1;
 const mongoUri = process.env.MONGO_URI;
 
