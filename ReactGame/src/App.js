@@ -42,21 +42,26 @@ const [error, setError] = useState('');
     setPasswordVisible(!passwordVisible);
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault(); // Prevent the default form submission
-  
-    // Check if either field is empty
-    if (!username || !password) {
-      setError('Both username and password are required.');
-    } else {
-      setError('');
-      // Proceed with further actions, such as API requests
-      console.log('Form submitted:', { username, password });
-  
-      // Move to the next page after successful login
-      setCurrentPage('play');
+  const handleLogin = async () => {
+    setError(''); // Clear any previous error messages
+    try {
+        await axios.post('http://localhost:5000/api/auth/login', {
+            username,
+            password,
+        });
+
+        // Optional: You can display a success message here
+        setCurrentPage('play'); // Change to play page upon successful login
+    } catch (error) {
+        console.error('Login error:', error);
+        if (error.response) {
+            setError(error.response.data.message); // Display error message from server
+        } else {
+            setError('Server error, please try again later.'); // Handle other errors
+        }
     }
-  };
+};
+
   
   
 
