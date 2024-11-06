@@ -10,14 +10,14 @@ const cors = require('cors');
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 50000
+const PORT = 5000
 
 // Middleware setup
 app.use(cors());
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(process.env.MONGO_URI2, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
