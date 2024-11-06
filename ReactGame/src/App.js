@@ -71,7 +71,7 @@ const [error, setError] = useState('');
 
     try {
       // Send the new counter value to the backend
-      await axios.post('http://localhost:5000/update-counter', { value: newCounterValue });
+      await axios.post('http://localhost:7000/update-counter', { value: newCounterValue });
       console.log(`Counter updated to ${newCounterValue}`);
     } catch (error) {
       console.error("Error updating counter:", error);
@@ -229,7 +229,7 @@ const [error, setError] = useState('');
           };
           console.log("JSON Payload:", jsonData);
           // Make POST request with the base64 image
-          const uploadResponse = await axios.post('http://localhost:5000/uploads', jsonData, {
+          const uploadResponse = await axios.post('http://localhost:7000/uploads', jsonData, {
               headers: {
                   'Content-Type': 'application/json', // Specify that it's JSON
               },
@@ -265,7 +265,7 @@ const [error, setError] = useState('');
 
     const handleButtonClick = async () => {
       try {
-          const response = await fetch('http://localhost:5000/trigger-model', {
+          const response = await fetch('http://localhost:7000/trigger-model', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
