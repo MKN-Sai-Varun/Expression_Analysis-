@@ -62,6 +62,24 @@ const [error, setError] = useState('');
         }
     }
 };
+  const endSession = () => {
+    console.log("EndSession called");
+    fetch('http://localhost:4000/end-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          console.log(data.message); // Expected success message from the server
+        } else if (data.error) {
+          console.error("Error:", data.error); // Error message from the server if something went wrong
+        }
+      })
+      .catch((error) => console.error('Request failed:', error));
+  };
 
   
   const handleCounter = async () => {
@@ -524,9 +542,17 @@ const [error, setError] = useState('');
                 </button>
               </div>
             </div>
-            <button id="submitButton" className="submit" type="button" onClick={submitted ? handleNext : handleSubmit}>
-  {submitted ? 'Next' : 'Submit'}
+            <button id="submitButton" className="submit" type="button" onClick={() => {if (submitted) {
+            handleNext();
+            } else {
+              handleSubmit();
+            }
+            endSession();
+            }}
+>
+  {submitted ? 'submit' : 'Submit'}
 </button>
+
 
           </div>
         )}
