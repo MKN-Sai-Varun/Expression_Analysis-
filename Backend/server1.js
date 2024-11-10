@@ -96,7 +96,7 @@ app.post('/screenshots', async (req, res) => {
   screenshotCount++;
   const base64Data = screenshotData.replace(/^data:image\/png;base64,/, "");
 
-  const filename = `Screenshot${screenshotCount}_Session${counterValue}.png`;
+  const filename = `Session${counterValue}_Screenshot${screenshotCount}.png`;
   const filepath = path.join(screenshotDir, filename);
 
   fs.writeFile(filepath, base64Data, 'base64', (err) => {
@@ -108,9 +108,7 @@ app.post('/screenshots', async (req, res) => {
     // Generate a relative path for MongoDB storage
     const relativePath = `./Backend/screenshots/${filename}`;
     sessionImagePaths.push(relativePath);
-
     console.log(`Screenshot saved as ${filename}, added to session paths.`);
-
     res.status(200).json({ message: 'Screenshot uploaded successfully', filename });
   });
 });
