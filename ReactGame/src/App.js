@@ -31,11 +31,9 @@ const [error, setError] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [cameraActive, setCameraActive] = useState(false);
   const captureInterval = useRef(null);
   const screenshotInterval = useRef(null);
-    // eslint-disable-next-line no-unused-vars
   const [hasSubmitted, setHasSubmitted] = useState(false); 
   const [counter, setCounter] = useState(0);
 
@@ -63,7 +61,7 @@ const [error, setError] = useState('');
     }
 };
   const endSession = () => {
-    console.log("EndSession called");
+    console.log("End session of screenshots called.");
     fetch('http://localhost:4000/end-session', {
       method: 'POST',
       headers: {
@@ -81,7 +79,25 @@ const [error, setError] = useState('');
       .catch((error) => console.error('Request failed:', error));
   };
 
-  
+  const endSession1 = () => {
+    console.log("End session of uploads called.");
+    fetch('http://localhost:7000/end-session1', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          console.log(data.message); // Expected success message from the server
+        } else if (data.error) {
+          console.error("Error:", data.error); // Error message from the server if something went wrong
+        }
+      })
+      .catch((error) => console.error('Request failed:', error));
+  };
+
   const handleCounter = async () => {
     // Increment counter
     const newCounterValue = counter + 1;
@@ -156,13 +172,8 @@ const [error, setError] = useState('');
         clearInterval(screenshotInterval.current);
         screenshotInterval.current = null; // Clear reference
     }
-    
-    
-
     console.log("Screenshot capture stopped.");
 };
-  
-
 
   const sendScreenshotToServer = async (base64Screenshot) => {
     console.log("Uploading Screenshot...");
@@ -173,33 +184,27 @@ const [error, setError] = useState('');
         screenshot: base64Screenshot // Send the base64 screenshot data
       };
       console.log("JSON Payload:", jsonData);
-  
       // Make POST request with the base64 screenshot
       const uploadResponse = await axios.post('http://localhost:4000/screenshots', jsonData, {
         headers: {
           'Content-Type': 'application/json', // Specify that it's JSON
         },
       });
-  
       console.log('Screenshot uploaded successfully:', uploadResponse.data.filename);
     } catch (error) {
       console.error('Error uploading screenshot:', error.response ? error.response.data : error.message);
     }
   };
   
-  
   const startCamera = () => {
     console.log("Starting camera...");
-    
     Webcam.set({
       width: 320,
       height: 240,
       image_format: 'png',
       
     });
-    
     Webcam.attach('#my_camera');
-
     console.log("Camera stream started...");
 
     // Start capturing images every 3 seconds
@@ -214,8 +219,6 @@ const [error, setError] = useState('');
   }, 10000);
 };
 
-  
-
   const stopImageCapture = () => {
     console.log("Stopping Image Capture...");
     if (captureInterval.current) {
@@ -225,10 +228,8 @@ const [error, setError] = useState('');
     Webcam.reset();
   };
 
-  
   const captureImage = () => {
     console.log("captureImage function called");
-    
     Webcam.snap(async (data_uri) => {
       console.log("Capturing Image...");
       console.log("Base64 Image Data Length:", data_uri.length);
@@ -236,7 +237,6 @@ const [error, setError] = useState('');
     });
   }
   
-    
     const uploadImage = async (base64Image) => {
       console.log("Uploading Image...");
       console.log("Base64 Image Data:", base64Image); // Log the image data
@@ -252,14 +252,12 @@ const [error, setError] = useState('');
                   'Content-Type': 'application/json', // Specify that it's JSON
               },
           });
-    
           console.log('Image uploaded successfully:', uploadResponse.data.message);
       } catch (error) {
           console.error('Error uploading image:', error.response ? error.response.data : error.message);
       }
     };
     
-
     useEffect(() => {
       if (isGameOver || isTimeUp) {
         clearInterval(timerRef.current); // Stop the timer when the game is over or time is up
@@ -280,7 +278,6 @@ const [error, setError] = useState('');
       }
     };
 
-
     const handleButtonClick = async () => {
       try {
           const response = await fetch('http://localhost:7000/trigger-model', {
@@ -299,10 +296,11 @@ const [error, setError] = useState('');
   const handleExitClick = async () => {
     handleButtonClick();
     handleGoHome();
+    endSession();
+    endSession1();
   }
 
     const timerRef = useRef(null); // Add a ref to store the timer
-
     const correctAnswers = {
       question1: 'p',
       question2: 'Lion',
@@ -322,7 +320,6 @@ const [error, setError] = useState('');
       if (isCorrect) {
         setScore(prevScore => prevScore + 1);
       }
-    
       // Mark the question as submitted
       setSubmitted(true);
     };
@@ -339,7 +336,6 @@ const [error, setError] = useState('');
           triggerConfetti(); // Assuming you have this function defined
           setIsGameOver(true); // Assuming this state is defined
         }
-      
         // Reset state for the next question
         setSelectedChoice(null);
         setHasSubmitted(false);
@@ -347,7 +343,6 @@ const [error, setError] = useState('');
       }
     };
     
-
     const getChoiceStyle = (choice, isCorrect) => {
       if (selectedChoice === choice) {
         if (submitted) {
@@ -403,8 +398,6 @@ const [error, setError] = useState('');
           </div>
         )}
 
-
-        
         {currentPage === 'play' && (
           <div id="playPage">
             <div className="images">
@@ -416,8 +409,6 @@ const [error, setError] = useState('');
             </div>
           </div>
         )}
-
-
 
         {currentPage.startsWith('question') && (
           <div className="timer">
@@ -457,7 +448,6 @@ const [error, setError] = useState('');
 
         </div>
       )}
-
         {currentPage === 'question2' && (
           <div id="question2">
             <h1>Q2. Find The Animal</h1>
@@ -476,8 +466,8 @@ const [error, setError] = useState('');
               </div>
             </div>
             <button id="submitButton" className="submit" type="button" onClick={submitted ? handleNext : handleSubmit}>
-  {submitted ? 'Next' : 'Submit'}
-</button>
+              {submitted ? 'Next' : 'Submit'}
+            </button>
 
           </div>
         )}
@@ -497,8 +487,8 @@ const [error, setError] = useState('');
               </div>
             </div>
             <button id="submitButton" className="submit" type="button" onClick={submitted ? handleNext : handleSubmit}>
-  {submitted ? 'Next' : 'Submit'}
-</button>
+            {submitted ? 'Next' : 'Submit'}
+            </button>
 
           </div>
         )}
@@ -521,8 +511,8 @@ const [error, setError] = useState('');
               </div>
             </div>
             <button id="submitButton" className="submit" type="button" onClick={submitted ? handleNext : handleSubmit}>
-  {submitted ? 'Next' : 'Submit'}
-</button>
+              {submitted ? 'Next' : 'Submit'}
+            </button>
 
           </div>
         )}
@@ -542,19 +532,17 @@ const [error, setError] = useState('');
                 </button>
               </div>
             </div>
-            <button id="submitButton" className="submit" type="button" onClick={() => {if (submitted) {
-            handleNext();
-            } else {
-              handleSubmit();
-            }
-            endSession();
-            }}
->
-  {submitted ? 'submit' : 'Submit'}
-</button>
-
-
-          </div>
+            <button id="submitButton" className="submit" type="button" onClick={() => {
+    if (submitted) {
+      handleNext();
+    } else {
+      handleSubmit();
+    }
+  }}
+              >
+              {submitted ? 'Submit' : 'Submit'}
+            </button>
+        </div>
         )}
 
         {currentPage === 'end' && (
@@ -590,6 +578,5 @@ const [error, setError] = useState('');
 
       </>
     );
-  
 }
-  export default App;
+export default App;
