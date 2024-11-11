@@ -9,9 +9,26 @@ function Navbar() {
         setIsNavbarOpen(prevState => !prevState); // Toggle the navbar visibility
     };
 
+    const handleButtonClick = async () => {
+        try {
+            const response = await fetch('http://localhost:7000/trigger-model', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+  
+            const data = await response.json();
+            console.log(data.message); // Handle success response
+        } catch (error) {
+            console.error('Error triggering model:', error);
+        }
+    };
+    
     const handleAnalysisClick = () => {
         // Add action for Analysis button
         console.log("Analysis button clicked");
+        handleButtonClick();
     };
 
     const handleGameClick = () => {
