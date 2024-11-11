@@ -31,9 +31,11 @@ const [error, setError] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [cameraActive, setCameraActive] = useState(false);
   const captureInterval = useRef(null);
   const screenshotInterval = useRef(null);
+  // eslint-disable-next-line no-unused-vars
   const [hasSubmitted, setHasSubmitted] = useState(false); 
   const [counter, setCounter] = useState(0);
 
@@ -278,23 +280,8 @@ const [error, setError] = useState('');
       }
     };
 
-    const handleButtonClick = async () => {
-      try {
-          const response = await fetch('http://localhost:7000/trigger-model', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-          });
-
-          const data = await response.json();
-          console.log(data.message); // Handle success response
-      } catch (error) {
-          console.error('Error triggering model:', error);
-      }
-  };
   const handleExitClick = async () => {
-    handleButtonClick();
+    // handleButtonClick();
     handleGoHome();
     endSession();
     endSession1();
@@ -347,7 +334,7 @@ const [error, setError] = useState('');
       if (selectedChoice === choice) {
         if (submitted) {
           return {
-            border: `7px solid ${isCorrect ? 'green' : 'red'}`,
+            border: `5px solid ${isCorrect ? 'green' : 'red'}`,
             backgroundColor: isCorrect ? 'green' : 'red',
             color: 'white',
           };
@@ -540,7 +527,7 @@ const [error, setError] = useState('');
     }
   }}
               >
-              {submitted ? 'Submit' : 'Submit'}
+              {submitted ? 'Finish' : 'Submit'}
             </button>
         </div>
         )}
