@@ -50,7 +50,7 @@ let screenshotCount = 0;
 let sessionImagePaths = [];
 
 // Enhanced insert function with logging
-async function insertImagePaths(pathsArray, sessionCounter) {
+async function insertImagePaths(pathsArray, sessionCounter) {//screenshots path
   const client = new MongoClient(mongoUri);
   console.log("Inserting paths into MongoDB. Paths:", pathsArray);
   try {
@@ -59,15 +59,17 @@ async function insertImagePaths(pathsArray, sessionCounter) {
 
     const database = client.db('test');
     const collection = database.collection('datas');
-
-    const document = {
-      paths: pathsArray,
-      session: sessionCounter,
-      __v: 0
-    };
-
-    const result = await collection.insertOne(document);
-    console.log('Document inserted with _id:', result.insertedId);
+    const result= await collection.updateOne({session:sessionCounter},{$set:{Screenshot_path:pathsArray}});
+    if(result.matchedCount===0){
+      const document={
+        _v:0,
+        session: sessionCounter,
+        Screenshot_path:pathsArray,
+ 
+      }
+      const res=await collection.insertOne(document);
+      console.log('Document inserted with _id:', res.insertedId);
+    }
   } catch (error) {
     console.error('Error inserting document:', error);
   } finally {
@@ -114,7 +116,7 @@ app.post('/screenshots', async (req, res) => {
 });
 
 
-app.post('/end-session', async (req, res) => {
+app.post('/end-session', async (req, res) => {//screenshots path
   let counterValue;
   try {
     counterValue = await getCurrentCounterValue();
