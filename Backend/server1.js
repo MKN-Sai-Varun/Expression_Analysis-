@@ -74,7 +74,7 @@ async function insertImagePaths(pathsArray, sessionCounter) {//screenshots path
     console.error('Error inserting document:', error);
   } finally {
     await client.close();
-    console.log("MongoDB client connection closed.");
+    console.log("MongoDB client connection closed."); 
   }
 }
 
