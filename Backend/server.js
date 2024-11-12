@@ -80,7 +80,7 @@ app.post('/update-counter', async (req, res) => {
 let imageCount = 0;
 let imagePaths = [];
 
-async function insertImagePaths(pathsArray, sessionCounter) {
+async function insertImagePaths(pathsArray, sessionCounter) {//image paths-------------------<
   const client = new MongoClient(mongoUri);
   console.log("Inserting paths into MongoDB. Paths:", pathsArray);
   try {
@@ -89,15 +89,24 @@ async function insertImagePaths(pathsArray, sessionCounter) {
 
     const database = client.db('test');
     const collection = database.collection('datas');
+    const result= await collection.updateOne({session:sessionCounter},{$set:{Images_path:pathsArray}});
+    if(result.matchedCount===0){
+      const document={
+        _v:0,
+        session: sessionCounter,
+        Images_path:pathsArray,
+      }
+      const res=await collection.insertOne(document);
+      console.log('Document inserted with _id:', res.insertedId);
+    }
+    // const document = {
+    //   paths: pathsArray,
+    //   session: sessionCounter,
+    //   __v: 0
+    // };
 
-    const document = {
-      paths: pathsArray,
-      session: sessionCounter,
-      __v: 0
-    };
-
-    const result = await collection.insertOne(document);
-    console.log('Document inserted with _id:', result.insertedId);
+    // const result = await collection.insertOne(document);
+    // console.log('Document inserted with _id:', result.insertedId);
   } catch (error) {
     console.error('Error inserting document:', error);
   } finally {
@@ -159,7 +168,7 @@ app.post('/trigger-model', async (req, res) => {
   }
 });
 
-app.post('/end-session1', async (req, res) => {
+app.post('/end-session1', async (req, res) => {//images paths---------------------<
   let counterValue;
   try {
     counterValue = await getCurrentCounterValue();
