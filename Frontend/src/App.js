@@ -17,7 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Webcam from 'webcamjs';
 import html2canvas from 'html2canvas';
-import Navbar from './navbar';
+import Navbar from './navbar.js';
 
 function App() {
   const [username, setUsername] = useState('');
