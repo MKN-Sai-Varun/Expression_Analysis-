@@ -1,8 +1,8 @@
-// Import required modules
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs'); // Imported all necessary modules
 const dotenv = require('dotenv');
 const cors = require('cors');
 
