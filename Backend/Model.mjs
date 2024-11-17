@@ -1,7 +1,7 @@
 import fs from 'fs';
-import path from 'path';
+import path from 'path'; // Importing Libraries
 import fetch from 'node-fetch';
-import { MongoClient } from 'mongodb';  //importing libs
+import { MongoClient } from 'mongodb';  // Import MongoDB client
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -26,56 +26,61 @@ async function query(imagePath) {
         const data = fs.readFileSync(imagePath);  // Read binary data from the image
         const response = await fetch(apiUrl, {
             headers: {
-                Authorization: `Bearer ${accessToken}`,  // access token from env
-                "Content-Type": "application/octet-stream",  
+                Authorization: `Bearer ${accessToken}`,  // Access token from env file
+                "Content-Type": "application/octet-stream",  // Correct Content-Type for binary data
             },
             method: 'POST',
             body: data  // Send binary data in the body
         });
 
         if (!response.ok) {
-            throw new Error(`Error with status ${response.status}: ${response.statusText}`);  // Error message
+            throw new Error(`Error with status ${response.status}: ${response.statusText}`);  // Fixed error message syntax
         }
 
         const result = await response.json();
         return result;
     } catch (error) {
-        console.error("Error querying the model:", error.message);  
+        console.error("Error querying the model:", error.message);  // Improved error logging
         return null;
     }
 }
-//Function to insert results into mongodb
+
 async function insertResultsToMongo(results) {
     const client = new MongoClient(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
     try {
         await client.connect();
         console.log("Connected to MongoDB");
-        const db = client.db(dbName); //Database name
-        const collection = db.collection(collectionName); //Collection name
+        const db = client.db(dbName);
+        const collection = db.collection(collectionName); // Collection name
 
         await collection.insertMany(results);
         console.log("Results inserted into MongoDB");
     } catch (error) {
-        console.error("Error inserting data into MongoDB:", error); // Error handling
+        console.error("Error inserting data into MongoDB:", error);
     } finally {
         await client.close();
-        console.log("MongoDB connection closed"); // Closing connection
+        console.log("MongoDB connection closed"); // Connection closed
     }
 }
 
-//Function to processImages
-async function processImages() {
-    const images = getImagesFromDirectory(folderPath); // Function to get images from directory
+async function processImages(session) {
+    const images = getImagesFromDirectory(folderPath);
+    const sessionImages = images.filter(image => image.startsWith(`Session${session}_`)); // Filter images by session
     const results = [];
 
-    for (const image of images) { // Takes images one by one
+    if (sessionImages.length === 0) {
+        console.log(`No images found for Session ${session}`);
+        return;
+    }
+
+    for (const image of sessionImages) {
         const imagePath = path.join(folderPath, image);
-        console.log(`Processing: ${imagePath}`);  // Message to obtain the image being processed
+        console.log(`Processing: ${imagePath}`);     // Message to obtain the image being processed
 
         const result = await query(imagePath);
         if (result) {
-            results.push({ image: image, result: result }); // Returns results array containing analysis
+            results.push({ image: image, session, result }); // Include session info in the result
         }
     }
 
@@ -85,4 +90,5 @@ async function processImages() {
         console.log("No results to insert into MongoDB");
     }
 }
-export {processImages}; // Function exported
+
+export { processImages };
