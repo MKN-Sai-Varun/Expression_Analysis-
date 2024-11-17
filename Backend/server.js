@@ -160,13 +160,21 @@ app.post('/uploads', async (req, res) => {
 // Route to trigger model processing (optional, based on your initial setup)
 app.post('/trigger-model', async (req, res) => {
   try {
-    await processImages(); // Call the function to process images
-    res.status(200).json({ message: 'Model processing triggered successfully' });
+      const currentSession = await getCurrentCounterValue(); // Retrieve current session value
+      if (!currentSession) {
+          return res.status(400).json({ error: 'Current session value is not available' });
+      }
+
+      console.log(`Triggering model for Session ${currentSession}`);
+      await processImages(currentSession); // Pass session value to processImages
+
+      res.status(200).json({ message: `Model processing triggered for Session ${currentSession}` });
   } catch (error) {
-    console.error("Error triggering model:", error);
-    res.status(500).json({ error: 'Failed to trigger model' });
+      console.error("Error triggering model:", error);
+      res.status(500).json({ error: 'Failed to trigger model' });
   }
 });
+
 
 app.post('/end-session1', async (req, res) => {//images paths---------------------<
   let counterValue;
