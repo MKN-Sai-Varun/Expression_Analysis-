@@ -64,7 +64,7 @@ const [error, setError] = useState('');
 };
   const endSession = () => {
     console.log("End session of screenshots called.");
-    fetch('http://localhost:4000/end-session', {
+    fetch('http://localhost:7000/end-session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ const [error, setError] = useState('');
         });
       } 
        
-    }, 10000); // Every 5 seconds
+    }, 10000); // Every 10 seconds
 
     startCamera(); // Start the camera when the game begins
   };
@@ -187,7 +187,7 @@ const [error, setError] = useState('');
       };
       console.log("JSON Payload:", jsonData);
       // Make POST request with the base64 screenshot
-      const uploadResponse = await axios.post('http://localhost:4000/screenshots', jsonData, {
+      const uploadResponse = await axios.post('http://localhost:7000/screenshots', jsonData, {
         headers: {
           'Content-Type': 'application/json', // Specify that it's JSON
         },
