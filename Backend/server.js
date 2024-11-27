@@ -232,41 +232,37 @@ app2.post('/end-session', async (req, res) => { // Screenshots path
 });
 
 // Function logic to insert relative paths of both screenshots and images
-async function insertPaths(sessionCounter, paths = {}, mongoUri) {
+async function insertImagePaths(pathsArray, sessionCounter) {//image paths-------------------<
   const client = new MongoClient(mongoUri);
+  console.log("Inserting paths into MongoDB. Paths:", pathsArray);
   try {
     await client.connect();
-    console.log("Connected to MongoDB client for path insertion.");
-
+    console.log("Connected to MongoDB client for direct insertion.");
     const database = client.db('test');
     const collection = database.collection('datas');
-
-    // Update or insert paths into the same document
-    const updateFields = {};
-    if (paths.Images_path) updateFields.Images_path = paths.Images_path;
-    if (paths.Screenshot_path) updateFields.Screenshot_path = paths.Screenshot_path;
-
-    const result = await collection.updateOne(
-      { session: sessionCounter },
-      {
-        $set: updateFields,
-      },
-      { upsert: true } // Use upsert to create a new document if it doesn't exist
-    );
-
-    if (result.matchedCount === 0 && result.upsertedCount > 0) {
-      console.log('Document created with _id:', result.upsertedId._id);
-    } else {
-      console.log('Document updated for session:', sessionCounter);
+    const status = await checkStatus(sessionCounter);
+    if(status=="data_inserted"){
+      const result=await collection.updateOne({Session_Id:sessionCounter},{$set:{Player_images:pathsArray}});
+      if(result.acknowledged){
+        console.log(`Update acknowledged: ${result.acknowledged}`);
+        if(result.modifiedCount){
+          console.log(`Document was updated. Modified count: ${result.modifiedCount}`)
+        }
+        else{
+          console.log('No documents were updated (perhaps the data was the same).');
+        }
+      }else{
+        console.log("Update was not acknowledged");
+      }
     }
-  } catch (error) {
-    console.error('Error inserting/updating document:', error);
+    
+     } catch (error) {
+    console.error('Error inserting document:', error);
   } finally {
     await client.close();
     console.log("MongoDB client connection closed.");
   }
 }
-
 // Function to determine Screenshot_path or Images_path in MongoDB document
 async function saveSessionData(pathsArray, sessionCounter, pathType) {
   if (!pathsArray || pathsArray.length === 0) {
