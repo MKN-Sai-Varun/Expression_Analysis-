@@ -210,6 +210,7 @@ app1.post('/end-session1', async (req, res) => {
     console.log("MongoDB client connection closed.");
   }
 });
+
 const screenshotDir = path.join(process.cwd(), 'screenshots');
 if (!fs.existsSync(screenshotDir)) fs.mkdirSync(screenshotDir, { recursive: true });
 
@@ -217,17 +218,48 @@ if (!fs.existsSync(screenshotDir)) fs.mkdirSync(screenshotDir, { recursive: true
 let screenshotCount = 0;
 let sessionImagePaths = [];
 
+
+const updateStatus = async (status,sessionCounter) => {
+  const client = new MongoClient(mongoUri);
+  try {
+    await client.connect();
+    const database = client.db('test');
+    const collection = database.collection('status');
+    
+    const result = await collection.updateOne(
+      { Session_Id: sessionCounter },
+      { $set: { status: status } },
+      { upsert: true }  // This will create the document if it doesn't exist
+    );
+    console.log(`Status updated to ${status}`);
+  } catch (error) {
+    console.error("Error updating status:", error);
+    throw error;
+  } finally {
+    await client.close();
+  }
+};
 // Routes for `app2` (Stores screenshots in the screenshots folder)
-app2.post('/screenshots', async (req, res) => {
+app.post('/screenshots', async (req, res) => {
   const screenshotData = req.body.screenshot;
   if (!screenshotData) {
+    console.log("Didn't receive the screenshots");
     return res.status(400).json({ error: 'No screenshot data provided' });
+    
+  }
+  console.log(screenshotData);
+
+  let counterValue;
+  try {
+    counterValue = await getCurrentCounterValue();
+    if (counterValue === null) {
+      return res.status(500).json({ error: 'Counter not initialized' });
+    }
+  } catch (error) {
+    console.error('Error accessing counter:', error);
+    return res.status(500).json({ error: 'Failed to access counter' });
   }
 
-  let counterValue = await getCurrentCounterValue();
-  if (counterValue === null) {
-    return res.status(500).json({ error: 'Counter not initialized' });
-  }
 
   screenshotCount++;
 
