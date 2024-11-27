@@ -19,7 +19,7 @@ const app2 = express();
 
 // Common middleware and configurations
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:3000','http://localhost:9000'],
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
 };
@@ -57,6 +57,46 @@ const getCurrentCounterValue = async () => {
   const counterDoc = await Counter.findOne();
   return counterDoc ? counterDoc.value : null;
 };
+const checkStatus = async (sessionCounter) => {
+  const client = new MongoClient(mongoUri);
+  try {
+    await client.connect();
+    const database = client.db('test');
+    const collection = database.collection('status');
+    
+    const statusDoc = await collection.findOne({ Session_Id: sessionCounter });
+    return statusDoc ? statusDoc.status : null;
+  } catch (error) {
+    console.error("Error checking status:", error);
+    return null;
+  } finally {
+    await client.close();
+  }
+};
+
+async function waitForData(sessionCounter) {
+  let attempts = 0;
+  const maxAttempts = 30;  // Limit the number of attempts to prevent infinite loops
+  const delay = 5000; // 5 seconds delay between checks
+
+  while (attempts < maxAttempts) {
+    const status = await checkStatus(sessionCounter);
+    
+    if (status === "data_inserted") {
+      console.log("Data inserted, proceeding with the operation.");
+      return true;  // Data is ready, continue processing
+    }
+
+    console.log(`Data not yet inserted, retrying... (${attempts + 1}/${maxAttempts})`);
+    attempts++;
+
+    // Wait before trying again
+    await new Promise(resolve => setTimeout(resolve, delay));
+  }
+
+  console.log("Max attempts reached, data not inserted.");
+  return false;  // Data was not inserted in the given attempts
+}
 
 // Function to Increment the Session ID by 1 in MongoDB everytime a session is played
 app1.post('/update-counter', async (req, res) => {
