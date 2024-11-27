@@ -379,13 +379,21 @@ async function saveSessionData(pathsArray, sessionCounter, pathType) {
 }
 
 // Route to trigger model processing 
-app1.post('/trigger-model', async (req, res) => {
+app1.post('/trigger-model', async (req, res) => {//Receiving the data
   try {
-    await processImages(); // Call the function to process images
-    res.status(200).json({ message: 'Model processing triggered successfully' });
+      // const currentSession = await getCurrentCounterValue(); // Retrieve current session value
+      const {Session_Id}=req.body;
+      if (!Session_Id) {
+          return res.status(400).json({ error: 'Did not receive the session_Id' });
+      }
+
+      console.log(`Triggering model for Session ${Session_Id}`);
+      await processImages(Session_Id); // Pass session value to processImages
+
+      res.status(200).json({ message: `Model processing triggered for Session ${Session_Id}` });
   } catch (error) {
-    console.error("Error triggering model:", error);
-    res.status(500).json({ error: 'Failed to trigger model' });
+      console.error("Error triggering model:", error);
+      res.status(500).json({ error: 'Failed to trigger model' });
   }
 });
 
