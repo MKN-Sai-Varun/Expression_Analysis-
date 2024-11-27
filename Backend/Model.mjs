@@ -9,8 +9,8 @@ const apiUrl = "https://api-inference.huggingface.co/models/trpakov/vit-face-exp
 const accessToken = process.env.MODEL_KEY;
 const folderPath = './uploads';
 const mongoUri = process.env.MONGO_URI;  // Connection String in env
-const dbName = 'Analysis';  // Database name
-const collectionName = 'g1';  // Collection name
+const dbName = 'test';  // Database name
+const collectionName = 'datas';  // Collection name
 
 // Function to get image files from the directory
 function getImagesFromDirectory(directory) {
@@ -45,7 +45,7 @@ async function query(imagePath) {
     }
 }
 
-async function insertResultsToMongo(results) {
+async function insertResultsToMongo(session,Emotions) {
     const client = new MongoClient(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
     try {
@@ -53,8 +53,7 @@ async function insertResultsToMongo(results) {
         console.log("Connected to MongoDB");
         const db = client.db(dbName);
         const collection = db.collection(collectionName); // Collection name
-
-        await collection.insertMany(results);
+        await collection.updateOne({Session_Id:session},{$set:{Emotions}});
         console.log("Results inserted into MongoDB");
     } catch (error) {
         console.error("Error inserting data into MongoDB:", error);
