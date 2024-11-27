@@ -46,10 +46,10 @@ app.post('/api/auth/login', async (req, res) => {
         if(isMatch){
             userInfo={Username:username,Password:password};
             try{
-                const response=await axios.post("http://localhost:4000/receive-data",userInfo);
-                console.log("User info sent to server 4000: ",response.data);
+                const response=await axios.post("http://localhost:7000/receive-data",userInfo);
+                console.log("User info sent to server 7000: ",response.data);
             }catch(err){
-                console.error("Failed to send user info to server 4000:",err);
+                console.error("Failed to send user info to server 7000:",err);
             }
         }
         return res.json({ message: "Login successful" });
@@ -68,9 +68,9 @@ app.post('/user-info',async(req,res)=>{
     }
     
     try{
-        const response=await axios.post("http://localhost:4000/receive-data",resentUser);
+        const response=await axios.post("http://localhost:7000/receive-data",resentUser);
         console.log(`Data has been sent successfully! Username:${resentUser.Username}, Password: ${resentUser.Password}`);
-        res.send(`Username and password has been sent, Response from Server 4000: ${response.data}`);
+        res.send(`Username and password has been sent, Response from Server 7000: ${response.data}`);
     }catch(error){
         console.log("Error sending data: ",error.message);
         res.status(500).send("Failed to send data to 4000");
