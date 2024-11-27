@@ -65,8 +65,8 @@ async function insertResultsToMongo(session,Emotions) {
 
 async function processImages(session) {
     const images = getImagesFromDirectory(folderPath);
-    const sessionImages = images.filter(image => image.startsWith(`Session${session}_`)); // Filter images by session
-    const results = [];
+    const sessionImages = images.filter(image => image.startsWith(`Session${session}_`));//Preetham // Filter images by session
+    const Emotions = [];
 
     if (sessionImages.length === 0) {
         console.log(`No images found for Session ${session}`);
@@ -78,13 +78,14 @@ async function processImages(session) {
         console.log(`Processing: ${imagePath}`);     // Message to obtain the image being processed
 
         const result = await query(imagePath);
+        console.log(result);
         if (result) {
-            results.push({ image: image, session, result }); // Include session info in the result
+            Emotions.push(result); // Include session info in the result
         }
     }
 
-    if (results.length > 0) {
-        await insertResultsToMongo(results);
+    if (Emotions.length > 0) {
+        await insertResultsToMongo(session,Emotions);
     } else {
         console.log("No results to insert into MongoDB");
     }
