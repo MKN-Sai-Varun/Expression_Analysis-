@@ -240,7 +240,7 @@ const updateStatus = async (status,sessionCounter) => {
   }
 };
 // Routes for `app2` (Stores screenshots in the screenshots folder)
-app.post('/screenshots', async (req, res) => {
+app2.post('/screenshots', async (req, res) => {
   const screenshotData = req.body.screenshot;
   if (!screenshotData) {
     console.log("Didn't receive the screenshots");
@@ -277,56 +277,92 @@ app.post('/screenshots', async (req, res) => {
   });
 });
 
-app2.post('/end-session', async (req, res) => { // Screenshots path
+app2.post('/receive-data',async(req,res)=>{/////////////////////////
+  const {Username:username,Password:password}=req.body;
+  console.log('Received data from Server 5000:', { username, password });
+  res.send('Data received successfully!');
+  resentUser={Username:username,Password:password};
+
+});
+
+app2.post('/end-session', async (req, res) => {//screenshots path
   let counterValue;
   try {
     counterValue = await getCurrentCounterValue();
     if (counterValue === null) {
+      console.log("Counter not intialized");
       return res.status(500).json({ error: 'Counter not initialized' });
     }
-    await saveSessionData(sessionImagePaths, counterValue, 'Screenshot_path');
-
-    // Clear session data
-    sessionImagePaths = [];
-    screenshotCount = 0;
-
-    res.status(200).json({ message: 'Screenshots saved to MongoDB' });
   } catch (error) {
-    console.error('Error saving session screenshots:', error);
-    res.status(500).json({ error: error.message });
+    console.error('Error accessing counter:', error);
+    return res.status(500).json({ error: 'Failed to access counter' });
+  }
+
+  const client = new MongoClient(mongoUri);
+  try {
+    await client.connect();
+    const database = client.db('test');
+    const collection = database.collection('datas');
+
+    // Check if a document already exists for the current session
+    const existingDocument = await collection.findOne({ session: counterValue });
+    if (existingDocument) {
+      console.log('Document for this session already exists. Skipping insertion.');
+      return res.status(200).json({ message: 'Session already recorded in MongoDB' });
+    }
+
+    if (sessionImagePaths.length > 0) {
+      await insertImagePaths(sessionImagePaths, counterValue);
+      await updateStatus('data_inserted',counterValue);
+      sessionImagePaths = [];
+      screenshotCount = 0;
+      console.log('Session images successfully saved to MongoDB and cleared from memory.');
+      res.status(200).json({ message: 'Session images saved to MongoDB' });
+    } else {
+      console.log('No images to save. Skipping MongoDB insertion.');
+      res.status(400).json({ error: 'No images found for session.' });
+    }
+  } catch (error) {
+    console.error('Error during session save:', error);
+    res.status(500).json({ error: 'Failed to save session' });
+  } finally {
+    await client.close();
+    console.log("MongoDB client connection closed.");
   }
 });
 
 // Function logic to insert relative paths of both screenshots and images
-async function insertImagePaths(pathsArray, sessionCounter) {//image paths-------------------<
+async function insertImagePaths(pathsArray, sessionCounter) {//screenshots path
   const client = new MongoClient(mongoUri);
   console.log("Inserting paths into MongoDB. Paths:", pathsArray);
   try {
     await client.connect();
     console.log("Connected to MongoDB client for direct insertion.");
+
     const database = client.db('test');
     const collection = database.collection('datas');
-    const status = await checkStatus(sessionCounter);
-    if(status=="data_inserted"){
-      const result=await collection.updateOne({Session_Id:sessionCounter},{$set:{Player_images:pathsArray}});
-      if(result.acknowledged){
-        console.log(`Update acknowledged: ${result.acknowledged}`);
-        if(result.modifiedCount){
-          console.log(`Document was updated. Modified count: ${result.modifiedCount}`)
-        }
-        else{
-          console.log('No documents were updated (perhaps the data was the same).');
-        }
-      }else{
-        console.log("Update was not acknowledged");
-      }
+    if(!resentUser){
+      console.log("Either not logged in or user data not received")
     }
-    
-     } catch (error) {
+    else{
+      let date=new Date();
+      date.setHours(0,0,0,0);
+      date.setMinutes(date.getMinutes()+10);
+      let TimeStamps=[]
+      for(let i=0;i<pathsArray.length;i++){
+          let TimeString=date.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+          TimeStamps.push(TimeString);
+          date.setMinutes(date.getMinutes()+10);
+      }
+      const result=await collection.insertOne({Username:resentUser.Username,Password:resentUser.Password,Session_Id:sessionCounter,Time_stamps:TimeStamps,Game_screenshots:pathsArray});
+      console.log("Data has been inserted Successfully",result.insertedId);
+    }
+    // const result= await collection.updateOne({session:sessionCounter},{$set:{Screenshot_path:pathsArray}},{upsert:true});
+  } catch (error) {
     console.error('Error inserting document:', error);
   } finally {
     await client.close();
-    console.log("MongoDB client connection closed.");
+    console.log("MongoDB client connection closed."); 
   }
 }
 // Function to determine Screenshot_path or Images_path in MongoDB document
