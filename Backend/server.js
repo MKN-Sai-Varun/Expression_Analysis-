@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { processImages } from './Model.mjs';
 import { MongoClient } from 'mongodb';
+import { getSystemErrorMap } from 'util';
 
 dotenv.config();
 
@@ -23,9 +24,12 @@ const corsOptions = {
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
 };
+let resentUser=null;
 
 app1.use(cors(corsOptions));
 app1.use(express.json({ limit: '50mb' }));
+
+
 
 app2.use(cors(corsOptions));
 app2.use(express.json({ limit: '50mb' }));
