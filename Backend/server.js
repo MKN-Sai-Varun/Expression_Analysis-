@@ -147,14 +147,18 @@ app1.post('/uploads', async (req, res) => {
 
   const filename = `Session${counterValue}_Image${imageCount}.png`;
   const filepath = path.join(uploadDir, filename);
-
-  fs.writeFile(filepath, base64Image.replace(/^data:image\/png;base64,/, ""), 'base64', async (err) => {
+  const base64Data = base64Image.replace(/^data:image\/png;base64,/, "");
+  fs.writeFile(filepath, base64Data, 'base64', async (err) => {
     if (err) {
       console.error('Error saving image:', err);
       return res.status(500).json({ error: 'Failed to save image' });
     }
-    const relativePath = `./Backend/uploads/${filename}`;
+    // Generate a relative path for MongoDB storage ../../../Backend/uploads/
+    const relativePath = `http://localhost:7000/pi/${filename}`;
     imagePaths.push(relativePath);
+
+    console.log(`User image saved as ${filename}, added to session paths.`);
+
     res.status(200).json({ message: 'User Image uploaded successfully', filename });
   });
 });
