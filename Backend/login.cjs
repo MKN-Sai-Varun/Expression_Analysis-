@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs'); // Imported all necessary modules
 const dotenv = require('dotenv');
 const cors = require('cors');
-
+const axios=require('axios');
 // Configure dotenv to access environment variables
 dotenv.config();
 
@@ -15,7 +15,7 @@ const PORT = 5000
 // Middleware setup
 app.use(cors());
 app.use(bodyParser.json());
-
+let userInfo=null;
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI2, {
     useNewUrlParser: true,
