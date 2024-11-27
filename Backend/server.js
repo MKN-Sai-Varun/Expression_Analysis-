@@ -164,26 +164,52 @@ app1.post('/uploads', async (req, res) => {
 });
 
 // Saving image paths after session is completed
-app1.post('/end-session1', async (req, res) => { 
+app1.post('/end-session1', async (req, res) => {
   let counterValue;
   try {
     counterValue = await getCurrentCounterValue();
     if (counterValue === null) {
       return res.status(500).json({ error: 'Counter not initialized' });
     }
-    await saveSessionData(imagePaths, counterValue, 'Images_path');
-
-    // Clear session data
-    imagePaths = [];
-    imageCount = 0;
-
-    res.status(200).json({ message: 'Images saved to MongoDB' });
   } catch (error) {
-    console.error('Error saving session images:', error);
-    res.status(500).json({ error: error.message });
+    console.error('Error accessing counter:', error);
+    return res.status(500).json({ error: 'Failed to access counter' });
+  }
+
+  // Wait for the main server to insert the data
+  const isDataReady = await waitForData(counterValue);
+  
+  if (!isDataReady) {
+    return res.status(400).json({ error: 'Data not ready to process yet' });
+  }
+
+  const client = new MongoClient(mongoUri);
+  try {
+    await client.connect();
+    const database = client.db('test');
+    const collection = database.collection('datas');
+
+    // Check if a document already exists for the current session
+    const existingDocument = await collection.findOne({ Session_Id: counterValue });
+    
+    if (imagePaths.length > 0) {
+      await insertImagePaths(imagePaths, counterValue);
+      imagePaths = [];
+      imageCount = 0;
+      console.log('Session images successfully saved to MongoDB and cleared from memory.');
+      res.status(200).json({ message: 'Session images saved to MongoDB' });
+    } else {
+      console.log('No images to save. Skipping MongoDB insertion.');
+      res.status(400).json({ error: 'No images found for session.' });
+    }
+  } catch (error) {
+    console.error('Error during session save:', error);
+    res.status(500).json({ error: 'Failed to save session' });
+  } finally {
+    await client.close();
+    console.log("MongoDB client connection closed.");
   }
 });
-
 const screenshotDir = path.join(process.cwd(), 'screenshots');
 if (!fs.existsSync(screenshotDir)) fs.mkdirSync(screenshotDir, { recursive: true });
 
