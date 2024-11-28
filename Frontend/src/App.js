@@ -7,6 +7,7 @@ import Webcam from 'webcamjs';
 import Navbar from './navbar.js';
 import Game from './game.js'; // Import the Game component
 import html2canvas from 'html2canvas';
+import Register from './Register'; // Import the Register component
 function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -43,6 +44,23 @@ function App() {
       }
     }
   };
+
+  // Add a function to handle the Register button click
+  const handleRegisterClick = () => {
+    setCurrentPage('register');
+  };
+  // In App.js
+
+const handleRegisterSuccess = () => {
+  setCurrentPage('login');  // Switch to login after successful registration
+};
+
+// Inside the return block
+{currentPage === 'register' && (
+  <Register setCurrentPage={setCurrentPage} />  // Pass the function to Register component
+)}
+
+
   // Storing relative paths of screenshots
   const storingScreenshotsPaths = () => {
     console.log("End session of screenshots called.");
@@ -282,12 +300,15 @@ function App() {
               {error && <p style={{ color: 'red' }}>{error}</p>}
               <div className="register">
                 {/* <p>Don't have an account? <a href='/register'>Register</a></p> */}
-                <p>Don't have an account?  <button id='registerid'>Register</button></p>
+                <p>Don't have an account?  <button id='registerid' onClick={handleRegisterClick}>Register</button></p>
               </div>
             </form>
           </div>
         </div>
       )}
+      {currentPage === 'register' && (
+        < Register setCurrentPage={setCurrentPage} />  // Pass the function to Register component
+    )}
 
       {currentPage === 'play' && (
         <div id="playPage">
