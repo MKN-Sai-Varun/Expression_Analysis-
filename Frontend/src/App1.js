@@ -43,45 +43,6 @@ function App() {
       }
     }
   };
-  // Storing relative paths of screenshots
-  const storingScreenshotsPaths = () => {
-    console.log("End session of screenshots called.");
-    fetch('http://localhost:7000/end-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message) {
-          console.log(data.message); // Expected success message from the server
-        } else if (data.error) {
-          console.error("Error:", data.error); // Error message from the server if something went wrong
-        }
-      })
-      .catch((error) => console.error('Request failed:', error));
-  };
-// Storing relative paths of images
-  const storingImagePaths = () => {
-    console.log("End session of uploads called.");
-    fetch('http://localhost:7000/end-session1', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message) {
-          console.log(data.message); // Expected success message from the server
-        } else if (data.error) {
-          console.error("Error:", data.error); // Error message from the server if something went wrong
-        }
-      })
-      .catch((error) => console.error('Request failed:', error));
-  };
-// Increment counter and send updated count to the server
 
   const handleCounter = async () => {
     const newCounterValue = counter + 1;
@@ -95,38 +56,16 @@ function App() {
     }
   };
 
-  const handlePlayButtonClick = async () => {
+  const handlePlayButtonClick = () => {
     setIsGameOver(false); // Reset game over state
     setCounter(0); // Reset counter
     handleCounter(); // Update counter
     setCurrentPage('game'); // Move to the game page
-
-    // Start the camera only if it hasn't been started yet
+    startCamera();
     if (!webcamAttached.current) {
-        startCamera();
-        webcamAttached.current = true; // Mark the webcam as attached
+      startCamera(); // Start the camera only when the Play button is clicked
     }
-
-    // Send a POST request to reset a server-side variable
-    try {
-        const response = await fetch('http://localhost:7000/reset-variable', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (response.ok) {
-            alert('Variable reset successfully!');
-        } else {
-            alert('Failed to reset variable.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error connecting to the server.');
-    }
-};
-
+  };
 
   const captureImage = () => {
     console.log("Capturing Image...");
@@ -160,9 +99,8 @@ function App() {
     setIsGameOver(false); // Reset the game over state
     setCounter(0); // Reset the counter
     handleCounter(); // Optionally update the counter if needed
-    storingScreenshotsPaths();
-    storingImagePaths();
     setCurrentPage('play'); // Move to the play page (instead of 'game')
+
     // Stop and reset the webcam
     stopImageCapture(); // Stop image capture if any ongoing
     Webcam.reset(); // Reset the webcam to avoid conflicts
@@ -281,8 +219,7 @@ function App() {
               </div>
               {error && <p style={{ color: 'red' }}>{error}</p>}
               <div className="register">
-                {/* <p>Don't have an account? <a href='/register'>Register</a></p> */}
-                <p>Don't have an account?  <button id='registerid'>Register</button></p>
+                <p>Don't have an account? <a href='/register'>Register</a></p>
               </div>
             </form>
           </div>

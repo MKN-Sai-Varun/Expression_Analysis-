@@ -13,7 +13,12 @@ dotenv.config();
 const PORT = 7000; // Port on which the server is run
 const mongoUri = process.env.MONGO_URI;
 const mongoUri1 = process.env.MONGO_URI1;
-
+app1.post('/reset-variable', (req, res) => {
+  screenshotCount = 0;
+  imageCount = 0; // Reset the variable
+  console.log('Variable reset to 0');
+  res.status(200).send({ message: 'Variable has been reset.' });
+});
 // Create two separate Express app instances
 const app1 = express();
 const app2 = express();
