@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styleRegister.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form id="registrationForm">
+            <div id="user" class="form-group">
+                <label for="username">Name</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div id="password1" class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div id="checkbox" class="form-group">
+                <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                <label for="agreeTerms">I agree to the terms and conditions</label>
+            </div>
+            <div id="submit" class="form-group">
+                <input type="submit" value="Register Now">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+
+            // Log the values before sending the request
+            console.log("Sending username:", username);
+            console.log("Sending password:", password);
+            console.log("Terms agreed:", agreeTerms);
+
+            if (!agreeTerms) {
+                alert('You must agree to the terms and conditions to register.');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })  // Ensure this is sent as JSON
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert(result.message || 'User registered successfully!');
+                } else {
+                    alert(result.message || 'Registration failed');
+                }
+            } catch (error) {
+                console.error('Network error during registration:', error);
+                alert('There was an error with the registration process.');
+            }
+        });
+    </script>
+</body>
+</html>
