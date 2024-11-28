@@ -403,7 +403,10 @@ app1.post('/reset-variable', (req, res) => {
   console.log('Variable reset to 0');
   res.status(200).send({ message: 'Variable has been reset.' });
 });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3a2a2725c9932820d7f5cc29bea536eccdacbebd
 // Combine `app1` and `app2` under the same server
 const mainApp = express();
 mainApp.use(app1);
