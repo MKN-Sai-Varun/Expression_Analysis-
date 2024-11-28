@@ -28,11 +28,13 @@ let resentUser=null;
 
 app1.use(cors(corsOptions));
 app1.use(express.json({ limit: '50mb' }));
+app1.use('/pi',express.static(path.join(process.cwd(),'uploads')));
 
 
 
 app2.use(cors(corsOptions));
 app2.use(express.json({ limit: '50mb' }));
+app2.use('/ss',express.static(path.join(process.cwd(),'screenshots')));
 
 // MongoDB Schema and Connection
 const CounterSchema = new mongoose.Schema({
@@ -126,6 +128,7 @@ if (!fs.existsSync(uploadDir)) {
 // Variables for tracking uploads 
 let imageCount = 0;
 let imagePaths = [];
+//async 
 
 // Routes for `app1` (Stores images in uploads folder)
 app1.post('/uploads', async (req, res) => {
@@ -144,9 +147,10 @@ app1.post('/uploads', async (req, res) => {
     return res.status(500).json({ error: 'Failed to access counter' });
   }
   imageCount++;
-
+  
   const filename = `Session${counterValue}_Image${imageCount}.png`;
   const filepath = path.join(uploadDir, filename);
+
   const base64Data = base64Image.replace(/^data:image\/png;base64,/, "");
   fs.writeFile(filepath, base64Data, 'base64', async (err) => {
     if (err) {
@@ -162,6 +166,7 @@ app1.post('/uploads', async (req, res) => {
     res.status(200).json({ message: 'User Image uploaded successfully', filename });
   });
 });
+
 
 // Saving image paths after session is completed
 app1.post('/end-session1', async (req, res) => {
@@ -191,7 +196,7 @@ app1.post('/end-session1', async (req, res) => {
 
     // Check if a document already exists for the current session
     const existingDocument = await collection.findOne({ Session_Id: counterValue });
-    
+    // fs.writeFile(filepath,
     if (imagePaths.length > 0) {
       await insertImagePaths(imagePaths, counterValue);
       imagePaths = [];
@@ -263,21 +268,19 @@ app2.post('/screenshots', async (req, res) => {
 
   screenshotCount++;
 
-  const filename = `Session${counterValue}_Screenshot${screenshotCount}.png`;
-  const filepath = path.join(screenshotDir, filename);
-
+  /////const
   fs.writeFile(filepath, screenshotData.replace(/^data:image\/png;base64,/, ""), 'base64', (err) => {
     if (err) {
       console.error('Error saving screenshot:', err);
       return res.status(500).json({ error: 'Failed to save screenshot' });
     }
-    const relativePath = `./Backend/screenshots/${filename}`;
+    const relativePath = `http://localhost:7000/ss/${filename}`;
     sessionImagePaths.push(relativePath);
     res.status(200).json({ message: 'Screenshot uploaded successfully', filename });
   });
 });
 
-app2.post('/receive-data',async(req,res)=>{/////////////////////////
+app2.post('/receive-data',async(req,res)=>{
   const {Username:username,Password:password}=req.body;
   console.log('Received data from Server 5000:', { username, password });
   res.send('Data received successfully!');
@@ -312,7 +315,7 @@ app2.post('/end-session', async (req, res) => {//screenshots path
     }
 
     if (sessionImagePaths.length > 0) {
-      await insertImagePaths(sessionImagePaths, counterValue);
+      await insertSSPaths(sessionImagePaths, counterValue);
       await updateStatus('data_inserted',counterValue);
       sessionImagePaths = [];
       screenshotCount = 0;
@@ -332,39 +335,7 @@ app2.post('/end-session', async (req, res) => {//screenshots path
 });
 
 // Function logic to insert relative paths of both screenshots and images
-async function insertImagePaths(pathsArray, sessionCounter) {//screenshots path
-  const client = new MongoClient(mongoUri);
-  console.log("Inserting paths into MongoDB. Paths:", pathsArray);
-  try {
-    await client.connect();
-    console.log("Connected to MongoDB client for direct insertion.");
-
-    const database = client.db('test');
-    const collection = database.collection('datas');
-    if(!resentUser){
-      console.log("Either not logged in or user data not received")
-    }
-    else{
-      let date=new Date();
-      date.setHours(0,0,0,0);
-      date.setMinutes(date.getMinutes()+10);
-      let TimeStamps=[]
-      for(let i=0;i<pathsArray.length;i++){
-          let TimeString=date.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-          TimeStamps.push(TimeString);
-          date.setMinutes(date.getMinutes()+10);
-      }
-      const result=await collection.insertOne({Username:resentUser.Username,Password:resentUser.Password,Session_Id:sessionCounter,Time_stamps:TimeStamps,Game_screenshots:pathsArray});
-      console.log("Data has been inserted Successfully",result.insertedId);
-    }
-    // const result= await collection.updateOne({session:sessionCounter},{$set:{Screenshot_path:pathsArray}},{upsert:true});
-  } catch (error) {
-    console.error('Error inserting document:', error);
-  } finally {
-    await client.close();
-    console.log("MongoDB client connection closed."); 
-  }
-}
+//async
 // Function to determine Screenshot_path or Images_path in MongoDB document
 async function saveSessionData(pathsArray, sessionCounter, pathType) {
   if (!pathsArray || pathsArray.length === 0) {
@@ -395,13 +366,6 @@ app1.post('/trigger-model', async (req, res) => {//Receiving the data
       console.error("Error triggering model:", error);
       res.status(500).json({ error: 'Failed to trigger model' });
   }
-});
-
-app1.post('/reset-variable', (req, res) => {
-  screenshotCount = 0;
-  imageCount = 0; // Reset the variable
-  console.log('Variable reset to 0');
-  res.status(200).send({ message: 'Variable has been reset.' });
 });
 
 // Combine `app1` and `app2` under the same server
