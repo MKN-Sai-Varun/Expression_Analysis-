@@ -1,140 +1,127 @@
-/* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-/* Body Styling */
-body {
+/* Main container for the registration form */
+.register-page-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #4b4bcb;
-}
-
-/* Container Styling */
-.container {
-    background: #fff;
-    padding: 20px 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
+    background-color: #f4f4f4;
+  }
+  
+  /* The container that holds the form */
+  .register-form-container {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 30px;
     width: 100%;
-}
-
-h2 {
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Title for the form */
+  .register-form-title {
+    font-size: 26px;
+    color: #333;
     text-align: center;
     margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
-
-/* Form Group Styling */
-.form-group {
+  }
+  
+  /* Form group styles */
+  .register-form-group {
     margin-bottom: 20px;
-}
-
-label {
-    display: block;
+  }
+  
+  /* Labels for inputs */
+  .register-form-container label {
     font-size: 14px;
     color: #555;
-    margin-bottom: 5px;
-}
-
-input[type="text"],
-input[type="password"] {
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  /* Input fields styles */
+  .register-form-container input[type="text"],
+  .register-form-container input[type="password"],
+  .register-form-container input[type="radio"],
+  .register-form-container input[type="checkbox"] {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 12px;
+    border: 2px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
-    transition: border-color 0.3s;
-}
-
-input[type="text"]:focus,
-input[type="password"]:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* Checkbox Styling */
-#checkbox {
-    display: flex;
-    flex-direction: column;
-}
-
-#checkbox label {
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-}
-
-#checkbox input[type="checkbox"] {
+    margin-top: 8px;
+    box-sizing: border-box;
+  }
+  
+  /* Style for radio buttons specifically */
+  .register-form-container input[type="radio"] {
+    width: auto;
     margin-right: 10px;
-    width: 16px;
-    height: 16px;
-}
-
-/* Submit Button */
-#submit input[type="submit"] {
-    width: 100%;
-    padding: 10px;
+    vertical-align: middle;
+  }
+  
+  /* Submit button */
+  .register-submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
     font-size: 16px;
-    background: #007bff;
-    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 100%;
     transition: background-color 0.3s;
-}
-
-#submit input[type="submit"]:hover {
-    background: #0056b3;
-}
-
-/* Media Query for Responsive Design */
-@media (max-width: 480px) {
-    .container {
-        padding: 15px;
-    }
-
-    h2 {
-        font-size: 20px;
-    }
-
-    label {
-        font-size: 13px;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-        font-size: 13px;
-    }
-
-    #submit input[type="submit"] {
-        font-size: 14px;
-    }
-}
-/* Radio Button Styling */
-#roleSelection {
-    display: flex;
-    flex-direction: column; /* Ensures labels stack vertically */
-    gap: 10px; /* Adds space between each radio button and label */
-}
-
-#roleSelection label {
+  }
+  
+  .register-submit-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Error message */
+  .register-error-message {
+    color: red;
     font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Adds space between the radio button and text */
-}
-
-#roleSelection input[type="radio"] {
-    width: 16px;
-    height: 16px;
-    margin: 0;
-}
+    margin-top: 10px;
+  }
+  
+  /* Success message */
+  .register-success-message {
+    color: green;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  /* Role selection styles */
+  .register-role-selection {
+    text-align: left;
+    margin-top: 10px;
+  }
+  
+  .register-role-selection label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  /* Checkbox style for agreeing to terms */
+  .register-form-container input[type="checkbox"] {
+    margin-top: 10px;
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 600px) {
+    .register-form-container {
+      width: 90%;
+      padding: 20px;
+    }
+  
+    .register-form-title {
+      font-size: 24px;
+    }
+  
+    .register-submit-button {
+      font-size: 14px;
+      padding: 10px 15px;
+    }
+  }
+  
