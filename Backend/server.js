@@ -268,7 +268,10 @@ app2.post('/screenshots', async (req, res) => {
 
   screenshotCount++;
 
-  /////const
+
+  const filename = `Session${counterValue}_Screenshot${screenshotCount}.png`;
+  const filepath = path.join(screenshotDir, filename);
+
   fs.writeFile(filepath, screenshotData.replace(/^data:image\/png;base64,/, ""), 'base64', (err) => {
     if (err) {
       console.error('Error saving screenshot:', err);
