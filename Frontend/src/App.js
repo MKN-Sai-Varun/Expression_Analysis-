@@ -135,9 +135,9 @@ const handleRegisterSuccess = () => {
         });
 
         if (response.ok) {
-            alert('Variable reset successfully!');
+            console.log('Variable reset successfully!');
         } else {
-            alert('Failed to reset variable.');
+            console.log('Failed to reset variable.');
         }
     } catch (error) {
         console.error('Error:', error);
