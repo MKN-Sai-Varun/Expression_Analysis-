@@ -97,7 +97,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect(process.env.MONGO_URI1, {
+mongoose.connect(process.env.MONGO_URI2, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
@@ -105,12 +105,13 @@ mongoose.connect(process.env.MONGO_URI1, {
 .catch((err) => console.error('Could not connect to MongoDB:', err));
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    role: { type: String, required: true, enum: ['admin', 'kid'] },
 });
 
 const User = mongoose.model('User', UserSchema);
 app.post('/api/auth/register', async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password ,role} = req.body;
 
     try {
         console.log("Connecting to MongoDB...");
@@ -125,7 +126,7 @@ app.post('/api/auth/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         console.log("Creating new user...");
-        const newUser = new User({ username, password: hashedPassword });
+        const newUser = new User({ username, password: hashedPassword,role });
         await newUser.save();
 
         console.log("User registered successfully");
@@ -147,7 +148,7 @@ app.post('/api/auth/login', async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: "Invalid password" });
 
-        res.json({ message: "Login successful" });
+        res.json({ message: "Login successful", role: user.role });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server error" });
