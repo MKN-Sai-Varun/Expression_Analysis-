@@ -128,7 +128,39 @@ if (!fs.existsSync(uploadDir)) {
 // Variables for tracking uploads 
 let imageCount = 0;
 let imagePaths = [];
-//async 
+
+async function insertImagePaths(pathsArray, sessionCounter) {//image paths-------------------<
+  const client = new MongoClient(mongoUri);
+  console.log("Inserting paths into MongoDB. Paths:", pathsArray);
+  try {
+    await client.connect();
+    console.log("Connected to MongoDB client for direct insertion.");
+    const database = client.db('test');
+    const collection = database.collection('datas');
+    const status = await checkStatus(sessionCounter);
+    if(status=="data_inserted"){
+      const result=await collection.updateOne({Session_Id:sessionCounter},{$set:{Player_images:pathsArray}});
+      if(result.acknowledged){
+        console.log(`Update acknowledged: ${result.acknowledged}`);
+        if(result.modifiedCount){
+          console.log(`Document was updated. Modified count: ${result.modifiedCount}`)
+        }
+        else{
+          console.log('No documents were updated (perhaps the data was the same).');
+        }
+      }else{
+        console.log("Update was not acknowledged");
+      }
+    }
+    
+  } catch (error) {
+    console.error('Error inserting document:', error);
+  } finally {
+    await client.close();
+    console.log("MongoDB client connection closed.");
+  }
+}
+
 
 // Routes for `app1` (Stores images in uploads folder)
 app1.post('/uploads', async (req, res) => {
