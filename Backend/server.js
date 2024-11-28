@@ -128,7 +128,6 @@ if (!fs.existsSync(uploadDir)) {
 // Variables for tracking uploads 
 let imageCount = 0;
 let imagePaths = [];
-
 async function insertImagePaths(pathsArray, sessionCounter) {//image paths-------------------<
   const client = new MongoClient(mongoUri);
   console.log("Inserting paths into MongoDB. Paths:", pathsArray);
@@ -160,7 +159,6 @@ async function insertImagePaths(pathsArray, sessionCounter) {//image paths------
     console.log("MongoDB client connection closed.");
   }
 }
-
 
 // Routes for `app1` (Stores images in uploads folder)
 app1.post('/uploads', async (req, res) => {
@@ -300,7 +298,6 @@ app2.post('/screenshots', async (req, res) => {
 
   screenshotCount++;
 
-
   const filename = `Session${counterValue}_Screenshot${screenshotCount}.png`;
   const filepath = path.join(screenshotDir, filename);
 
@@ -315,7 +312,7 @@ app2.post('/screenshots', async (req, res) => {
   });
 });
 
-app2.post('/receive-data',async(req,res)=>{
+app2.post('/receive-data',async(req,res)=>{/////////////////////////
   const {Username:username,Password:password}=req.body;
   console.log('Received data from Server 5000:', { username, password });
   res.send('Data received successfully!');
@@ -403,7 +400,6 @@ async function insertSSPaths(pathsArray, sessionCounter) {//screenshots path
     console.log("MongoDB client connection closed."); 
   }
 }
-
 // Function to determine Screenshot_path or Images_path in MongoDB document
 async function saveSessionData(pathsArray, sessionCounter, pathType) {
   if (!pathsArray || pathsArray.length === 0) {
