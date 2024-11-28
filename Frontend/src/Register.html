@@ -19,8 +19,12 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <div id="checkbox" class="form-group">
-                <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
-                <label for="agreeTerms">I agree to the terms and conditions</label>
+                <div id="roleSelection" class="form-group">
+                    <label><input type="radio" id="adminRadio" name="role" value="admin" required> I am an admin</label>
+                    <label><input type="radio" id="kidRadio" name="role" value="kid" required> I am a kid</label>
+                </div>
+                
+                
             </div>
             <div id="submit" class="form-group">
                 <input type="submit" value="Register Now">

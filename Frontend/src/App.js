@@ -100,7 +100,7 @@ function App() {
     setCounter(0); // Reset counter
     handleCounter(); // Update counter
     setCurrentPage('game'); // Move to the game page
-
+    startCamera();
     // Start the camera only if it hasn't been started yet
     if (!webcamAttached.current) {
         startCamera();
