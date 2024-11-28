@@ -370,7 +370,40 @@ app2.post('/end-session', async (req, res) => {//screenshots path
 });
 
 // Function logic to insert relative paths of both screenshots and images
-//async
+async function insertSSPaths(pathsArray, sessionCounter) {//screenshots path
+  const client = new MongoClient(mongoUri);
+  console.log("Inserting paths into MongoDB. Paths:", pathsArray);
+  try {
+    await client.connect();
+    console.log("Connected to MongoDB client for direct insertion.");
+
+    const database = client.db('test');
+    const collection = database.collection('datas');
+    if(!resentUser){
+      console.log("Either not logged in or user data not received")
+    }
+    else{
+      let date=new Date();
+      date.setHours(0,0,0,0);
+      date.setMinutes(date.getMinutes()+10);
+      let TimeStamps=[]
+      for(let i=0;i<pathsArray.length;i++){
+          let TimeString=date.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+          TimeStamps.push(TimeString);
+          date.setMinutes(date.getMinutes()+10);
+      }
+      const result=await collection.insertOne({Username:resentUser.Username,Password:resentUser.Password,Session_Id:sessionCounter,Time_stamps:TimeStamps,Game_screenshots:pathsArray});
+      console.log("Data has been inserted Successfully",result.insertedId);
+    }
+    // const result= await collection.updateOne({session:sessionCounter},{$set:{Screenshot_path:pathsArray}},{upsert:true});
+  } catch (error) {
+    console.error('Error inserting document:', error);
+  } finally {
+    await client.close();
+    console.log("MongoDB client connection closed."); 
+  }
+}
+
 // Function to determine Screenshot_path or Images_path in MongoDB document
 async function saveSessionData(pathsArray, sessionCounter, pathType) {
   if (!pathsArray || pathsArray.length === 0) {
