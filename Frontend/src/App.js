@@ -8,9 +8,11 @@ import Navbar from './navbar.js';
 import Game from './game.js'; // Import the Game component
 import html2canvas from 'html2canvas';
 import Register from './Register'; // Import the Register component
+import Home from '../../React(Admin & Analysis)/final/src/Home.jsx';
 function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [role,setRole]=useState('')
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState('login');
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -29,12 +31,19 @@ function App() {
     console.log("Password:", password);
     setError(''); // Clear any previous error messages
     try {
-      await axios.post('http://localhost:5000/api/auth/login', {
+      const response=await axios.post('http://localhost:5000/api/auth/login', {
         username,
         password,
       });
       console.log("Login successful!");
-      setCurrentPage('play'); // Change to play page upon successful login
+      console.log(response);
+      const userRole=response.data.role;
+      if(userRole==='kid'){
+        setCurrentPage('play');
+      }; // Change to play page upon successful login
+      if(userRole==='admin'){
+        setCurrentPage('Home');
+      };
     } catch (error) {
       console.error('Login error:', error);
       if (error.response) {
