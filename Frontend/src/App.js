@@ -8,11 +8,11 @@ import Navbar from './navbar.js';
 import Game from './game.js'; // Import the Game component
 import html2canvas from 'html2canvas';
 import Register from './Register'; // Import the Register component
-import Home from '../../React(Admin & Analysis)/final/src/Home.jsx';
+// import Home from '../../React(Admin & Analysis)/final/src/Home.jsx';
 function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [role,setRole]=useState('')
+  
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState('login');
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -41,9 +41,9 @@ function App() {
       if(userRole==='kid'){
         setCurrentPage('play');
       }; // Change to play page upon successful login
-      if(userRole==='admin'){
-        setCurrentPage('Home');
-      };
+      // if(userRole==='admin'){
+      //   setCurrentPage('Home');
+      // };
     } catch (error) {
       console.error('Login error:', error);
       if (error.response) {
