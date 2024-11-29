@@ -235,7 +235,7 @@ const handleRegisterSuccess = () => {
           sendScreenshotToServer(base64Screenshot);
         });
       } else {
-        stopImageCapture(); // Stop capturing images if game is over or time is up
+         stopImageCapture(); // Stop capturing images if game is over or time is up
       }
     }, 10000); // Capture image every 10 seconds
   };
