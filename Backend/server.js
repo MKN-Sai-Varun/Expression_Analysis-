@@ -30,7 +30,7 @@ app1.use(cors(corsOptions));
 app1.use(express.json({ limit: '50mb' }));
 app1.use('/pi',express.static(path.join(process.cwd(),'uploads')));
 
-
+//axios
 
 app2.use(cors(corsOptions));
 app2.use(express.json({ limit: '50mb' }));
