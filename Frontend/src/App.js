@@ -26,33 +26,6 @@ function App() {
     setPasswordVisible(!passwordVisible);
   };
 
-  // const handleLogin = async () => {
-  //   console.log("Username:", username);
-  //   console.log("Password:", password);
-  //   setError(''); // Clear any previous error messages
-  //   try {
-  //     const response=await axios.post('http://localhost:5000/api/auth/login', {
-  //       username,
-  //       password,
-  //     });
-  //     console.log("Login successful!");
-  //     console.log(response);
-  //     const userRole=response.data.role;
-  //     if(userRole==='kid'){
-  //       setCurrentPage('play');
-  //     }; // Change to play page upon successful login
-  //     // if(userRole==='admin'){
-  //     //   setCurrentPage('Home');
-  //     // };
-  //   } catch (error) {
-  //     console.error('Login error:', error);
-  //     if (error.response) {
-  //       setError(error.response.data.message); // Display error message from server
-  //     } else {
-  //       setError('Server error, please try again later.'); // Handle other errors
-  //     }
-  //   }
-  // };
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -67,7 +40,7 @@ function App() {
         });
 
         console.log("Login successful!");
-        console.log(response);
+        
 
         const userRole = response.data.role;
 
