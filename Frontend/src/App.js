@@ -26,33 +26,73 @@ function App() {
     setPasswordVisible(!passwordVisible);
   };
 
+  // const handleLogin = async () => {
+  //   console.log("Username:", username);
+  //   console.log("Password:", password);
+  //   setError(''); // Clear any previous error messages
+  //   try {
+  //     const response=await axios.post('http://localhost:5000/api/auth/login', {
+  //       username,
+  //       password,
+  //     });
+  //     console.log("Login successful!");
+  //     console.log(response);
+  //     const userRole=response.data.role;
+  //     if(userRole==='kid'){
+  //       setCurrentPage('play');
+  //     }; // Change to play page upon successful login
+  //     // if(userRole==='admin'){
+  //     //   setCurrentPage('Home');
+  //     // };
+  //   } catch (error) {
+  //     console.error('Login error:', error);
+  //     if (error.response) {
+  //       setError(error.response.data.message); // Display error message from server
+  //     } else {
+  //       setError('Server error, please try again later.'); // Handle other errors
+  //     }
+  //   }
+  // };
+
   const handleLogin = async () => {
     console.log("Username:", username);
     console.log("Password:", password);
     setError(''); // Clear any previous error messages
+
     try {
-      const response=await axios.post('http://localhost:5000/api/auth/login', {
-        username,
-        password,
-      });
-      console.log("Login successful!");
-      console.log(response);
-      const userRole=response.data.role;
-      if(userRole==='kid'){
-        setCurrentPage('play');
-      }; // Change to play page upon successful login
-      // if(userRole==='admin'){
-      //   setCurrentPage('Home');
-      // };
+        const response = await axios.post('http://localhost:5000/api/auth/login', {
+            username,
+            password,
+        });
+
+        console.log("Login successful!");
+        console.log(response);
+
+        const userRole = response.data.role;
+
+        // Show a welcome alert with the username
+        
+
+        // Navigate to the appropriate page based on the user role
+        if (userRole === 'kid') {
+            setCurrentPage('play');
+        } else if (userRole === 'admin') {
+            setCurrentPage('Home');
+        }
+        alert(`Welcome, ${username}! You have successfully logged in.`);
     } catch (error) {
-      console.error('Login error:', error);
-      if (error.response) {
-        setError(error.response.data.message); // Display error message from server
-      } else {
-        setError('Server error, please try again later.'); // Handle other errors
-      }
+        console.error('Login error:', error);
+        if (error.response) {
+            const errorMessage = error.response.data.message;
+            setError(errorMessage); // Update the error state to display a message
+            alert(errorMessage);    // Show an alert popup with the error message
+        } else {
+            const serverErrorMessage = 'Server error, please try again later.';
+            setError(serverErrorMessage); // Update state with a fallback message
+            alert(serverErrorMessage);    // Show an alert popup for server issues
+        }
     }
-  };
+};
 
   // Add a function to handle the Register button click
   const handleRegisterClick = () => {
