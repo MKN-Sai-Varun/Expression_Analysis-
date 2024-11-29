@@ -54,7 +54,8 @@ function App() {
   //   }
   // };
 
-  const handleLogin = async () => {
+  const handleLogin = async (event) => {
+    event.preventDefault();
     console.log("Username:", username);
     console.log("Password:", password);
     setError(''); // Clear any previous error messages
@@ -306,7 +307,7 @@ function App() {
       {currentPage === 'login' && (
         <div className="background">
           <div id="loginPage">
-            <form id="loginForm">
+            <form id="loginForm" onSubmit={handleLogin}>
               <h1>Login</h1>
               <div className="input-box">
                 <label>Username:</label>
@@ -340,7 +341,7 @@ function App() {
                 <button type="button">Forgot Password?</button>
               </div>
               <div className="submit-button">
-                <button type="button" onClick={handleLogin} className="button">Login</button>
+                <button type="submit" className="button">Login</button>
               </div>
               {error && <p style={{ color: 'red' }}>{error}</p>}
               <div className="register">
