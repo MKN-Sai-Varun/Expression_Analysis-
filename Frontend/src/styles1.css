@@ -212,7 +212,7 @@ html, body {
 .playButton button:active {
     background-color: #019a50; /* Even darker green for active state */
     transform: scale(0.95); /* Slightly shrink to simulate press */
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for pressed state */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for pressed state */
 }
 
 .images{
@@ -525,5 +525,5 @@ h1 {
 }
 .nav-item:hover{
     transform: scale(1.05);         /* Slightly increases size on hover */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3); /* Adds shadow on hover */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3); /* Adds shadow on hover */
 }
