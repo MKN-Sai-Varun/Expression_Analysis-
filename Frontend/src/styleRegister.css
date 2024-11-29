@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f4f4f4;
+    background-color: #40389b;
   }
   
   /* The container that holds the form */
@@ -123,5 +123,31 @@
       font-size: 14px;
       padding: 10px 15px;
     }
+  }
+  /* Wrapper for the password input and the icon */
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Password input styling */
+  .password-input-wrapper input {
+    width: 100%;
+    padding-right: 40px; /* Add padding to make room for the icon */
+    box-sizing: border-box;
+  }
+  
+  /* Eye icon styling */
+  .eye-icon {
+    position: absolute;
+    right: 10px; /* Adjust distance from the right edge */
+    cursor: pointer;
+    color: #555; /* Default icon color */
+    font-size: 18px; /* Adjust size if needed */
+  }
+  
+  .eye-icon:hover {
+    color: #000; /* Optional: Change color on hover */
   }
   
