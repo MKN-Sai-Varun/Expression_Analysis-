@@ -60,10 +60,6 @@ function App() {
   };
   // In App.js
 
-const handleRegisterSuccess = () => {
-  setCurrentPage('login');  // Switch to login after successful registration
-};
-
 // Inside the return block
 {currentPage === 'register' && (
   <Register setCurrentPage={setCurrentPage} />  // Pass the function to Register component

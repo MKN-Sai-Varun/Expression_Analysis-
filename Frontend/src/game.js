@@ -16,45 +16,6 @@ function Game({ onExit }) { // Accept onExit as a prop
   const captureInterval = useRef(null);
   const screenshotInterval = useRef(null);
   const timerRef = useRef(null);
-  const endSession = () => {
-    console.log("End session of screenshots called.");
-    fetch('http://localhost:7000/end-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message) {
-          console.log(data.message); // Expected success message from the server
-        } else if (data.error) {
-          console.error("Error:", data.error); // Error message from the server if something went wrong
-        }
-      })
-      .catch((error) => console.error('Request failed:', error));
-  };
-
-  const endSession1 = () => {
-    console.log("End session of uploads called.");
-    fetch('http://localhost:7000/end-session1', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message) {
-          console.log(data.message); // Expected success message from the server
-        } else if (data.error) {
-          console.error("Error:", data.error); // Error message from the server if something went wrong
-        }
-      })
-      .catch((error) => console.error('Request failed:', error));
-  };
-
-
   const correctAnswers = {
     question1: 'p',
     question2: 'Lion',
@@ -119,8 +80,6 @@ function Game({ onExit }) { // Accept onExit as a prop
   const handleExitClick = () => {
     stopConfetti();
     setScore(0);
-    endSession();
-    endSession1();
     if (onExit) onExit(); // Call the onExit prop function
   };
 
@@ -290,7 +249,7 @@ function Game({ onExit }) { // Accept onExit as a prop
             </div>
           </div>
           <button className="submit" type="button" onClick={submitted ? handleNext : handleSubmit}>
-            {submitted ? 'Next' : 'Submit'}
+            {submitted ? 'Exit' : 'Submit'}
           </button>
         </div>
       )}
