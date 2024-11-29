@@ -138,7 +138,7 @@ app.post('/api/auth/register', async (req, res) => {
 });
 app.post('/api/auth/login', async (req, res) => {
     const { username, password } = req.body;
-
+    console.log("Data received on server 5000",username,password);
     try {
         // Check if the user exists
         const user = await User.findOne({ username });
@@ -147,7 +147,15 @@ app.post('/api/auth/login', async (req, res) => {
         // Compare the password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: "Invalid password" });
-
+        if(isMatch){
+            userInfo={Username:username,Password:password};
+            try{
+                const response=await axios.post("http://localhost:7000/receive-data",userInfo);
+                console.log("User info sent to server 7000: ",response.data);
+            }catch(err){
+                console.error("Failed to send user info to server 7000:",err);
+            }
+        }
         res.json({ message: "Login successful", role: user.role });
     } catch (error) {
         console.error(error);
