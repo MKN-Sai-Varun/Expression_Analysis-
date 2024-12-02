@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import '../styles1.css';
+import './styleGame.css';
 import image from '../Assets/images.js';
 import { triggerConfetti, stopConfetti } from '../Components/Confetti.js';
 import Webcam from 'webcamjs';
