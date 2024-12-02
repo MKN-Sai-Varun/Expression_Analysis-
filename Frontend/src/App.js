@@ -38,15 +38,8 @@ function App() {
             username,
             password,
         });
-
         console.log("Login successful!");
-        
-
         const userRole = response.data.role;
-
-        // Show a welcome alert with the username
-        
-
         // Navigate to the appropriate page based on the user role
         if (userRole === 'kid') {
             setCurrentPage('play');
@@ -72,7 +65,7 @@ function App() {
   const handleRegisterClick = () => {
     setCurrentPage('register');
   };
-  // In App.js
+  
 
 // Inside the return block
 {currentPage === 'register' && (
@@ -123,7 +116,6 @@ function App() {
   const handleCounter = async () => {
     const newCounterValue = counter + 1;
     setCounter(newCounterValue);
-
     try {
       await axios.post('http://localhost:7000/update-counter', { value: newCounterValue });
       console.log(`Counter updated to ${newCounterValue}`);
@@ -131,7 +123,6 @@ function App() {
       console.error("Error updating counter:", error);
     }
   };
-
   const handlePlayButtonClick = async () => {
     setIsGameOver(false); // Reset game over state
     setCounter(0); // Reset counter
@@ -143,7 +134,6 @@ function App() {
         startCamera();
         webcamAttached.current = true; // Mark the webcam as attached
     }
-
     // Send a POST request to reset a server-side variable
     try {
         const response = await fetch('http://localhost:7000/reset-variable', {
@@ -163,7 +153,6 @@ function App() {
         alert('Error connecting to the server.');
     }
 };
-
 
   const captureImage = () => {
     console.log("Capturing Image...");
@@ -191,7 +180,6 @@ function App() {
       clearInterval(captureInterval.current);
     }
   };
-
 
   const handleExitGame = () => {
     setIsGameOver(false); // Reset the game over state
@@ -269,12 +257,6 @@ function App() {
       console.error('Error uploading screenshot:', error.response ? error.response.data : error.message);
     }
   };
-  // useEffect(() => {
-  //   if (currentPage === 'play' && !webcamAttached.current) {
-  //     startCamera(); // Start the camera when transitioning to the 'play' page
-  //   }
-  // }, [currentPage]); // Trigger this effect whenever currentPage changes
-
   return (
     <>
       {currentPage === 'login' && (

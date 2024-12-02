@@ -30,8 +30,6 @@ app1.use(cors(corsOptions));
 app1.use(express.json({ limit: '50mb' }));
 app1.use('/pi',express.static(path.join(process.cwd(),'uploads')));
 
-//axios
-
 app2.use(cors(corsOptions));
 app2.use(express.json({ limit: '50mb' }));
 app2.use('/ss',express.static(path.join(process.cwd(),'screenshots')));
@@ -128,7 +126,9 @@ if (!fs.existsSync(uploadDir)) {
 // Variables for tracking uploads 
 let imageCount = 0;
 let imagePaths = [];
-async function insertImagePaths(pathsArray, sessionCounter) {//image paths-------------------<
+
+// Function to insert relative paths of images
+async function insertImagePaths(pathsArray, sessionCounter) {
   const client = new MongoClient(mongoUri);
   console.log("Inserting paths into MongoDB. Paths:", pathsArray);
   try {
@@ -151,7 +151,6 @@ async function insertImagePaths(pathsArray, sessionCounter) {//image paths------
         console.log("Update was not acknowledged");
       }
     }
-    
   } catch (error) {
     console.error('Error inserting document:', error);
   } finally {
@@ -226,7 +225,6 @@ app1.post('/end-session1', async (req, res) => {
 
     // Check if a document already exists for the current session
     const existingDocument = await collection.findOne({ Session_Id: counterValue });
-    // fs.writeFile(filepath,
     if (imagePaths.length > 0) {
       await insertImagePaths(imagePaths, counterValue);
       imagePaths = [];
@@ -249,10 +247,9 @@ app1.post('/end-session1', async (req, res) => {
 const screenshotDir = path.join(process.cwd(), 'screenshots');
 if (!fs.existsSync(screenshotDir)) fs.mkdirSync(screenshotDir, { recursive: true });
 
-//Variables for tracking uploads
+//Variables for tracking screenshots
 let screenshotCount = 0;
 let sessionImagePaths = [];
-
 
 const updateStatus = async (status,sessionCounter) => {
   const client = new MongoClient(mongoUri);
@@ -312,7 +309,7 @@ app2.post('/screenshots', async (req, res) => {
   });
 });
 
-app2.post('/receive-data',async(req,res)=>{/////////////////////////
+app2.post('/receive-data',async(req,res)=>{
   const {Username:username,Password:password}=req.body;
   console.log('Received data from Server 5000:', { username, password });
   res.send('Data received successfully!');
@@ -320,7 +317,7 @@ app2.post('/receive-data',async(req,res)=>{/////////////////////////
 
 });
 
-app2.post('/end-session', async (req, res) => {//screenshots path
+app2.post('/end-session', async (req, res) => {
   let counterValue;
   try {
     counterValue = await getCurrentCounterValue();
@@ -414,7 +411,7 @@ async function saveSessionData(pathsArray, sessionCounter, pathType) {
 }
 
 // Route to trigger model processing 
-app1.post('/trigger-model', async (req, res) => {//Receiving the data
+app1.post('/trigger-model', async (req, res) => {
   try {
       // const currentSession = await getCurrentCounterValue(); // Retrieve current session value
       const {Session_Id}=req.body;
