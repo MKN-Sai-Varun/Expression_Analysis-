@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ana from '../Assets/analysisIcon.png';
 import game from '../Assets/gameIcon.png';
+import './styleNavbar.css'
 
 function Navbar() {
     const [isNavbarOpen, setIsNavbarOpen] = useState(false); // State to control navbar visibility
