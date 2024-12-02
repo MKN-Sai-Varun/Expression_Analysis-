@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import './styles1.css';
+import '../styles1.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Webcam from 'webcamjs';
-import Navbar from './navbar.js';
-import Game from './game.js'; // Import the Game component
+import Navbar from '../Componenets/navbar.js';
+import Game from '../Componenets/game.js'; // Import the Game component
 import html2canvas from 'html2canvas';
+import Register from '../Componenets/Register.js'; // Import the Register component
+// import Home from '../../React(Admin & Analysis)/final/src/Home.jsx';
 function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [role,setRole]=useState('')
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState('login');
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -23,31 +26,96 @@ function App() {
     setPasswordVisible(!passwordVisible);
   };
 
-  const handleLogin = async () => {
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
     console.log("Username:", username);
     console.log("Password:", password);
     setError(''); // Clear any previous error messages
+
     try {
-      await axios.post('http://localhost:5000/api/auth/login', {
-        username,
-        password,
-      });
-      console.log("Login successful!");
-      setCurrentPage('play'); // Change to play page upon successful login
+        const response = await axios.post('http://localhost:5000/api/auth/login', {
+            username,
+            password,
+        });
+        console.log("Login successful!");
+        const userRole = response.data.role;
+        // Navigate to the appropriate page based on the user role
+        if (userRole === 'kid') {
+            setCurrentPage('play');
+        } else if (userRole === 'admin') {
+            setCurrentPage('Home');
+        }
+        alert(`Welcome, ${username}! You have successfully logged in.`);
     } catch (error) {
-      console.error('Login error:', error);
-      if (error.response) {
-        setError(error.response.data.message); // Display error message from server
-      } else {
-        setError('Server error, please try again later.'); // Handle other errors
-      }
+        console.error('Login error:', error);
+        if (error.response) {
+            const errorMessage = error.response.data.message;
+            setError(errorMessage); // Update the error state to display a message
+            alert(errorMessage);    // Show an alert popup with the error message
+        } else {
+            const serverErrorMessage = 'Server error, please try again later.';
+            setError(serverErrorMessage); // Update state with a fallback message
+            alert(serverErrorMessage);    // Show an alert popup for server issues
+        }
     }
+};
+
+  // Add a function to handle the Register button click
+  const handleRegisterClick = () => {
+    setCurrentPage('register');
   };
+  
+
+// Inside the return block
+{currentPage === 'register' && (
+  <Register setCurrentPage={setCurrentPage} />  // Pass the function to Register component
+)}
+
+
+  // Storing relative paths of screenshots
+  const storingScreenshotsPaths = () => {
+    console.log("End session of screenshots called.");
+    fetch('http://localhost:7000/end-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          console.log(data.message); // Expected success message from the server
+        } else if (data.error) {
+          console.error("Error:", data.error); // Error message from the server if something went wrong
+        }
+      })
+      .catch((error) => console.error('Request failed:', error));
+  };
+// Storing relative paths of images
+  const storingImagePaths = () => {
+    console.log("End session of uploads called.");
+    fetch('http://localhost:7000/end-session1', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          console.log(data.message); // Expected success message from the server
+        } else if (data.error) {
+          console.error("Error:", data.error); // Error message from the server if something went wrong
+        }
+      })
+      .catch((error) => console.error('Request failed:', error));
+  };
+// Increment counter and send updated count to the server
 
   const handleCounter = async () => {
     const newCounterValue = counter + 1;
     setCounter(newCounterValue);
-
     try {
       await axios.post('http://localhost:7000/update-counter', { value: newCounterValue });
       console.log(`Counter updated to ${newCounterValue}`);
@@ -55,17 +123,36 @@ function App() {
       console.error("Error updating counter:", error);
     }
   };
-
-  const handlePlayButtonClick = () => {
+  const handlePlayButtonClick = async () => {
     setIsGameOver(false); // Reset game over state
     setCounter(0); // Reset counter
     handleCounter(); // Update counter
     setCurrentPage('game'); // Move to the game page
     startCamera();
+    // Start the camera only if it hasn't been started yet
     if (!webcamAttached.current) {
-      startCamera(); // Start the camera only when the Play button is clicked
+        startCamera();
+        webcamAttached.current = true; // Mark the webcam as attached
     }
-  };
+    // Send a POST request to reset a server-side variable
+    try {
+        const response = await fetch('http://localhost:7000/reset-variable', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            console.log('Variable reset successfully!');
+        } else {
+            console.log('Failed to reset variable.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error connecting to the server.');
+    }
+};
 
   const captureImage = () => {
     console.log("Capturing Image...");
@@ -94,13 +181,13 @@ function App() {
     }
   };
 
-
   const handleExitGame = () => {
     setIsGameOver(false); // Reset the game over state
     setCounter(0); // Reset the counter
     handleCounter(); // Optionally update the counter if needed
+    storingScreenshotsPaths();
+    storingImagePaths();
     setCurrentPage('play'); // Move to the play page (instead of 'game')
-
     // Stop and reset the webcam
     stopImageCapture(); // Stop image capture if any ongoing
     Webcam.reset(); // Reset the webcam to avoid conflicts
@@ -146,7 +233,7 @@ function App() {
           sendScreenshotToServer(base64Screenshot);
         });
       } else {
-        stopImageCapture(); // Stop capturing images if game is over or time is up
+         stopImageCapture(); // Stop capturing images if game is over or time is up
       }
     }, 10000); // Capture image every 10 seconds
   };
@@ -170,18 +257,12 @@ function App() {
       console.error('Error uploading screenshot:', error.response ? error.response.data : error.message);
     }
   };
-  // useEffect(() => {
-  //   if (currentPage === 'play' && !webcamAttached.current) {
-  //     startCamera(); // Start the camera when transitioning to the 'play' page
-  //   }
-  // }, [currentPage]); // Trigger this effect whenever currentPage changes
-
   return (
     <>
       {currentPage === 'login' && (
         <div className="background">
           <div id="loginPage">
-            <form id="loginForm">
+            <form id="loginForm" onSubmit={handleLogin}>
               <h1>Login</h1>
               <div className="input-box">
                 <label>Username:</label>
@@ -195,36 +276,41 @@ function App() {
                 />
               </div>
               <div className="input-box">
-                <label>Password:</label>
-                <div className="password-container">
-                  <input
-                    type={passwordVisible ? "text" : "password"}
-                    id="password"
-                    placeholder="Password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <span id="togglePassword" className="eye" onClick={togglePasswordVisibility}>
-                    <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
-                  </span>
-                </div>
-              </div>
+              <label>Password:</label>
+              <div className="password-container">
+              <input
+              type={passwordVisible ? "text" : "password"} // Show password when visible
+              id="password"
+              placeholder="Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              />
+              <span id="togglePassword" className="eye" onClick={togglePasswordVisibility}>
+              {/* Show faEyeSlash when the password is visible and faEye when hidden */}
+              <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
+              </span>
+             </div>
+            </div>
               <div className="remember-forgot">
                 <label><input type="checkbox" />Remember me</label>
                 <button type="button">Forgot Password?</button>
               </div>
               <div className="submit-button">
-                <button type="button" onClick={handleLogin} className="button">Login</button>
+                <button type="submit" className="button">Login</button>
               </div>
               {error && <p style={{ color: 'red' }}>{error}</p>}
               <div className="register">
-                <p>Don't have an account? <a href='/register'>Register</a></p>
+                {/* <p>Don't have an account? <a href='/register'>Register</a></p> */}
+                <p>Don't have an account?  <button id='registerid' onClick={handleRegisterClick}>Register</button></p>
               </div>
             </form>
           </div>
         </div>
       )}
+      {currentPage === 'register' && (
+        < Register setCurrentPage={setCurrentPage} />  // Pass the function to Register component
+    )}
 
       {currentPage === 'play' && (
         <div id="playPage">

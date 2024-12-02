@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ana from './Assets/analysisIcon.png';
+import ana from '../Assets/analysisIcon.png';
 import game from './Assets/gameIcon.png';
 
 function Navbar() {
