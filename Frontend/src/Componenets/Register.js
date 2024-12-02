@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './styleRegister.css'; // Ensure the styles are imported
+import '../styleRegister.css'; // Ensure the styles are imported
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 function Register({ setCurrentPage }) {
