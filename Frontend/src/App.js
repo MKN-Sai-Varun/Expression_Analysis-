@@ -276,21 +276,22 @@ function App() {
                 />
               </div>
               <div className="input-box">
-                <label>Password:</label>
-                <div className="password-container">
-                  <input
-                    type={passwordVisible ? "text" : "password"}
-                    id="password"
-                    placeholder="Password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <span id="togglePassword" className="eye" onClick={togglePasswordVisibility}>
-                    <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
-                  </span>
-                </div>
-              </div>
+              <label>Password:</label>
+              <div className="password-container">
+              <input
+              type={passwordVisible ? "text" : "password"} // Show password when visible
+              id="password"
+              placeholder="Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              />
+              <span id="togglePassword" className="eye" onClick={togglePasswordVisibility}>
+              {/* Show faEyeSlash when the password is visible and faEye when hidden */}
+              <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
+              </span>
+             </div>
+            </div>
               <div className="remember-forgot">
                 <label><input type="checkbox" />Remember me</label>
                 <button type="button">Forgot Password?</button>
