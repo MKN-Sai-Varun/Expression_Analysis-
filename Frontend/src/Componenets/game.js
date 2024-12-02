@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './styles1.css';
-import image from './image.js';
-import { triggerConfetti, stopConfetti } from './Confetti.js';
+import '../styles1.css';
+import image from '../Assets/images.js';
+import { triggerConfetti, stopConfetti } from '../Componenets/Confetti.js';
 import Webcam from 'webcamjs';
 
 function Game({ onExit }) { // Accept onExit as a prop
@@ -12,6 +12,7 @@ function Game({ onExit }) { // Accept onExit as a prop
   const [isGameOver, setIsGameOver] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [timeLeft, setTimeLeft] = useState(180); // or any initial value you need
+  // eslint-disable-next-line
   const [cameraActive, setCameraActive] = useState(false);
   const captureInterval = useRef(null);
   const screenshotInterval = useRef(null);
@@ -177,7 +178,7 @@ function Game({ onExit }) { // Accept onExit as a prop
             <img className="questionImg" src={image.Clion} alt="Lion" />
             <div className="imgChoices">
               <button className="imgchoice" onClick={() => handleChoiceClick('Bear')} style={getChoiceStyle('Bear', false)}>
-                <img src={image.Bear} alt="Bear" />
+                <img src={image.bear} alt="Bear" />
               </button>
               <button className="imgchoice" onClick={() => handleChoiceClick('Lion')} style={getChoiceStyle('Lion', true)}>
                 <img src={image.lion} alt="Lion" />
@@ -215,16 +216,16 @@ function Game({ onExit }) { // Accept onExit as a prop
         <div id="question4">
           <h1>Q4. Find the Animal</h1>
           <div className="game">
-            <img className="questionImg" src={image.CZebra} alt="Zebra" />
+            <img className="questionImg" src={image.Czebra} alt="Zebra" />
             <div className="imgChoices">
               <button className="imgchoice" onClick={() => handleChoiceClick('Leopard')} style={getChoiceStyle('Leopard', false)}>
-                <img src={image.leo} alt="Leopard" />
+                <img src={image.leapord} alt="Leopard" />
               </button>
               <button className="imgchoice" onClick={() => handleChoiceClick('Giraffe')} style={getChoiceStyle('Giraffe', false)}>
                 <img src={image.giraffe} alt="Giraffe" />
               </button>
               <button className="imgchoice" onClick={() => handleChoiceClick('Zebra')} style={getChoiceStyle('Zebra', true)}>
-                <img src={image.Zebra} alt="Zebra" />
+                <img src={image.zebra} alt="Zebra" />
               </button>
             </div>
           </div>
