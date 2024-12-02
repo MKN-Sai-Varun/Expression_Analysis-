@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles1.css';
 import image from '../Assets/images.js';
-import { triggerConfetti, stopConfetti } from '../Componenets/Confetti.js';
+import { triggerConfetti, stopConfetti } from '../Components/Confetti.js';
 import Webcam from 'webcamjs';
 
 function Game({ onExit }) { // Accept onExit as a prop

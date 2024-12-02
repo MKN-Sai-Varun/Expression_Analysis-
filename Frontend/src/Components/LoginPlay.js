@@ -1,23 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import '../styles1.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Webcam from 'webcamjs';
-import Navbar from '../Componenets/navbar.js';
-import Game from '../Componenets/game.js'; // Import the Game component
+import Navbar from '../Components/navbar.js';
+import Game from '../Components/game.js'; // Import the Game component
 import html2canvas from 'html2canvas';
-import Register from '../Componenets/Register.js'; // Import the Register component
+import Register from '../Components/Register.js'; // Import the Register component
 // import Home from '../../React(Admin & Analysis)/final/src/Home.jsx';
 function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+    // eslint-disable-next-line
   const [role,setRole]=useState('')
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState('login');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [counter, setCounter] = useState(0);
+    // eslint-disable-next-line
   const [isTimeUp, setIsTimeUp] = useState(false);
   const captureInterval = useRef(null);
   const webcamAttached = useRef(false); // To track if webcam is already started

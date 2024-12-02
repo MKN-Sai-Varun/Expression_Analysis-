@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Register from './Componenets/Register'; // Import the Register component
-import LoginPlay from './Componenets/LoginPlay';
+import Register from './Components/Register'; // Import the Register component
+import LoginPlay from './Components/LoginPlay';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('login'); // Define initial page state
