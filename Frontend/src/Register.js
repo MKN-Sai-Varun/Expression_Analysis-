@@ -89,11 +89,15 @@ function Register({ setCurrentPage }) {
                                     value={password}
                                     onChange={handlePasswordChange}
                                 />
-                                <span
+                                {/* <span
                                      className="eye-icon"
                                      onClick={togglePasswordVisibility} // Toggle visibility on click
                                 >
                                 <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
+                        </span> */}
+                        <span id="togglePassword" className="eye-icon" onClick={togglePasswordVisibility}>
+                                {/* Show faEyeSlash when the password is visible and faEye when hidden */}
+                                <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
                         </span>
                     </div>
                 </div>
