@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import '../styles1.css';
+import './styleLoginPlay.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Webcam from 'webcamjs';
@@ -70,6 +70,7 @@ function App() {
   
 
 // Inside the return block
+// eslint-disable-next-line
 {currentPage === 'register' && (
   <Register setCurrentPage={setCurrentPage} />  // Pass the function to Register component
 )}
