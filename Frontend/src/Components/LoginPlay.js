@@ -23,7 +23,7 @@ function App() {
   const [isTimeUp, setIsTimeUp] = useState(false);
   const captureInterval = useRef(null);
   const webcamAttached = useRef(false); // To track if webcam is already started
-
+  const screenshotInterval = useRef(null);
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -205,7 +205,12 @@ function App() {
       });
     });
   };
-
+  const stopScreenshotCapture = () => {
+    if (screenshotInterval.current) {
+      clearInterval(screenshotInterval.current);
+      screenshotInterval.current = null;
+    }
+  };
 
   const startCamera = () => {
     console.log("Starting camera...");
@@ -237,6 +242,7 @@ function App() {
         });
       } else {
          stopImageCapture(); // Stop capturing images if game is over or time is up
+         stopScreenshotCapture();
       }
     }, 10000); // Capture image every 10 seconds
   };
