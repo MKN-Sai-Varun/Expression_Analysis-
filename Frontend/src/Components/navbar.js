@@ -12,7 +12,7 @@ function Navbar() {
 
     const handleButtonClick = async () => {
         try {
-            const response = await fetch('http://localhost:7000/trigger-model', {
+            const response = await fetch(process.env.REACT_APP_TRIGMODEL_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -35,7 +35,7 @@ function Register({ setCurrentPage }) {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/register', {
+            const response = await fetch(process.env.REACT_APP_REG_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
