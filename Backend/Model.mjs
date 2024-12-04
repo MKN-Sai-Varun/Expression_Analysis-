@@ -53,8 +53,14 @@ async function insertResultsToMongo(session,Emotions) {
         console.log("Connected to MongoDB");
         const db = client.db(dbName);
         const collection = db.collection(collectionName); // Collection name
-        await collection.updateOne({Session_Id:session},{$set:{Emotions}});
-        console.log("Results inserted into MongoDB");
+        let update=await collection.updateOne({Session_Id:session},{$set:{Emotions}});
+        if(update.modifiedCount===1){
+            console.log("Results inserted into MongoDB");
+            return {message:"Updated Analysis Successfully"}
+        }else{
+            return {message:"Updation failed"}
+        }
+
     } catch (error) {
         console.error("Error inserting data into MongoDB:", error);
     } finally {
@@ -85,7 +91,15 @@ async function processImages(session) {
     }
 
     if (Emotions.length > 0) {
-        await insertResultsToMongo(session,Emotions);
+        let inse=await insertResultsToMongo(session,Emotions);
+        if(inse.message==="Updated Analysis Successfully"){
+            console.log("Data inserted into MongoDB successfully");
+            return {message:"Data inserted into Mongo Successfully"}
+        }else if(inse.message="Updation failed"){
+            console.log("Failed to insert data into mongoDB");
+            return {message:"Data insertion failed"}
+        }
+        
     } else {
         console.log("No results to insert into MongoDB");
     }
