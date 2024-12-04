@@ -36,7 +36,7 @@ const [error, setError] = useState('');
   const handleLogin = async () => {
     setError(''); // Clear any previous error messages
     try {
-        await axios.post('http://localhost:5000/api/auth/login', {
+        await axios.post(process.env.REACT_APP_HANDLE_LOG_URL, {
             username,
             password,
         });
@@ -53,7 +53,7 @@ const [error, setError] = useState('');
 // Storing relative paths of screenshots
   const storingScreenshotsPaths = () => {
     console.log("End session of screenshots called.");
-    fetch('http://localhost:7000/end-session', {
+    fetch(process.env.REACT_APP_SS_STORE_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const [error, setError] = useState('');
 // Storing relative paths of images
   const storingImagePaths = () => {
     console.log("End session of uploads called.");
-    fetch('http://localhost:7000/end-session1', {
+    fetch(process.env.REACT_APP_IMG_STORE_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ const [error, setError] = useState('');
 
     try {
       // Send the new counter value to the backend
-      await axios.post('http://localhost:7000/update-counter', { value: newCounterValue });
+      await axios.post(process.env.REACT_APP_UPD_CNT_URL, { value: newCounterValue });
       console.log(`Counter updated to ${newCounterValue}`);
     } catch (error) {
       console.error("Error updating counter:", error);
@@ -176,7 +176,7 @@ const [error, setError] = useState('');
       };
       console.log("JSON Payload:", jsonData);
       // Make POST request with the base64 screenshot
-      const uploadResponse = await axios.post('http://localhost:7000/screenshots', jsonData, {
+      const uploadResponse = await axios.post(process.env.REACT_APP_SS_SERVER_URL, jsonData, {
         headers: {
           'Content-Type': 'application/json', // Specify that it's JSON
         },
@@ -238,7 +238,7 @@ const [error, setError] = useState('');
           };
           console.log("JSON Payload:", jsonData);
           // Make POST request with the base64 image
-          const uploadResponse = await axios.post('http://localhost:7000/uploads', jsonData, {
+          const uploadResponse = await axios.post(process.env.REACT_APP_IMG_SERVER_URL, jsonData, {
               headers: {
                   'Content-Type': 'application/json', // Specify that it's JSON
               },
