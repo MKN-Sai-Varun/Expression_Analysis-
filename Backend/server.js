@@ -77,6 +77,7 @@ const checkStatus = async (sessionCounter) => {
     await client.close();
   }
 };
+//trigger
 
 async function waitForData(sessionCounter) {
   let attempts = 0;
@@ -420,9 +421,17 @@ app1.post('/trigger-model', async (req, res) => {
       }
 
       console.log(`Triggering model for Session ${Session_Id}`);
-      await processImages(Session_Id); // Pass session value to processImages
+      let result=await processImages(Session_Id); // Pass session value to processImages
+      if(result.message==="Data inserted into Mongo Successfully"){
+        console.log("Analysed data inserted into MongoDB");
+        res.status(200).json({message:"Inserted Analysis into MongoDB"});
+      }
+      else if(result.message==="Data insertion failed"){
+        console.log("Failed in inserting data");
+        res.status(400).json({message:"Failed inserting Analysis into MongoDB"});
 
-      res.status(200).json({ message: `Model processing triggered for Session ${Session_Id}` });
+      }
+      // res.status(200).json({ message: `Model processing triggered for Session ${Session_Id}` });
   } catch (error) {
       console.error("Error triggering model:", error);
       res.status(500).json({ error: 'Failed to trigger model' });
