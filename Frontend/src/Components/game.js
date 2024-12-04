@@ -24,13 +24,13 @@ function Game({ onExit }) { // Accept onExit as a prop
     question4: 'Zebra',
     question5: 'h',
   };
-
+// Handle selection of an answer choice
   const handleChoiceClick = (choice) => {
     if (!submitted) {
       setSelectedChoice(choice);
     }
   };
-
+//handles the display after an option is selected
   const getChoiceStyle = (choice, isCorrect) => {
     if (selectedChoice === choice) {
       if (submitted) {
@@ -48,7 +48,7 @@ function Game({ onExit }) { // Accept onExit as a prop
     }
     return {};
   };
-
+// Check the selected answer and update score accordingly
   const handleSubmit = () => {
     if (selectedChoice === null) {
       alert('Please select an option!');
@@ -61,7 +61,7 @@ function Game({ onExit }) { // Accept onExit as a prop
     }
     setSubmitted(true);
   };
-
+// Navigate to the next question after submission
   const handleNext = () => {
     if (submitted) {
       if (currentPage === 'question1') setCurrentPage('question2');
@@ -77,13 +77,13 @@ function Game({ onExit }) { // Accept onExit as a prop
       setSubmitted(false);
     }
   };
-
+// Reset game state to allow starting a new game
   const handleExitClick = () => {
     stopConfetti();
     setScore(0);
     if (onExit) onExit(); // Call the onExit prop function
   };
-
+// Stop capturing images
   const stopImageCapture = () => {
     if (captureInterval.current) {
       clearInterval(captureInterval.current);
@@ -91,7 +91,7 @@ function Game({ onExit }) { // Accept onExit as a prop
     setCameraActive(false);
     Webcam.reset();
   };
-
+//Stop capturing screenshots
   const stopScreenshotCapture = () => {
     if (screenshotInterval.current) {
       clearInterval(screenshotInterval.current);

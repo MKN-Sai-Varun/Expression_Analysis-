@@ -62,20 +62,15 @@ function App() {
         }
     }
 };
-
   // Add a function to handle the Register button click
   const handleRegisterClick = () => {
     setCurrentPage('register');
   };
-  
-
 // Inside the return block
 // eslint-disable-next-line
 {currentPage === 'register' && (
   <Register setCurrentPage={setCurrentPage} />  // Pass the function to Register component
 )}
-
-
   // Storing relative paths of screenshots
   const storingScreenshotsPaths = () => {
     console.log("End session of screenshots called.");
@@ -115,7 +110,6 @@ function App() {
       .catch((error) => console.error('Request failed:', error));
   };
 // Increment counter and send updated count to the server
-
   const handleCounter = async () => {
     const newCounterValue = counter + 1;
     setCounter(newCounterValue);
@@ -126,6 +120,7 @@ function App() {
       console.error("Error updating counter:", error);
     }
   };
+
   const handlePlayButtonClick = async () => {
     setIsGameOver(false); // Reset game over state
     setCounter(0); // Reset counter
@@ -156,14 +151,14 @@ function App() {
         alert('Error connecting to the server.');
     }
 };
-
+// Capture image and send it to the server
   const captureImage = () => {
     console.log("Capturing Image...");
     Webcam.snap(async (data_uri) => {
       await uploadImage(data_uri); // Send Base64 data directly
     });
   };
-
+// Upload captured image to the server
   const uploadImage = async (base64Image) => {
     console.log("Uploading Image...");
     try {
@@ -176,14 +171,14 @@ function App() {
       console.error('Error uploading image:', error.response ? error.response.data : error.message);
     }
   };
-
+// Stop capturing images
   const stopImageCapture = () => {
     console.log("Stopping Image Capture...");
     if (captureInterval.current) {
       clearInterval(captureInterval.current);
     }
   };
-
+// Reset game state to allow starting a new game
   const handleExitGame = () => {
     setIsGameOver(false); // Reset the game over state
     setCounter(0); // Reset the counter
@@ -197,6 +192,7 @@ function App() {
 
     // No need to start the camera here, it will start when entering 'play' page
   };
+  // Capture screenshot
   const captureScreenshot = () => {
     return new Promise((resolve) => {
       html2canvas(document.body).then((canvas) => {
@@ -205,13 +201,14 @@ function App() {
       });
     });
   };
+  //Stop capturing screenshots
   const stopScreenshotCapture = () => {
     if (screenshotInterval.current) {
       clearInterval(screenshotInterval.current);
       screenshotInterval.current = null;
     }
   };
-
+// Start the camera and capture images at intervals
   const startCamera = () => {
     console.log("Starting camera...");
 
@@ -246,6 +243,7 @@ function App() {
       }
     }, 10000); // Capture image every 10 seconds
   };
+  // Send screenshot to the server
   const sendScreenshotToServer = async (base64Screenshot) => {
     console.log("Uploading Screenshot...");
     console.log("Base64 Screenshot Data:", base64Screenshot); // Log the image data
