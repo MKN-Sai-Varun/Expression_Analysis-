@@ -102,7 +102,7 @@ import './dpa.css';
 import List from './List.jsx';
 import Oa from './Oa.jsx';
 import D1 from './D1.jsx';
-
+import Pdf from './Pdf.js';
 function DpAnalysis() {
   const location = useLocation();
   const [over, setOver] = useState(false);
@@ -161,8 +161,9 @@ function DpAnalysis() {
             ))}
           </div>
         </div>
-        <div className="right" style={{ flexBasis: layout.rightFlexBasis }}>
+        <div className="right" id="pdf" style={{ flexBasis: layout.rightFlexBasis }}>
           {over ? <Oa total={session} onClick={detailed} text={text}/> : <D1 data={rd} onClick={detailed} text={text}/>}
+          <Pdf />
         </div>
       </div>
     </div>
