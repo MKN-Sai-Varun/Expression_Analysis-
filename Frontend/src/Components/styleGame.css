@@ -127,7 +127,7 @@ h1 {
 }
 
 /* Timer */
-.timer {
+/*.timer {
     position: absolute;
     top: 10px;
     left: 50%;
@@ -137,10 +137,10 @@ h1 {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border-radius: 5px;
-}
+}*/
 
 /* Score */
-.score {
+/*.score {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -149,7 +149,61 @@ h1 {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border-radius: 5px;
+}*/
+
+.timer {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(1rem, 2.5vw, 1.5rem); /* Adjusts font size dynamically */
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.5rem 1rem; /* Scales well on smaller devices */
+    border-radius: 5px;
+    max-width: 90%; /* Ensures timer doesn’t overflow */
+    text-align: center; /* Center-align text */
 }
+
+.status {
+    position: relative; /* Allows positioning of child elements within this container */
+    width: 100%;
+    height: auto; /* Adjusts based on the content */
+    padding: 10px;
+    box-sizing: border-box; /* Ensures padding is included in width/height */
+}
+
+.score {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: clamp(1rem, 2.5vw, 1.5rem); /* Adjusts font size dynamically */
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.5rem 1rem; /* Scales well on smaller devices */
+    border-radius: 5px;
+    max-width: 90%; /* Prevents overflow */
+    text-align: center; /* Center-align text */
+}
+
+/* Media Queries for Additional Fine-Tuning */
+@media screen and (max-width: 768px) {
+    .timer, .score {
+        font-size: clamp(0.8rem, 3vw, 1.2rem); /* Smaller font size for smaller screens */
+        padding: 0.4rem 0.8rem;
+        top: 3%; /* Adjusts spacing for smaller viewports */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .timer, .score {
+        top: 2%;
+        font-size: clamp(0.7rem, 4vw, 1rem);
+        padding: 0.3rem 0.6rem;
+    }
+}
+
+
 
 /* End Score */
 .endScore {
