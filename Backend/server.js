@@ -20,7 +20,7 @@ const app2 = express();
 
 // Common middleware and configurations
 const corsOptions = {
-  origin: ['http://localhost:3000','http://localhost:9000'],
+  origin: [process.env.CORS_URL1,process.env.CORS_URL2],
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
 };
