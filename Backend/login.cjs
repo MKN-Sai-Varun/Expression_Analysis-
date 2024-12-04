@@ -66,7 +66,7 @@ app.post('/api/auth/login', async (req, res) => {
         if(isMatch){
             userInfo={Username:username,Password:password};
             try{
-                const response=await axios.post("http://localhost:7000/receive-data",userInfo);
+                const response=await axios.post(process.env.Login_URL,userInfo);
                 console.log("User info sent to server 7000: ",response.data);
             }catch(err){
                 console.error("Failed to send user info to server 7000:",err);
@@ -89,7 +89,7 @@ app.post('/user-info',async(req,res)=>{
     }
     
     try{
-        const response=await axios.post("http://localhost:7000/receive-data",resentUser);
+        const response=await axios.post(process.env.USER_URL,resentUser);
         console.log(`Data has been sent successfully! Username:${resentUser.Username}, Password: ${resentUser.Password}`);
         res.send(`Username and password has been sent, Response from Server 7000: ${response.data}`);
     }catch(error){
