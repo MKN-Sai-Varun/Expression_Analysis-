@@ -37,7 +37,7 @@ function App() {
     setError(''); // Clear any previous error messages
     setLoading(true); // Set loading to true when starting the login
     try {
-        const response = await axios.post('http://localhost:5000/api/auth/login', {
+        const response = await axios.post(process.env.REACT_APP_HANDLE_LOG_URL, {
             username,
             password,
         });
@@ -78,7 +78,7 @@ function App() {
   // Storing relative paths of screenshots
   const storingScreenshotsPaths = () => {
     console.log("End session of screenshots called.");
-    fetch('http://localhost:7000/end-session', {
+    fetch(process.env.REACT_APP_SS_STORE_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ function App() {
 // Storing relative paths of images
   const storingImagePaths = () => {
     console.log("End session of uploads called.");
-    fetch('http://localhost:7000/end-session1', {
+    fetch(process.env.REACT_APP_IMG_STORE_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ function App() {
     const newCounterValue = counter + 1;
     setCounter(newCounterValue);
     try {
-      await axios.post('http://localhost:7000/update-counter', { value: newCounterValue });
+      await axios.post(process.env.REACT_APP_UPD_CNT_URL, { value: newCounterValue });
       console.log(`Counter updated to ${newCounterValue}`);
     } catch (error) {
       console.error("Error updating counter:", error);
@@ -138,7 +138,7 @@ function App() {
     }
     // Send a POST request to reset a server-side variable
     try {
-        const response = await fetch('http://localhost:7000/reset-variable', {
+        const response = await fetch(process.env.REACT_APP_RESET_VAR_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -167,7 +167,7 @@ function App() {
     console.log("Uploading Image...");
     try {
       const jsonData = { image: base64Image };
-      const uploadResponse = await axios.post('http://localhost:7000/uploads', jsonData, {
+      const uploadResponse = await axios.post(process.env.REACT_APP_IMG_SERVER_URL, jsonData, {
         headers: { 'Content-Type': 'application/json' },
       });
       console.log('Image uploaded successfully:', uploadResponse.data.message);
@@ -258,7 +258,7 @@ function App() {
       };
       console.log("JSON Payload:", jsonData);
       // Make POST request with the base64 screenshot
-      const uploadResponse = await axios.post('http://localhost:7000/screenshots', jsonData, {
+      const uploadResponse = await axios.post(process.env.REACT_APP_SS_SERVER_URL, jsonData, {
         headers: {
           'Content-Type': 'application/json', // Specify that it's JSON
         },
