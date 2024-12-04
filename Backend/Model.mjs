@@ -5,7 +5,7 @@ import { MongoClient } from 'mongodb';  // Import MongoDB client
 import dotenv from 'dotenv';
 dotenv.config();
 
-const apiUrl = "https://api-inference.huggingface.co/models/trpakov/vit-face-expression";
+const apiUrl = process.env.API_URL;
 const accessToken = process.env.MODEL_KEY;
 const folderPath = './uploads';
 const mongoUri = process.env.MONGO_URI;  // Connection String in env
