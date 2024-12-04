@@ -12,6 +12,7 @@ import Register from '../Components/Register.js'; // Import the Register compone
 function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false); // Add loading state
     // eslint-disable-next-line
   const [role,setRole]=useState('')
   const [error, setError] = useState('');
@@ -34,7 +35,7 @@ function App() {
     console.log("Username:", username);
     console.log("Password:", password);
     setError(''); // Clear any previous error messages
-
+    setLoading(true); // Set loading to true when starting the login
     try {
         const response = await axios.post('http://localhost:5000/api/auth/login', {
             username,
@@ -48,7 +49,7 @@ function App() {
         } else if (userRole === 'admin') {
             setCurrentPage('Home');
         }
-        alert(`Welcome, ${username}! You have successfully logged in.`);
+        // alert(`Welcome, ${username}! You have successfully logged in.`);
     } catch (error) {
         console.error('Login error:', error);
         if (error.response) {
@@ -60,6 +61,9 @@ function App() {
             setError(serverErrorMessage); // Update state with a fallback message
             alert(serverErrorMessage);    // Show an alert popup for server issues
         }
+    }
+    finally {
+      setLoading(false); // Set loading to false after the request completes
     }
 };
   // Add a function to handle the Register button click
@@ -266,6 +270,11 @@ function App() {
   };
   return (
     <>
+    {loading && (
+      <div className="loading-overlay">
+        <div className="spinner"></div>
+      </div>
+    )}
       {currentPage === 'login' && (
         <div className="background">
           <div id="loginPage">
