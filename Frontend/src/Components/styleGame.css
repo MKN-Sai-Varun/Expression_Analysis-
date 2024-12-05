@@ -2,7 +2,7 @@
 .game {
     text-align: center;
     flex-direction: column;
-    gap: 2rem; /* Adjust the gap between elements */
+    gap: 0.5rem; /* Adjust the gap between elements */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -204,102 +204,71 @@ h1 {
 
 
 
-/* End Score */
-.endScore {
+/* General styles for full-page centering */
+.page-container {
     display: flex;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: black;
-    margin-top: 20px;
-    font-weight: bold;
-}
-
-#TimeUpPage {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-#TimeUpPage h1, #TimeUpPage h2, #TimeUpPage h3 {
+    flex-direction: column; /* Align elements vertically */
+    justify-content: center; /* Center elements vertically */
+    align-items: center; /* Center elements horizontally */
+    height: 100vh; /* Full height of the viewport */
     text-align: center;
+    padding: 20px; /* Add padding for smaller screens */
+    box-sizing: border-box; /* Include padding in the height/width calculation */
 }
 
-.button-container {
-    display: flex; /* Use flexbox to align buttons side by side */
-    justify-content: center; /* Center the buttons horizontally */
-    gap: 20px; /* Add some spacing between the buttons */
-    margin-top: 20px; /* Optional: margin for spacing above the container */
-    flex-wrap: wrap;
-  }
-  
-  .exit-button {
-      background-color: #4CAF50; /* Green background */
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-      border: 2px solid black;
-      flex: 1; /* Flexibly grow/shrink button size */
-      max-width: 200px; /* Prevent excessive width on larger screens */
-      min-width: 120px; /* Maintain a minimum width */
+/* Specific styles for headings in both pages */
+.page-container h1, 
+.page-container h2, 
+.page-container h3 {
+    margin: 0;
+    padding: 10px;
+    font-size: 2.5rem; /* Scalable font size */
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Improve text visibility */
+}
 
-  }
-  
-  .exit-button:hover {
-    background-color: #45a049; /* Darker green for hover */
-    transform: scale(1.1); /* Slightly smaller to simulate pressing */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Simulate depth during hover */
-     /* Add black border */
+/* Styling for the score text */
+.endScore {
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+/* Style for exit buttons */
+.exit-button {  /* Added missing period for class selector */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    border: 2px solid black;
+    max-width: 200px;
+    min-width: 120px;
+    margin-top: 20px; /* Add spacing between score and button */
+}
+
+/* Hover and active styles for buttons */
+.exit-button:hover {
+    background-color: #45a049;
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 }
 
 .exit-button:active {
-    background-color: #3e8e41;  
-    transform: scale(1); 
+    background-color: #3e8e41;
+    transform: scale(1);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* Responsive styles for medium screens (tablets) */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 1.8rem;
-    }
-    .choice {
-        font-size: 1.2rem;
-        padding: 0.5rem 1rem;
-        min-width: 80px;
-    }
-    .imgchoice {
-        width: 120px;
-    }
-    .submit {
-        font-size: 1rem;
-        padding: 0.5rem 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .choice {
-        font-size: 1rem;
-        min-width: 70px;
-    }
-    .imgchoice {
-        width: 100px;
-    }
-    .submit {
-        font-size: 0.9rem;
-    }
-    .exit-button {
-        font-size: 0.9rem;
-    }
-}
-/* Responsive styles */
-@media (max-width: 768px) {
-    #endPage h1 {
+    .page-container h1 {
         font-size: 2rem;
+    }
+    .page-container h2 {
+        font-size: 1.5rem;
     }
     .endScore {
         font-size: 1.2rem;
@@ -310,19 +279,23 @@ h1 {
     }
 }
 
+/* Responsive styles for small screens (mobile phones) */
 @media (max-width: 480px) {
-    #endPage h1 {
+    .page-container h1 {
         font-size: 1.8rem;
+    }
+    .page-container h2 {
+        font-size: 1.3rem;
+    }
+    .page-container h3 {
+        font-size: 1rem;
     }
     .endScore {
         font-size: 1rem;
     }
-    .button-container {
-        flex-direction: column; /* Stack buttons vertically */
-        gap: 10px;
-    }
+    
     .exit-button {
-        width: 100%; /* Buttons take full width */
+        width: 100%; /* Button takes full width */
         max-width: none; /* Remove width restriction */
-    } 
+    }
 }
