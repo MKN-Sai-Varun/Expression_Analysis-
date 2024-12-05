@@ -186,7 +186,6 @@ function App() {
   const handleExitGame = () => {
     setIsGameOver(false); // Reset the game over state
     setCounter(0); // Reset the counter
-    handleCounter(); // Optionally update the counter if needed
     storingScreenshotsPaths();
     storingImagePaths();
     setCurrentPage('play'); // Move to the play page (instead of 'game')
