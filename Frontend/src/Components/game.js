@@ -255,19 +255,17 @@ function Game({ onExit }) { // Accept onExit as a prop
         </div>
       )}
       {currentPage === 'end' && (
-          <div id="endPage">
+          <div id="endPage" className='page-container'>
             <h1>CONGRATULATIONS!</h1>
             <h1>Game Completed</h1>
             <div className="endScore">Score: {score}/5</div>
-            <div className="button-container">
             <button className="exit-button" type="button" onClick={handleExitClick}>Exit
             </button>
-            </div>
             {currentPage === 'end'}
           </div>
         )}
         {currentPage === 'TimeUp' && (
-          <div id="TimeUpPage">
+          <div id="TimeUpPage" className='page-container'>
             <h1>Time's Up</h1>
             <h2>You ran out of time. Game Over</h2>
             <h3>Score: {score}/5</h3>
