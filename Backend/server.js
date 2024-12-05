@@ -105,6 +105,7 @@ async function waitForData(sessionCounter) {
 
 // Function to Increment the Session ID by 1 in MongoDB everytime a session is played
 app1.post('/update-counter', async (req, res) => {
+  console.log("Update session by 1 method called.");
   try {
     const counterDoc = await Counter.findOneAndUpdate(
       {}, // Match the first document (or create a new one if none exists)
