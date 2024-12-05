@@ -25,20 +25,6 @@ function App() {
   const captureInterval = useRef(null);
   const webcamAttached = useRef(false); // To track if webcam is already started
   const screenshotInterval = useRef(null);
-  // Increment counter and send updated count to the server
-  const handleCounter = async () => {
-    // Increment counter
-    const newCounterValue = counter + 1;
-    setCounter(newCounterValue);
-
-    try {
-      // Send the new counter value to the backend
-      await axios.post(process.env.REACT_APP_UPD_CNT_URL, { value: newCounterValue });
-      console.log(`Counter updated to ${newCounterValue}`);
-    } catch (error) {
-      console.error("Error updating counter:", error);
-    }
-  };
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -89,158 +75,198 @@ function App() {
 {currentPage === 'register' && (
   <Register setCurrentPage={setCurrentPage} />  // Pass the function to Register component
 )}
-const handlePlayButtonClick = async () => {
-  setIsGameOver(false); // Reset game over state
-  setCounter(0); // Reset counter
-  handleCounter(); // Update counter
-  setCurrentPage('game'); // Move to the game page
-  startCamera();
-  // Start the camera only if it hasn't been started yet
-  if (!webcamAttached.current) {
-      startCamera();
-      webcamAttached.current = true; // Mark the webcam as attached
-  }
-  // Send a POST request to reset a server-side variable
-  try {
-      const response = await fetch(process.env.REACT_APP_RESET_VAR_URL, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-      });
-
-      if (response.ok) {
-          console.log('Variable reset successfully!');
-      } else {
-          console.log('Failed to reset variable.');
+  // Storing relative paths of screenshots
+  const storingScreenshotsPaths = () => {
+    console.log("End session of screenshots called.");
+    fetch(process.env.REACT_APP_SS_STORE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       }
-  } catch (error) {
-      console.error('Error:', error);
-      alert('Error connecting to the server.');
-  }
-};
- // Start the camera and set up intervals for capturing images and screenshots
- const startCamera = () => {
-  console.log('Starting camera...');
-  const cameraElement = document.getElementById('my_camera');
-
-  if (!cameraElement) {
-    console.error('Camera element not found!');
-    return;
-  }
-
-  Webcam.set({
-    width: 320,
-    height: 240,
-    image_format: 'png',
-  });
-
-  Webcam.attach('#my_camera');
-  webcamAttached.current = true;
-
-  captureInterval.current = setInterval(() => {
-    if (!isTimeUp && !isGameOver) {
-      captureImage();
-      captureScreenshot();
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          console.log(data.message); // Expected success message from the server
+        } else if (data.error) {
+          console.error("Error:", data.error); // Error message from the server if something went wrong
+        }
+      })
+      .catch((error) => console.error('Request failed:', error));
+  };
+// Storing relative paths of images
+  const storingImagePaths = () => {
+    console.log("End session of uploads called.");
+    fetch(process.env.REACT_APP_IMG_STORE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          console.log(data.message); // Expected success message from the server
+        } else if (data.error) {
+          console.error("Error:", data.error); // Error message from the server if something went wrong
+        }
+      })
+      .catch((error) => console.error('Request failed:', error));
+  };
+// Increment counter and send updated count to the server
+  const handleCounter = async () => {
+    const newCounterValue = counter + 1;
+    setCounter(newCounterValue);
+    try {
+      await axios.post(process.env.REACT_APP_UPD_CNT_URL, { value: newCounterValue });
+      console.log(`Counter updated to ${newCounterValue}`);
+    } catch (error) {
+      console.error("Error updating counter:", error);
     }
-  }, 10000); // Capture image every 10 seconds
+  };
 
-  screenshotInterval.current = setInterval(() => {
-    if (!isTimeUp && !isGameOver) {
-      captureScreenshot().then((base64Screenshot) => {
-        sendScreenshotToServer(base64Screenshot);
-      });
+  const handlePlayButtonClick = async () => {
+    setIsGameOver(false); // Reset game over state
+    setCounter(0); // Reset counter
+    handleCounter(); // Update counter
+    setCurrentPage('game'); // Move to the game page
+    startCamera();
+    // Start the camera only if it hasn't been started yet
+    if (!webcamAttached.current) {
+        startCamera();
+        webcamAttached.current = true; // Mark the webcam as attached
     }
-  }, 10000); // Capture screenshot every 10 seconds
+    // Send a POST request to reset a server-side variable
+    try {
+        const response = await fetch(process.env.REACT_APP_RESET_VAR_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
-  console.log('Camera started with capture intervals.');
+        if (response.ok) {
+            console.log('Variable reset successfully!');
+        } else {
+            console.log('Failed to reset variable.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error connecting to the server.');
+    }
 };
-
-// Stop the camera and clear all intervals
-const stopCamera = () => {
-  console.log('Stopping camera and clearing intervals...');
-  stopImageCapture();
-  stopScreenshotCapture();
-
-  if (webcamAttached.current) {
-    Webcam.reset();
-    webcamAttached.current = false;
-    console.log('Camera stopped and reset.');
-  }
-};
-
-// Stop image capture interval
-const stopImageCapture = () => {
-  if (captureInterval.current) {
-    clearInterval(captureInterval.current);
-    captureInterval.current = null;
-    console.log('Image capture stopped.');
-  }
-};
-
-// Stop screenshot capture interval
-const stopScreenshotCapture = () => {
-  if (screenshotInterval.current) {
-    clearInterval(screenshotInterval.current);
-    screenshotInterval.current = null;
-    console.log('Screenshot capture stopped.');
-  }
-};
-
-// Capture an image using the webcam
-const captureImage = () => {
-  console.log('Capturing Image...');
-  Webcam.snap((dataUri) => {
-    uploadImage(dataUri);
-  });
-};
-
-// Upload captured image to the server
-const uploadImage = async (base64Image) => {
-  console.log('Uploading Image...');
-  try {
-    const response = await axios.post(process.env.REACT_APP_IMG_SERVER_URL, { image: base64Image });
-    console.log('Image uploaded successfully:', response.data.message);
-  } catch (error) {
-    console.error('Error uploading image:', error.response?.data || error.message);
-  }
-};
-
-// Capture a screenshot of the current page
-const captureScreenshot = () => {
-  return new Promise((resolve) => {
-    html2canvas(document.body).then((canvas) => {
-      const base64Screenshot = canvas.toDataURL('image/png');
-      resolve(base64Screenshot);
+// Capture image and send it to the server
+  const captureImage = () => {
+    console.log("Capturing Image...");
+    Webcam.snap(async (data_uri) => {
+      await uploadImage(data_uri); // Send Base64 data directly
     });
-  });
-};
+  };
+// Upload captured image to the server
+  const uploadImage = async (base64Image) => {
+    console.log("Uploading Image...");
+    try {
+      const jsonData = { image: base64Image };
+      const uploadResponse = await axios.post(process.env.REACT_APP_IMG_SERVER_URL, jsonData, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      console.log('Image uploaded successfully:', uploadResponse.data.message);
+    } catch (error) {
+      console.error('Error uploading image:', error.response ? error.response.data : error.message);
+    }
+  };
+// Stop capturing images
+  const stopImageCapture = () => {
+    console.log("Stopping Image Capture...");
+    if (captureInterval.current) {
+      clearInterval(captureInterval.current);
+    }
+  };
+// Reset game state to allow starting a new game
+  const handleExitGame = () => {
+    setIsGameOver(false); // Reset the game over state
+    setCounter(0); // Reset the counter
+    storingScreenshotsPaths();
+    storingImagePaths();
+    setCurrentPage('play'); // Move to the play page (instead of 'game')
+    // Stop and reset the webcam
+    stopImageCapture(); // Stop image capture if any ongoing
+    Webcam.reset(); // Reset the webcam to avoid conflicts
 
-// Upload captured screenshot to the server
-const sendScreenshotToServer = async (base64Screenshot) => {
-  console.log('Uploading Screenshot...');
-  try {
-    const response = await axios.post(process.env.REACT_APP_SS_SERVER_URL, { screenshot: base64Screenshot });
-    console.log('Screenshot uploaded successfully:', response.data.filename);
-  } catch (error) {
-    console.error('Error uploading screenshot:', error.response?.data || error.message);
-  }
-};
+    // No need to start the camera here, it will start when entering 'play' page
+  };
+  // Capture screenshot
+  const captureScreenshot = () => {
+    return new Promise((resolve) => {
+      html2canvas(document.body).then((canvas) => {
+        const base64Screenshot = canvas.toDataURL('image/png');
+        resolve(base64Screenshot);
+      });
+    });
+  };
+  //Stop capturing screenshots
+  const stopScreenshotCapture = () => {
+    if (screenshotInterval.current) {
+      clearInterval(screenshotInterval.current);
+      screenshotInterval.current = null;
+    }
+  };
+// Start the camera and capture images at intervals
+  const startCamera = () => {
+    console.log("Starting camera...");
 
-const handleExitGame = () => {
-  console.log('Exiting game...');
-  setIsGameOver(false);
-  setCounter(0);
-  stopCamera();  // Stop the camera when exiting the game
-  setCurrentPage('play');
-};
+    const cameraElement = document.getElementById("my_camera");
 
-const handleGameCompletion = () => {
-  setIsGameOver(true);  // Mark the game as over
-  stopCamera();         // Stop the camera when the game is completed
-};
+    // Ensure the DOM element exists
+    if (!cameraElement) {
+      console.error("Camera element not found!");
+      return;
+    }
 
+    // Set webcam settings and attach to the element
+    Webcam.set({
+      width: 320,
+      height: 240,
+      image_format: 'png',
+    });
 
+    Webcam.attach('#my_camera'); // Attach the webcam to the DOM element
+    webcamAttached.current = true; // Mark the webcam as attached
+    console.log("Camera stream started...");
+
+    captureInterval.current = setInterval(() => {
+      if (!isTimeUp && !isGameOver) {
+        captureImage();
+        captureScreenshot().then((base64Screenshot) => {
+          sendScreenshotToServer(base64Screenshot);
+        });
+      } else {
+         stopImageCapture(); // Stop capturing images if game is over or time is up
+         stopScreenshotCapture();
+      }
+    }, 10000); // Capture image every 10 seconds
+  };
+  // Send screenshot to the server
+  const sendScreenshotToServer = async (base64Screenshot) => {
+    console.log("Uploading Screenshot...");
+    console.log("Base64 Screenshot Data:", base64Screenshot); // Log the image data
+    try {
+      // Create JSON object
+      const jsonData = {
+        screenshot: base64Screenshot // Send the base64 screenshot data
+      };
+      console.log("JSON Payload:", jsonData);
+      // Make POST request with the base64 screenshot
+      const uploadResponse = await axios.post(process.env.REACT_APP_SS_SERVER_URL, jsonData, {
+        headers: {
+          'Content-Type': 'application/json', // Specify that it's JSON
+        },
+      });
+      console.log('Screenshot uploaded successfully:', uploadResponse.data.filename);
+    } catch (error) {
+      console.error('Error uploading screenshot:', error.response ? error.response.data : error.message);
+    }
+  };
   return (
     <>
     {loading && (
@@ -311,10 +337,9 @@ const handleGameCompletion = () => {
         </div>
       )}
 
-        {currentPage === 'game' && (
-        <Game onExit={handleExitGame} onGameComplete={handleGameCompletion} />
-        )}
-
+      {currentPage === 'game' && (
+        <Game onExit={handleExitGame} />
+      )}
     </>
   );
 }
