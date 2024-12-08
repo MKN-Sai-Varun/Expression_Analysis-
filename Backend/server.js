@@ -39,12 +39,9 @@ const CounterSchema = new mongoose.Schema({
   value: { type: Number, default: 0 },
 });
 const Counter = mongoose.model('Counter', CounterSchema, 'counters');
-mongoose.connect(mongoUri1, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(mongoUri1)
   .then(() => console.log('Connected to MongoDB'))
-  .catch((error) => console.error('Connection error', error));
+  .catch((err) => console.error('Could not connect to MongoDB:', err));
 
 // Function to initialize Session ID if not present in MongoDB 
 const initializeCounter = async () => {
