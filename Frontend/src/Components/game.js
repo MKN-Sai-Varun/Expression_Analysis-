@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import './styleGame.css';
 import image from '../Assets/images.js';
 import { triggerConfetti, stopConfetti } from '../Components/Confetti.js';
-import Webcam from 'webcamjs';
 
 function Game({ onExit , onGameComplete}) { // Accept onExit as a prop
   const [selectedChoice, setSelectedChoice] = useState(null);
@@ -12,10 +11,6 @@ function Game({ onExit , onGameComplete}) { // Accept onExit as a prop
   const [isGameOver, setIsGameOver] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [timeLeft, setTimeLeft] = useState(180); // or any initial value you need
-  // eslint-disable-next-line
-  const [cameraActive, setCameraActive] = useState(false);
-  const captureInterval = useRef(null);
-  const screenshotInterval = useRef(null);
   const timerRef = useRef(null);
   const correctAnswers = {
     question1: 'p',
