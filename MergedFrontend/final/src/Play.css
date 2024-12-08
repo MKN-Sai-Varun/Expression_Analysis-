@@ -1,0 +1,13 @@
+.Flex_Play {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('./Assets/PlayBackground2.png');
+    background-size: cover;
+}
+.playButton{
+    width:15vw;
+    height:10vh;
+    font-size: 45px !important;
+}

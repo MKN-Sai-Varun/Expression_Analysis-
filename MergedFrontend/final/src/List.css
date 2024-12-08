@@ -1,0 +1,14 @@
+.listInstance{
+    display:flex;
+    border:1px solid black;
+    padding:10px;
+    flex-basis:100px;
+    justify-content:space-around;
+    border-radius:10px;
+    align-items:center;
+
+}
+.listInstance:hover{
+    border:2px solid black;
+
+}
