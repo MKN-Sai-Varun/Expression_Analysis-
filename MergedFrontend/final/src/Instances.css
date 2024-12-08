@@ -1,0 +1,21 @@
+.imagesPiegGraphs{
+    display:flex;
+    flex-direction:column;
+    gap:5vh;
+    padding:10px;
+    align-items:center;
+}
+.gameScreenshot{
+    flex-basis:30vh;
+    width:25vw;
+    border:2px solid black;
+}
+.playerImage{
+    flex-basis:30vh;
+    width:25vw;
+    border:2px solid black;
+}
+.Flex3{
+    padding-left:30px;
+    padding-right:30px;
+}

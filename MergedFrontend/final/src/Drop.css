@@ -1,0 +1,27 @@
+.dropDown{
+    display:flex;
+    height:7vh;
+    font-size:25px;
+    align-items:center;
+    cursor:pointer;
+}
+.dropDownToggle{
+    flex-basis:fit-content;
+    display:flex;
+    flex-direction:column;
+    width:80vw;
+    border-radius:10px;
+    border:1px solid black;
+
+}
+.dropContent{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.3s ease;
+}
+.dropContent.open{
+    max-height:100vh;
+}
+.Name{
+    margin-left:20px;
+}

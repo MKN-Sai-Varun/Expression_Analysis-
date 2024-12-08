@@ -1,0 +1,145 @@
+
+.timer {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .score {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+  }
+.gameLayout{
+    text-align: center;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+    
+
+}
+.gameLayout p {
+    font-size: 40px;
+  }
+.choicesButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 300px;
+  }
+  .choiceButton {
+    padding: 10px 20px;
+    font-size: 37px;
+    border-radius: 64px;
+    border: 1px solid #333;
+    background-color: #fff;
+    width: 127.3px;
+    cursor: pointer;
+  }
+  .choiceButton:hover {
+    background-color: rgb(221, 220, 220);
+  }
+  .choicesImages{
+    display: flex;
+    justify-content: center;
+    gap: 4%;
+  }
+  .choiceImage{
+    border: 3px solid black;
+  border-radius: 5px;
+  padding: 0;
+  background-color: transparent;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  display: inline-block;
+
+  }
+  .choiceImage img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    display: block;
+  }
+  .choiceImage:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+  }
+  .answerSubmit {
+    justify-content: flex-end;
+    font-size: 30px;
+    border-radius: 25px;
+    border: 3px solid black;
+    background-color: white;
+    cursor: pointer;
+    width: 197.2px;
+    height: 71.3px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    float: right;
+  }
+  
+  .answerSubmit:hover {
+    background-color: rgb(221, 220, 220);
+  }
+  .totalScore {
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+    color: black;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  #endPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  }
+  #endPage h1 {
+    margin: 0;
+    padding: 10px;
+  }
+  #TimeUpPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  #TimeUpPage h1, #TimeUpPage h2, #TimeUpPage h3 {
+    text-align: center;
+  }
+  .exitButton {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+.exitButton:hover {
+    background-color: #45a049;
+}
+.buttonContainer {
+    display: flex; /* Use flexbox to align buttons side by side */
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 50px; /* Add some spacing between the buttons */
+    margin-top: 20px; /* Optional: margin for spacing above the container */
+  }
