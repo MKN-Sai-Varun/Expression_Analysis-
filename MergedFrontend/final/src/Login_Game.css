@@ -1,0 +1,114 @@
+.Login_Page_Flex{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100vh;
+  background-image: url('./Assets/Final_F.jpg'); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+#Login_Form_Layout {
+  width: 350px;
+  height: 500px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid grey;
+  border-radius: 30px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  margin-right: 7%;
+}
+#LoginForm{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+#loginForm h1 {
+  font-size:50px;
+  text-align: center;
+}
+.input-box{
+  width:200px;
+  margin-top:30px;
+}
+
+.Labels {
+  font-size: 17px;
+  font-weight:600;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 7px;
+  background: #F4F6FC;
+  outline: none;
+  border: 0.2px solid;
+  border-radius: 5px;
+  font-size: 17px;
+}
+.remember_forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 5px;
+  margin-top: 40px;
+}
+
+.remember_forgot label input {
+  margin: 3px;
+  font-size: large;
+}
+
+.remember_forgot button {
+  border-radius: 5px;
+  width: 160px;
+  border: 0.5px solid black;
+  height: 30px;
+  background: #F4F6FC;
+}
+
+.remember_forgot button:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
+.formSubmitButton{
+  display: flex;
+  justify-content: center;
+  margin: 40px 0 25px;
+}
+
+.formSubmitButton button {
+  width: 150px;
+  font-size: 20px;
+  font-family: 'Jost', sans-serif;
+  color: hsl(0, 0%, 0%);
+  border-radius: 5px;
+  border: solid black;
+  height: 50px;
+  background-color: hsl(0, 0%, 100%);
+}
+
+.formSubmitButton button:hover {
+  background-color: hsla(210, 50%, 60%, 0.85);
+  cursor: pointer;
+}
+.passwordContainer {
+  position: relative;
+}
+
+.passwordContainer .eye {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.passwordContainer .eye i {
+  font-size: 16px;
+}

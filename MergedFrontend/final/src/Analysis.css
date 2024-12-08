@@ -1,0 +1,89 @@
+
+/* Two */
+.rightContainer, .Overall, .instancesList {
+    transition: flex-basis 2s ease; 
+    border-radius: 10px;
+    border: 1.5px solid black;
+}
+.leftContainer{
+    height:87vh;
+    transition:flex-basis 2s ease;
+    flex-direction:column;
+    display:flex;
+    gap:1vh;
+    margin:0px;
+}
+.rightContainer{
+    /* height:87vh; */
+    margin-right:15px;
+    margin-bottom:15px;
+}
+.Head{
+    flex-basis:12vh;
+    margin:0px
+}
+
+
+.Overall {
+    flex-basis:12vh !important;
+    font-size: 50px;
+    margin-left:10px;
+    padding-left:10px;
+}
+.analysisPageLayout {
+    display: flex;
+    flex-direction: column;
+    gap:1vh;
+    margin:0px;
+    padding:0px;
+}
+
+.Flex {
+    flex-basis:87vh;
+    display: flex;
+    gap: 1vw;
+    padding:0px;
+    margin:0px;
+}
+.instancesList{
+    display:flex;
+    flex-direction:column;
+    flex:0 1 auto;
+    gap:5px;
+    padding:10px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    justify-content:space-around;
+    margin-left:10px;
+    margin-bottom:15px;
+}
+.rightFlex:hover {
+    border: 2px solid black;
+}
+
+.Overall:hover {
+    border: 2px solid black;
+}
+
+.instancesList:hover {
+    border: 2px solid black;
+}
+
+.instancesList::-webkit-scrollbar {
+    width: 12px; 
+}
+
+.instancesList:-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 15px;
+}
+
+.instancesList::-webkit-scrollbar-thumb {
+    background-color: black; 
+    border-radius: 10px;     
+    border: 2px solid #ccc;  
+}
+
+.instancesList:-webkit-scrollbar-thumb:hover {
+    background-color: #555; 
+}
