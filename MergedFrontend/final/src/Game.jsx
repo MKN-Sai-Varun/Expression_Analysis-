@@ -438,7 +438,7 @@ function Game() { // Accept onExit as a prop
         </div>
       )}
       {currentPage === 'end' && (
-          <div id="endPage">
+          <div id="endPage" className='page-container'>
             <h1>CONGRATULATIONS!</h1>
             <h1>Game Completed</h1>
             <div className="totalScore">Score: {score}/5</div>
@@ -450,7 +450,7 @@ function Game() { // Accept onExit as a prop
           </div>
         )}
         {currentPage === 'TimeUp' && (
-          <div id="TimeUpPage">
+          <div id="TimeUpPage" className='page-container'>
             <h1>Time's Up</h1>
             <h2>You ran out of time. Game Over</h2>
             <h3>Score: {score}/5</h3>
