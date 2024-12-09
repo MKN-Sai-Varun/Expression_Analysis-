@@ -1,8 +1,7 @@
 import React from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import "./Pdf.css";
-
+import images from "./image.js";
 const Pdf = () => {
   const downloadPartialPDF = () => {
     const content = document.getElementById("pdfpart"); // Target specific element
@@ -20,10 +19,11 @@ const Pdf = () => {
   };
 
   return (
-    <button onClick={downloadPartialPDF} type="button" class="btn btn-primary">
-      <i className="fas fa-print"></i>
-      PDF
-    </button>
+    <button type="button" className="Download"><span>Download PDF</span><img src={images.Download} style={{height:"100%"}}></img></button>
+    // <button onClick={downloadPartialPDF} type="button" class="btn btn-primary">
+    //   <i className="fas fa-print"></i>
+    //   PDF
+    // </button>
   );
 };
 
