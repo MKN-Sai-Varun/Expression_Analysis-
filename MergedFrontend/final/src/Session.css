@@ -3,28 +3,28 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    /* border:1.5px solid black; */
+    border:1.5px solid #112240;
     padding:5px;
-    /* border-radius:5px; */
     flex-basis:50px;
-    /* border-radius:10px; */
-    background-color:#7cc0c8;
+    background-color:#344f73;
 }
 .sessionId{
     display:flex;
     flex-basis:15vw;
     justify-content:center;
     border:1px solid black;
-    /* border-radius:5px; */
+    color: black;
+    border-radius:5px;
     background-color:white;
 }
 .userName{
     display:flex;
     flex-direction:column;
+    text-align: center;
     flex-basis:30vw;
-    padding-left:2vw;
+    color: black;
     border:1px solid black;
-    /* border-radius:5px; */
+    border-radius:5px;
     padding-top:2px;
     padding-bottom:2px;
     background-color:white;
@@ -32,4 +32,6 @@
 .fetchView{
     color:white;
     display:flex;
+    flex-basis: 15vw;
+    justify-content:center;
 }

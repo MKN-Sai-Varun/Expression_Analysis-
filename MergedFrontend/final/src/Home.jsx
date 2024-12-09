@@ -50,7 +50,7 @@ function Home() {
   return (
     <div className="adminPageLayout">
       {/* Navbar */}
-
+      
       {/* Main Content */}
       <div className="adminPageHeading">
         <div>Dashboard</div>
@@ -68,7 +68,7 @@ function Home() {
           />
         </form>
         <a className="navbar-brand tag" style={{fontSize:"20px",display:"flex",
-    justifyContent:"center",height:"10vh"}}>Search Bar</a>
+    justifyContent:"center",height:"10vh", color:"white"}}>Search Bar</a>
         
       </nav>
         {filteredDatabase.map((list_doc, index1) => (
