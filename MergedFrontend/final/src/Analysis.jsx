@@ -161,7 +161,7 @@ function Analysis() {
             ))}
           </div>
         </div>
-        <div className="rightContainer" style={{ flexBasis: layout.rightFlexBasis }}>
+        <div className="rightContainer" id="pdfpart" style={{ flexBasis: layout.rightFlexBasis }}>
           {over ? <Overall total={session} onClick={detailed} text={text}/> : <Instances data={rd} onClick={detailed} text={text}/>}
         </div>
       </div>
