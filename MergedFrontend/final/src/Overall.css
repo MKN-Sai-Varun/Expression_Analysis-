@@ -1,0 +1,16 @@
+.OaHeading1{
+    font-size:1.7rem;
+    text-align:center;
+
+}
+.Download{
+    display:flex;
+    height:2.5rem;
+    align-items:center;
+    border:1.5px solid black;
+    border-radius:10px;
+    padding-left:0.5rem;
+    padding-right:0.5rem;
+    
+
+}
