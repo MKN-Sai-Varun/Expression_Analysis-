@@ -6,7 +6,7 @@ dotenv.config();
 
 const mongoUri = process.env.MONGO_URI;
 
-let resentUser=null;
+ global.resentUser=null;
 
 // Function to initialize Session ID if not present in MongoDB 
 export const initializeCounter = async () => {
@@ -126,7 +126,7 @@ export async function waitForData(sessionCounter) {
   
       const database = client.db('test');
       const collection = database.collection('datas');
-      if(!resentUser){
+      if(!global.resentUser){
         console.log("Either not logged in or user data not received")
       }
       else{
@@ -139,7 +139,7 @@ export async function waitForData(sessionCounter) {
             TimeStamps.push(TimeString);
             date.setMinutes(date.getMinutes()+10);
         }
-        const result=await collection.insertOne({Username:resentUser.Username,Password:resentUser.Password,Session_Id:sessionCounter,Time_stamps:TimeStamps,Game_screenshots:pathsArray});
+        const result=await collection.insertOne({Username:global.resentUser.Username,Password:global.resentUser.Password,Session_Id:sessionCounter,Time_stamps:TimeStamps,Game_screenshots:pathsArray});
         console.log("Data has been inserted Successfully",result.insertedId);
       }
       // const result= await collection.updateOne({session:sessionCounter},{$set:{Screenshot_path:pathsArray}},{upsert:true});

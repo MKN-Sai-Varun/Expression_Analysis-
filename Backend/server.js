@@ -72,7 +72,7 @@ let sessionImagePaths = [];
 app2.use('/', screenshotRoutes({ getCurrentCounterValue, screenshotCount, screenshotDir, sessionImagePaths }));
 
 
-app2.use('/receive-data',data);
+app2.use('/',data);
 
 // Route for saving screenshot paths
 app2.use('/', screenshotPaths({ getCurrentCounterValue,   sessionImagePaths }));
