@@ -4,6 +4,7 @@
     transition: flex-basis 2s ease; 
     border-radius: 10px;
     border: 1.5px solid black;
+    
 }
 .leftContainer{
     height:87vh;
@@ -20,7 +21,10 @@
 }
 .Head{
     flex-basis:12vh;
-    margin:0px
+    margin:0px;
+    font-size:4rem;
+    padding-left:1rem;
+    border-bottom:2px solid black;
 }
 
 
