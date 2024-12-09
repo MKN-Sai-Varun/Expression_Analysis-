@@ -8,12 +8,12 @@
 .gameScreenshot{
     flex-basis:30vh;
     width:25vw;
-    border:2px solid black;
+    border:2px solid #f1f1f1;
 }
 .playerImage{
     flex-basis:30vh;
     width:25vw;
-    border:2px solid black;
+    border:2px solid #f1f1f1;
 }
 .Flex3{
     padding-left:30px;
