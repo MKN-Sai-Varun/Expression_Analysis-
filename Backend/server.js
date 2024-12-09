@@ -6,6 +6,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { processImages } from './Model.mjs';
 import { MongoClient } from 'mongodb';
+import Counter from './models/Counter.js'; // Import Counter model
+import updateCounter from './routes/update_counter.js';
 import { getSystemErrorMap } from 'util';
 
 dotenv.config();
@@ -34,14 +36,11 @@ app2.use(cors(corsOptions));
 app2.use(express.json({ limit: '50mb' }));
 app2.use('/ss',express.static(path.join(process.cwd(),'screenshots')));
 
-// MongoDB Schema and Connection
-const CounterSchema = new mongoose.Schema({
-  value: { type: Number, default: 0 },
-});
-const Counter = mongoose.model('Counter', CounterSchema, 'counters');
 mongoose.connect(mongoUri1)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Could not connect to MongoDB:', err));
+
+  app1.use('/', updateCounter); // Route for updating counter
 
 // Function to initialize Session ID if not present in MongoDB 
 const initializeCounter = async () => {
@@ -100,21 +99,6 @@ async function waitForData(sessionCounter) {
   return false;  // Data was not inserted in the given attempts
 }
 
-// Function to Increment the Session ID by 1 in MongoDB everytime a session is played
-app1.post('/update-counter', async (req, res) => {
-  console.log("Update session by 1 method called.");
-  try {
-    const counterDoc = await Counter.findOneAndUpdate(
-      {}, // Match the first document (or create a new one if none exists)
-      { $inc: { value: 1 } }, // Increment the value field by 1
-      { new: true, upsert: true } // Return the updated document
-    );
-    res.status(200).json({ message: 'Counter updated successfully', counter: counterDoc.value });
-  } catch (error) {
-    console.error("Error updating counter:", error);
-    res.status(500).json({ error: 'Failed to update counter' });
-  }
-});
 
 // Directory for saving images
 const uploadDir = path.join(process.cwd(), 'uploads');
