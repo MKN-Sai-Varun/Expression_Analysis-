@@ -6,7 +6,7 @@ dotenv.config();
 
 const mongoUri = process.env.MONGO_URI;
 
- global.resentUser=null;
+ global.resentUser=null; 
 
 // Function to initialize Session ID if not present in MongoDB 
 export const initializeCounter = async () => {
