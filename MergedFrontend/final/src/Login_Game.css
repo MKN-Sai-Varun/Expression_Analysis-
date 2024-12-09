@@ -12,14 +12,16 @@
   width: 100vw;
   box-sizing: border-box;
   overflow-y: auto;
+  backdrop-filter: blur(6px); /* Adds a blurred effect for a modern touch */
 }
 
 #loginPage {
   width: 90%;
   max-width: 400px;
   padding: 40px 30px;
-  background-color: rgba(255, 255, 255, 0.95);
-  border: 1px solid #ccc;
+  background-color: rgba(255, 255, 255, 0.75); /* Transparent white for glassmorphism */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(245, 245, 245, 0.8));
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Soft border */
   border-radius: 30px;
   box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -28,14 +30,15 @@
   margin-right: 7%; /* Keep the container on the right side */
   margin-left: auto; /* Push the container to the right */
   height: auto; /* Let the height adjust dynamically */
+  backdrop-filter: blur(10px); /* Enhances the glass effect */
 }
+
 
 
 #loginForm h1 {
   font-size: 40px;
   text-align: center;
   color: #333;
-  /*margin-bottom: 10px;*/
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
@@ -52,6 +55,7 @@
   color: #555;
   display: block;
   margin-bottom: 5px;
+  font-family: 'Roboto', sans-serif; /* Clean and readable font */
 }
 
 .input-box input {
@@ -63,14 +67,16 @@
   border-radius: 5px;
   font-size: 14px;
   color: #333;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, transform 0.2s ease-in-out;
 }
 
 .input-box input:focus {
   border-color: #6366f1;
   background-color: #ffffff;
   box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+  transform: scale(1.02);
 }
+
 
 .input-box input:not(:placeholder-shown) {
   background-color: #e6f7ff;
@@ -139,6 +145,7 @@
   background-color: hsla(210, 50%, 60%, 0.85);
   cursor: pointer;
   transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
 }
 #loginForm {
   display: flex;
@@ -179,27 +186,6 @@
 
   .submit-button button {
     font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  #loginPage {
-    width: 90%;
-    padding: 20px 15px;
-  }
-
-  #loginForm h1 {
-    font-size: 20px;
-  }
-
-  .input-box input {
-    font-size: 12px;
-    padding: 8px;
-  }
-
-  .submit-button button {
-    font-size: 12px;
-    height: 45px;
   }
 }
 
