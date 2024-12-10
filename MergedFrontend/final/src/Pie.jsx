@@ -17,7 +17,7 @@ function Pie({ emotions }) {
   emotions.forEach((data) => {
     // Add emoji beside the label
     if (data.label === "angry") {
-      arr1.push("angry 😠");
+      arr1.push("angry 😡");
       arr3.push("red");
     } else if (data.label === "sad") {
       arr1.push("sad 😢");

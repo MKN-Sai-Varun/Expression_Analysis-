@@ -5,6 +5,7 @@ import './Session.css';
 function Sessions({ session, setCurrentSession }) {
   const [name,setName]=useState("Fetch Analysis");//Intial name-->Fetch Analysis
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(()=>{
     if (session.Emotions){
@@ -12,6 +13,7 @@ function Sessions({ session, setCurrentSession }) {
     }
   },[])
   const handleFetchAnalysis = async () => {
+    setLoading(true);
     if(name==="View Analysis"){
       setCurrentSession(session);
       navigate('/Analysis_Page',{state:{session}});
@@ -31,6 +33,9 @@ function Sessions({ session, setCurrentSession }) {
         }
       } catch (error) {
         console.error('Error triggering model:', error);
+      }
+      finally {
+        setLoading(false); // Stop loading once the fetch is complete (success or failure)
       }
     }
     // if(name==="Fetch Analysis"){
@@ -55,11 +60,18 @@ function Sessions({ session, setCurrentSession }) {
   };
 
   return (
+    <>
+    {loading && (
+      <div className="loading-overlay">
+        <div className="spinner"></div>
+      </div>
+    )}
     <div className="sessionContainer" >
       <div className="sessionId">Session_Id: {session.Session_Id}</div>
       <div className="userName"><div>Username: {session.Username}</div></div>
       <button type="button" className="btn btn-success fetchView " onClick={handleFetchAnalysis}>{(!session.Emotions)?name:"View Analysis"}</button>
     </div>
+    </>
   );
 }
 export default Sessions;

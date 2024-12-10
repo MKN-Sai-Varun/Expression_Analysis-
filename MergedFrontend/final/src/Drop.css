@@ -16,14 +16,17 @@
     
 
 }
-.dropContent{
-    max-height:0;
-    overflow:hidden;
-    transition:max-height 0.3s ease;
+.dropContent {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
 }
-.dropContent.open{
-    max-height:100vh;
+
+.dropContent.open {
+    max-height: 100vh; /* Fully expand */
+    overflow-y: auto;  /* Enable scrolling for large content */
 }
+
 .Name{
     margin-left:20px;
 }

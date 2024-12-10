@@ -19,3 +19,11 @@
     padding-left:30px;
     padding-right:30px;
 }
+.Pie{
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    /* padding-bottom: 155px; */
+    /* padding-top: 10px; */
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}

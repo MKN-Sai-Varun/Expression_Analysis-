@@ -27,12 +27,13 @@ function BC({ labels, dataPoints }) {
 
   const chartData = labels.map((label, index) => {
     const colors = {
-      angry: "var(--color-chrome)",
-      sad: "var(--color-safari)",
-      happy: "var(--color-firefox)",
-      surprise: "var(--color-edge)",
-      fear: "var(--color-other)",
-      neutral: "var(--color-opera)",
+      angry: "red",        
+      sad: "blue",         
+      happy: "limegreen",     
+      surprise: "gold", 
+      fear: "orange",       
+      neutral: "gray" ,
+      disgust: "green",     
     };
     return {
       browser: label,
@@ -40,10 +41,31 @@ function BC({ labels, dataPoints }) {
       fill: colors[label] || "var(--color-brave)", // Default to Brave color if no match
     };
   });
+  // Custom Tooltip Component
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div
+          style={{
+            backgroundColor: "white",
+            color: "black",
+            border: "1px solid gray",
+            borderRadius: "5px",
+            padding: "10px",
+            fontSize: "14px",
+          }}
+        >
+          <p style={{ margin: 0 }}>{label}</p>
+          <p style={{ margin: 0 }}>Level: {payload[0].value}</p>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div style={{ width: "100%" }}>
-      <p style={{marginLeft:"5vw",marginTop:"1vh",fontSize:"1.7rem"}}>Emotion-Bar</p>
+      <p style={{marginLeft:"5vw",marginTop:"1vh",fontSize:"2rem"}}>Emotion-Bar</p>
       <BarChart
         width={dimensions.width}
         height={dimensions.height}
@@ -57,9 +79,10 @@ function BC({ labels, dataPoints }) {
           tickLine={false}
           axisLine={false}
           tickMargin={5}
+          tick={{ fill: "white" }}
         />
         <XAxis type="number" hide />
-        <Tooltip />
+        <Tooltip content={<CustomTooltip />} />
         <Bar dataKey="level" layout="vertical" radius={5} />
       </BarChart>
     </div>
@@ -406,3 +429,6 @@ export default BC;
 // };
 
 // export default BarChart;
+
+
+
