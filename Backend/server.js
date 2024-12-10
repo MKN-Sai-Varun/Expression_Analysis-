@@ -53,7 +53,7 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 // Variables for tracking uploads 
-let imageCount = 0;
+global.imageCount = 0;
 let imagePaths = [];
 
 // Routes for `app1` (Stores images in uploads folder)
@@ -66,7 +66,7 @@ const screenshotDir = path.join(process.cwd(), 'screenshots');
 if (!fs.existsSync(screenshotDir)) fs.mkdirSync(screenshotDir, { recursive: true });
 
 //Variables for tracking screenshots
-let screenshotCount = 0;
+global.screenshotCount = 0;
 let sessionImagePaths = [];
 
 // Route for saving screenshots
