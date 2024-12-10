@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start-all": "npx concurrently \"node login.js\" \"node server.js\" \"node app.js\" "
   },
   "keywords": [],
   "author": "",
@@ -24,5 +25,8 @@
     "nodemon": "^3.1.7",
     "socket.io": "^4.8.1"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
 }
