@@ -1,4 +1,4 @@
-.Flex_Play {
+/* .Flex_Play {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,4 +10,150 @@
     width:15vw;
     height:10vh;
     font-size: 45px !important;
+} */
+ /* General styles for the game */
+/* Play Button Page */
+.playButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;  /* Full height to ensure vertical centering */
+    background-image: url('./Assets/PlayBackground2.png');
+    background-size: cover;
+    background-position: center;
+    flex-direction: column;
+    /*margin-top: 0%;*/
+    margin-top: 0;
+    overflow: hidden; /* Prevent scrolling */
+    padding: 20px;
+    box-sizing: border-box;
 }
+
+.playButton button {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: #00BF63;
+    border: 2px solid black; /* Adjusted border for consistency */
+    border-radius: 12px;
+    width: 13%;
+    /*height: 10%;*/
+    height: auto;
+    padding: 15px; /* Padding for consistent appearance */
+    font-size: 2rem; /* Use relative font-size for scalability */
+    font-size: 300%;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth motion for hover effects */
+}
+
+.playButton button:hover {
+    background-color: #01ae5a; /* Slightly darker green for hover */
+    transform: scale(1.1); /* Slightly expand the button */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Add shadow to enhance the button look */
+}
+
+.playButton button:active {
+    background-color: #019a50; /* Even darker green for active state */
+    transform: scale(0.95); /* Slightly shrink to simulate press */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for pressed state */
+}
+
+
+/* Media Queries for Responsiveness */
+
+/* For small devices (phones) */
+@media (max-width: 480px) {
+    .playButton {
+        padding: 10px;
+    }
+
+    .playButton button {
+        width: 80%; /* Full-width button on small screens */
+        font-size: 1.5rem;
+        padding: 12px;
+    }
+}
+
+/* For medium devices (tablets) */
+@media (max-width: 768px) {
+    .playButton button {
+        width: 50%; /* Adjust width for medium screens */
+        font-size: 2rem;
+    }
+}
+
+/* For large devices (desktops and larger) */
+@media (min-width: 1024px) {
+    .playButton button {
+        width: 15%; /* Adjust width for larger screens */
+        font-size: 3rem;
+    }
+}
+
+.images{
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.6%;
+    z-index: 1; /* Keep it above the background */
+    position: absolute; /* Positioning it absolutely */
+    top: 0; /* Align it to the top of the parent */
+    left: 0;
+}   
+#image.selected {
+    background-color: grey;
+}
+#image {
+    /* margin-top: 15px; */
+    background-color: invisible;
+    width: 60px;
+    height: 60px;
+    justify-content: space-between;
+    margin-top: 15px;
+    margin-left: 10px;
+    width: 50px;
+    height: 50px;
+}
+#image:hover {
+    border: 2px solid black;
+    cursor: pointer;
+}
+.analysis-button {
+    background-color: #008CBA; /* Blue background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.analysis-button:hover {
+    background-color: #007BB5;
+}
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .spinner {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

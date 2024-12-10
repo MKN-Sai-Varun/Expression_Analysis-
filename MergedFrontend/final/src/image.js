@@ -9,7 +9,6 @@ import leo from './Assets/Lepord.png';
 import skill from './Assets/Skill1.png';
 import tiger from './Assets/Tiger.png';
 import Zebra from './Assets/Zebra.png';
-import Download from "./Assets/download.png";
 const images = {
     parrot,
     lion,
@@ -22,7 +21,6 @@ const images = {
     leo,
     skill,
     Bear,
-    Download
     
   };
   
