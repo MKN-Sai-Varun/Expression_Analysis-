@@ -27,9 +27,9 @@ const uploadsRoute = ({ getCurrentCounterValue, imageCount, imagePaths }) => {
       }
   
       // Increment image count
-      imageCount++;
+      global.imageCount++;
   
-      const filename = `Session${counterValue}_Image${imageCount}.png`;
+      const filename = `Session${counterValue}_Image${global.imageCount}.png`;
       const filepath = path.join(uploadDir, filename);
   
       const base64Data = base64Image.replace(/^data:image\/png;base64,/, "");

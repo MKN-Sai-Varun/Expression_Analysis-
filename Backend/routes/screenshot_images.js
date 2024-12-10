@@ -25,9 +25,9 @@ const screenshotRoutes = ({ getCurrentCounterValue, screenshotCount, screenshotD
       return res.status(500).json({ error: 'Failed to access counter' });
     }
 
-    screenshotCount++;
+    global.screenshotCount++;
 
-    const filename = `Session${counterValue}_Screenshot${screenshotCount}.png`;
+    const filename = `Session${counterValue}_Screenshot${global.screenshotCount}.png`;
     const filepath = path.join(screenshotDir, filename);
 
     fs.writeFile(filepath, screenshotData.replace(/^data:image\/png;base64,/, ""), 'base64', (err) => {
