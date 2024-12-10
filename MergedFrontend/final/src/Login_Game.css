@@ -1,9 +1,9 @@
-.background {
+.Login_Page_Flex{
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   height: 100vh;
-  background-image: url('./Assets/Final_F.jpg');
+  background-image: url('./Assets/Final_F.jpg'); 
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -11,93 +11,97 @@
   padding: 0;
   width: 100vw;
   box-sizing: border-box;
-  overflow-y: auto;
-  backdrop-filter: blur(6px); /* Adds a blurred effect for a modern touch */
+  overflow: hidden;
 }
-
-#loginPage {
-  width: 90%;
-  max-width: 400px;
-  padding: 40px 30px;
-  background-color: rgba(255, 255, 255, 0.75); /* Transparent white for glassmorphism */
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(245, 245, 245, 0.8));
-  border: 1px solid rgba(255, 255, 255, 0.5); /* Soft border */
+#Login_Form_Layout {
+  width: 350px;
+  height: 500px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid grey;
   border-radius: 30px;
-  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Add spacing between sections */
-  margin-right: 7%; /* Keep the container on the right side */
-  margin-left: auto; /* Push the container to the right */
-  height: auto; /* Let the height adjust dynamically */
-  backdrop-filter: blur(10px); /* Enhances the glass effect */
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  margin-right: 7%;
 }
-
-
-
+#LoginForm{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
 #loginForm h1 {
-  font-size: 40px;
+  font-size:50px;
   text-align: center;
-  color: #333;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.input-box{
+  width:200px;
+  margin-top:30px;
 }
 
-.input-box {
-  margin-top: 20px;
-}
-.input-box + .input-box {
-  margin-top: 15px; /* Space between consecutive input fields */
-}
-
-.input-box label {
+.Labels {
   font-size: 17px;
-  font-weight: 500;
-  color: #555;
-  display: block;
-  margin-bottom: 5px;
-  font-family: 'Roboto', sans-serif; /* Clean and readable font */
+  font-weight:600;
 }
 
 .input-box input {
   width: 100%;
-  padding: 10px;
-  background: #f9fafc;
+  padding: 7px;
+  background: #F4F6FC;
   outline: none;
-  border: 1px solid black;
+  border: 0.2px solid;
   border-radius: 5px;
-  font-size: 14px;
-  color: #333;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, transform 0.2s ease-in-out;
+  font-size: 17px;
+}
+.remember_forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 5px;
+  margin-top: 40px;
 }
 
-.input-box input:focus {
-  border-color: #6366f1;
-  background-color: #ffffff;
-  box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
-  transform: scale(1.02);
+.remember_forgot label input {
+  margin: 3px;
+  font-size: large;
 }
 
-
-.input-box input:not(:placeholder-shown) {
-  background-color: #e6f7ff;
-  border-color: #3399ff;
-  box-shadow: 0 0 5px rgba(51, 153, 255, 0.4);
+.remember_forgot button {
+  border-radius: 5px;
+  width: 160px;
+  border: 0.5px solid black;
+  height: 30px;
+  background: #F4F6FC;
 }
 
-.input-box input::placeholder {
-  color: #9ca3af;
-  font-style: italic;
+.remember_forgot button:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
+.formSubmitButton{
+  display: flex;
+  justify-content: center;
+  margin: 40px 0 25px;
 }
 
-.input-box input:focus::placeholder {
-  color: rgba(0, 0, 0, 0);
+.formSubmitButton button {
+  width: 150px;
+  font-size: 20px;
+  font-family: 'Jost', sans-serif;
+  color: hsl(0, 0%, 0%);
+  border-radius: 5px;
+  border: solid black;
+  height: 50px;
+  background-color: hsl(0, 0%, 100%);
 }
 
-.password-container {
+.formSubmitButton button:hover {
+  background-color: hsla(210, 50%, 60%, 0.85);
+  cursor: pointer;
+}
+.passwordContainer {
   position: relative;
 }
 
-.password-container .eye {
+.passwordContainer .eye {
   position: absolute;
   top: 50%;
   right: 10px;
@@ -105,145 +109,6 @@
   cursor: pointer;
 }
 
-.remember-forgot {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.remember-forgot a {
-  font-size: 14px;
-  color: #6366f1;
-  text-decoration: none;
-}
-
-.remember-forgot a:hover {
-  text-decoration: underline;
-}
-
-.submit-button {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.submit-button button {
-  width: 100%;
-  max-width: 200px;
-  font-size: 25px;
-  font-family: Arial, Helvetica, sans-serif;
-  color: hsl(0, 0%, 0%);
-  border-radius: 5px;
-  border: solid black;
-  height: 50px;
-  background-color: hsl(0, 0%, 100%);
-  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
-}
-
-.submit-button button:hover {
-  background-color: hsla(210, 50%, 60%, 0.85);
-  cursor: pointer;
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
-}
-#loginForm {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* Adds consistent spacing between sections */
-}
-
-#registerid{
-  background: none;
-  border: none;
-  color: #007bff; /* Use a color to make it look like a link */
+.passwordContainer .eye i {
   font-size: 16px;
-  cursor: pointer;
-  text-decoration: none; /* Remove underline initially */
-  padding: 0; /* Remove extra padding */
-  transition: text-decoration 0.3s ease, color 0.3s ease;
-}
-
-#registerid:hover {
-  text-decoration: underline; /* Add underline on hover */
-  color: #0056b3; /* Darken the color slightly on hover */
-}
-
-/* Media Queries */
-@media (max-width: 768px) {
-  #loginPage {
-    padding: 30px 20px;
-    
-  }
-
-  #loginForm h1 {
-    font-size: 24px;
-  }
-
-  .input-box input {
-    font-size: 13px;
-  }
-
-  .submit-button button {
-    font-size: 14px;
-  }
-}
-
-
-@media (max-width: 480px) {
-  #loginPage {
-    width: 95%;
-    padding: 20px 15px;
-    margin-right: 2%; /* Reduce margin to fit within the viewport */
-  }
-
-  #loginForm h1 {
-    font-size: 30px;
-  }
-
-  .input-box input {
-    font-size: 12px;
-    padding: 8px;
-  }
-
-  .submit-button button {
-    font-size: 12px;
-    height: 45px;
-  }
-}
-
-/* Adjustments for very narrow windows */
-@media (max-height: 400px) {
-  .background {
-    align-items: flex-start; /* Align to top to prevent cutoff */
-    padding: 20px; /* Add padding to avoid clipping */
-  }
-
-  #loginPage {
-    margin-top: 10px;
-    padding: 15px;
-  }
-}
-
-/* Adjustments for extremely small screens (square or very narrow dimensions) */
-@media (max-width: 320px) {
-  #loginPage {
-    width: 100%; /* Utilize full width */
-    padding: 15px 10px;
-    margin: 0 auto; /* Center align */
-  }
-
-  #loginForm h1 {
-    font-size: 30px;
-  }
-
-  .input-box input {
-    font-size: 11px;
-    padding: 6px;
-  }
-
-  .submit-button button {
-    font-size: 11px;
-    height: 40px;
-  }
 }

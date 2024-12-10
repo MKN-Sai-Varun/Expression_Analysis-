@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
 import './Login_Game.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -75,12 +75,12 @@ function Login_Game() {
 
   return (
     <>
-        <div className="background">
-          <div id="loginPage">
+        <div className="Login_Page_Flex">
+          <div id="Login_Form_Layout">
             <form id="loginForm" onSubmit={handleLogin}>
               <h1>Login</h1>
               <div className="input-box">
-                <label>Username:</label>
+                <label className="Labels">Username:</label>
                 <input
                   id="user"
                   type="text"
@@ -91,27 +91,26 @@ function Login_Game() {
                 />
               </div>
               <div className="input-box">
-              <label>Password:</label>
-              <div className="password-container">
-              <input
-              type={passwordVisible ? "text" : "password"} // Show password when visible
-              id="password"
-              placeholder="Password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              />
-              <span id="togglePassword" className="eye" onClick={togglePasswordVisibility}>
-              {/* Show faEyeSlash when the password is visible and faEye when hidden */}
-              <FontAwesomeIcon icon={passwordVisible ? faEye : faEyeSlash} />
-              </span>
-             </div>
-            </div>
-              <div className="remember-forgot">
+                <label className="Labels">Password:</label>
+                <div className="passwordContainer">
+                  <input
+                    type={passwordVisible ? "text" : "password"}
+                    id="password"
+                    placeholder="Password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <span id="togglePassword" className="eye" onClick={togglePasswordVisibility}>
+                    <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
+                  </span>
+                </div>
+              </div>
+              <div className="remember_forgot">
                 <label><input type="checkbox" />Remember me</label>
                 <button type="button">Forgot Password?</button>
               </div>
-              <div className="submit-button">
+              <div className="formSubmitButton">
                 <button type="submit" className="button">Login</button>
               </div>
               {error && <p style={{ color: 'red' }}>{error}</p>}

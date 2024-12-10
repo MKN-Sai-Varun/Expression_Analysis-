@@ -3,8 +3,6 @@ import BC from "./Bar.jsx";
 import "./Instances.css";
 import { Doughnut } from 'react-chartjs-2';
 import Pie from "./Pie.jsx";
-import images from "./image.js";
-import Pdf from "./Pdf.jsx";
 function Instances({data,onClick,text}){
     const pi=data.pi;
     const ts=data.ts;
@@ -61,7 +59,7 @@ function Instances({data,onClick,text}){
         <button type="button" class="btn btn-primary" onClick={async()=>{
             onClick();
         }}>{bu}</button>
-        <Pdf/>
+        <button type="button" class="btn btn-dark">PDF</button>
         </div>
         
     </div>
