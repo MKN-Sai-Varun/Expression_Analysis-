@@ -3,7 +3,7 @@ import express from 'express';
 import {MongoClient,ObjectId} from "mongodb";
 import {Server} from 'socket.io';
 import http from 'http';
-import uri from "./atlas_uri.js";
+import uri from "../MergedFrontend/atlas_uri.js";
 // import data from './output.json' assert {type: 'json'};
 const client= new MongoClient(uri);
 const dbname = "test";
