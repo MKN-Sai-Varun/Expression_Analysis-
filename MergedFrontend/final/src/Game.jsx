@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './styleGame.css';
+import './Game.css';
 import image from './Assets/images.js';
 import { triggerConfetti, stopConfetti } from './Confetti.js';
 function Game({ onExit , onGameComplete}) { // Accept onExit as a prop
@@ -120,7 +120,7 @@ function Game({ onExit , onGameComplete}) { // Accept onExit as a prop
   }, [currentPage, onGameComplete]);
 
   return (
-    <>
+    <div className="backGround">
       {currentPage.startsWith('question') && (
         <div className="status">
           <div className="timer">
@@ -262,8 +262,8 @@ function Game({ onExit , onGameComplete}) { // Accept onExit as a prop
             {currentPage === 'TimeUp'}
           </div>
         )}
-    </>
+    </div>
   );
 }
 
-export default Game; 
+export default Game;

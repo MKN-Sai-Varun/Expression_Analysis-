@@ -12,6 +12,7 @@ function Login_Game() {
   const [error, setError] = useState('');//login
   const [passwordVisible, setPasswordVisible] = useState(false);//login
   const navigate=useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -23,6 +24,7 @@ function Login_Game() {
     console.log("Username:", username);
     console.log("Password:", password);
     setError(''); // Clear any previous error messages
+    setLoading(true);
 
     try {
         const response = await axios.post('http://localhost:5000/api/auth/login', {
@@ -58,6 +60,9 @@ function Login_Game() {
             alert(serverErrorMessage);    // Show an alert popup for server issues
         }
     }
+    finally {
+      setLoading(false); // Set loading to false after the request completes
+    }
 };
 
   // Add a function to handle the Register button click
@@ -75,6 +80,11 @@ function Login_Game() {
 
   return (
     <>
+    {loading && (
+      <div className="loading-overlay">
+        <div className="spinner"></div>
+      </div>
+    )}
         <div className="background">
           <div id="loginPage">
             <form id="loginForm" onSubmit={handleLogin}>

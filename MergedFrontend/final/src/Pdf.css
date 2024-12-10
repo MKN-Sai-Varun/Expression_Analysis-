@@ -1,11 +1,3 @@
-/* Headings */
-.OaHeading1 {
-    font-size: 1.7rem;
-    text-align: center;
-    color: #f1f1f1; /* Light text for headings */
-}
-
-/* Download Button */
 .Download {
     display: flex;
     height: 2.5rem;
@@ -21,7 +13,4 @@
 .Download:hover {
     background: #355c7d;
     color: #f1f1f1;
-}
-.App{
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }

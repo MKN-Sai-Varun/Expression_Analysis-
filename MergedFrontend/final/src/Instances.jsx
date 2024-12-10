@@ -16,6 +16,7 @@ function Instances({data,onClick,text}){
         l_align:"center",
         l_fb:"100%",
     });
+    const [pad,setPad]=useState({top:"0px",bottom:"0px"});
     const [pieshow,setPieShow]=useState(false)
     const labels=[];
     const dataPoints=[];
@@ -29,12 +30,14 @@ function Instances({data,onClick,text}){
             setBu("Brief Analysis");
             setTimeout(()=>{
                 setPieShow(true);
-            },300)
+            },300);
+            setPad({top:"10px",bottom:"155px"});
         }
         else if(text==="Brief Analysis"){
             setChan({dis:"block",l_align:"center",l_fb:"100%",mar:""});
             setPieShow(false);
-            setBu("Detailed Analysis")
+            setBu("Detailed Analysis");
+            setPad({top:"0px",bottom:"0px"});
         }
     },[text]);
     // function change(){//Turning these into useEffects functions resolves this issue and changing activating it everytime text changes and button is clicked
@@ -58,15 +61,16 @@ function Instances({data,onClick,text}){
         
         <img src={pi} className="playerImage" alt="Player Images" style={{alignSelf:chan.l_align,marginLeft:chan.mar}}></img>
         <div style={{display:"flex",justifyContent:"space-evenly",width:"25vw"}}>
-        <button type="button" class="btn btn-primary" onClick={async()=>{
+        <button type="button" class="btn btn-outline-light" style={{height:"2.5rem"}}onClick={async()=>{
             onClick();
         }}>{bu}</button>
+        
         <Pdf/>
         </div>
         
     </div>
     <div className="Flex3">
-        <div className="Pie">{(pieshow===true)?<BC labels={labels} dataPoints={dataPoints} />:null}</div>
+        <div className="Pie" style={{paddingTop:pad.top,paddingBottom:pad.bottom}}>{(pieshow===true)?<BC labels={labels} dataPoints={dataPoints} />:null}</div>
     </div>
     </div>
     );

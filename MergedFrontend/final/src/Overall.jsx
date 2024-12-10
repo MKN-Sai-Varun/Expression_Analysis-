@@ -95,6 +95,7 @@ function Overall({total,onClick,text}){
         <Pdf/>
         </div>
         </div>
+        
         {barshow && <div className="App" style={{width:"25vw"}}>
             
             <BarChart labels={labels} dataPoints={dataPoints} />
