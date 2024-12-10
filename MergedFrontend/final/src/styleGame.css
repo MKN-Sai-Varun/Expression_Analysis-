@@ -1,4 +1,9 @@
 /* Question Pages */
+body{
+    background-image: url('./Assets/gamebackground.png');
+    background-size: cover;
+}
+
 .game {
     text-align: center;
     flex-direction: column;
