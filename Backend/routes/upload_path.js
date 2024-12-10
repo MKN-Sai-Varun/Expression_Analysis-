@@ -8,6 +8,7 @@ const router = express.Router(); // Create a new router instance
 const uploadPaths = ({ getCurrentCounterValue, imagePaths, imageCount }) => {
   router.post('/end-session1', async (req, res) => {
     let counterValue;
+    console.log("Images route called via post request.");
     try {
       counterValue = await getCurrentCounterValue();
       if (counterValue === null) {
@@ -33,9 +34,9 @@ const uploadPaths = ({ getCurrentCounterValue, imagePaths, imageCount }) => {
 
       // Check if a document already exists for the current session
       const existingDocument = await collection.findOne({ Session_Id: counterValue });
-      if (existingDocument) {
-        console.log('Document for this session already exists. Skipping insertion.');
-        return res.status(200).json({ message: 'Session already recorded in MongoDB' });
+      if (!existingDocument) {
+        console.log('Document for this session does not exists. Skipping insertion.');
+        return res.status(200).json({ message: 'Session does not exist in MongoDB' });
       }
 
       // Insert image paths if available

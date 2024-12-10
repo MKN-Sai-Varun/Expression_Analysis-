@@ -10,6 +10,7 @@ import screenshotRoutes from './routes/screenshot_images.js';
 import data from './routes/receive_data.js';
 import uploadPaths from './routes/upload_path.js';
 import screenshotPaths from './routes/screenshot_paths.js';
+import resetVariable from './routes/reset_variable.js';
 import {initializeCounter, getCurrentCounterValue} from './utility/utils.js';
 import triggerModel from './routes/triggerModel.js';
 
@@ -41,7 +42,7 @@ mongoose.connect(mongoUri1)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Could not connect to MongoDB:', err));
 
-  app1.use('/', updateCounter); // Route for updating counter
+app1.use('/', updateCounter); // Route for updating counter
 
 initializeCounter();
 
@@ -71,12 +72,12 @@ let sessionImagePaths = [];
 // Route for saving screenshots
 app2.use('/', screenshotRoutes({ getCurrentCounterValue, screenshotCount, screenshotDir, sessionImagePaths }));
 
-
 app2.use('/',data);
 
 // Route for saving screenshot paths
 app2.use('/', screenshotPaths({ getCurrentCounterValue,   sessionImagePaths }));
 
+app1.use('/',resetVariable);
 // Route to trigger model processing 
 app1.use('/',triggerModel);
 
