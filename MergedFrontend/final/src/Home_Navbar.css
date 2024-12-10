@@ -1,35 +1,35 @@
 .navbar {
-    z-index: 10; /* Ensure it appears above other elements */
-    pointer-events: auto; /* Prevent clicks on the transparent area */
-    background-color:transparent;
-  }
-  .navbar-toggler {
-    pointer-events: auto; /* Ensure the button is clickable */
-    height:50px;
-    width:100px;
-  }
-  .custom-toggler .navbar-toggler-icon {
-    background-image: none !important; /* Remove default Bootstrap background */
-    width: 30px;
-    height: 3px;
-    background-color: black;
-    position: relative;
-  }
-  
-  .custom-toggler .navbar-toggler-icon::before,
-  .custom-toggler .navbar-toggler-icon::after {
-    content: "";
-    position: absolute;
-    width: 30px;
-    height: 3px;
-    background-color: black;
-    left: 0;
-  }
-  
-  .custom-toggler .navbar-toggler-icon::before {
-    top: -10px;
-  }
-  
-  .custom-toggler .navbar-toggler-icon::after {
-    top: 10px;
-  }
+  z-index: 10; /* Ensure it appears above other elements */
+  pointer-events: auto; /* Prevent clicks on the transparent area */
+  background-color:transparent;
+}
+.navbar-toggler {
+  pointer-events: auto; /* Ensure the button is clickable */
+  height:50px;
+  width:100px;
+}
+.custom-toggler .navbar-toggler-icon {
+  background-image: none !important; /* Remove default Bootstrap background */
+  width: 30px;
+  height: 3px;
+  background-color: black;
+  position: relative;
+}
+
+.custom-toggler .navbar-toggler-icon::before,
+.custom-toggler .navbar-toggler-icon::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  background-color: black;
+  left: 0;
+}
+
+.custom-toggler .navbar-toggler-icon::before {
+  top: -10px;
+}
+
+.custom-toggler .navbar-toggler-icon::after {
+  top: 10px;
+}
