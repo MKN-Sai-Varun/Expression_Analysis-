@@ -36,7 +36,7 @@ const uploadPaths = ({ getCurrentCounterValue, imagePaths, imageCount }) => {
       const existingDocument = await collection.findOne({ Session_Id: counterValue });
       if (!existingDocument) {
         console.log('Document for this session does not exists. Skipping insertion.');
-        return res.status(200).json({ message: 'Session does not exist in MongoDB' });
+        return res.status(200).json({ message: 'Session does not exist in MongoDB.' });
       }
 
       // Insert image paths if available
