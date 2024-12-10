@@ -1,9 +1,6 @@
 import React,{useState,useEffect} from "react";
 import Pie from "./Pie.jsx";
 import BarChart from "./Bar.jsx";
-import './Overall.css';
-import images from "./image.js";
-import Pdf from "./Pdf.jsx";
 function Overall({total,onClick,text}){
     const dict=[
         {
@@ -82,20 +79,17 @@ function Overall({total,onClick,text}){
     },[text])
 
     return(
-        <div className="Flexov" style={{display:ch.dis,gap:"0px"}}>
-        <div style={{height:"70vh",width:"25vw",marginLeft:"2rem"}}>
-        <p className="OaHeading1">Top Emotions Distribution</p>
-        <div style={{height:"65vh"}}>
+        <div className="Flexov" style={{display:ch.dis,justifyContent:ch.jc}}>
+        <div style={{flexBasis:ch.bas,height:"70vh",width:"350px"}}>
         <Pie emotions={dict} />
-        </div>
         <div style={{display:"flex",justifyContent:"space-around"}}>
         <button type="button" class="btn btn-primary" onClick={async()=>{
             onClick();
         }}>{but}</button>
-        <Pdf/>
+        <button type="button" class="btn btn-dark">PDF</button>
         </div>
         </div>
-        {barshow && <div className="App" style={{width:"25vw"}}>
+        {barshow && <div className="App" style={{flexBasis:ch.bas}}>
             
             <BarChart labels={labels} dataPoints={dataPoints} />
         </div>}
