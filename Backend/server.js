@@ -54,7 +54,7 @@ if (!fs.existsSync(uploadDir)) {
 
 // Variables for tracking uploads 
 global.imageCount = 0;
-let imagePaths = [];
+global.imagePaths = [];
 
 // Routes for `app1` (Stores images in uploads folder)
 app1.use('/', uploadsRoute({ getCurrentCounterValue, imageCount, imagePaths }));

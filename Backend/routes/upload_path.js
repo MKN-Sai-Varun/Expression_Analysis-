@@ -40,9 +40,9 @@ const uploadPaths = ({ getCurrentCounterValue, imagePaths, imageCount }) => {
       }
 
       // Insert image paths if available
-      if (imagePaths.length > 0) {
-        await insertImagePaths(imagePaths, counterValue);
-        imagePaths = []; // Clear image paths after insertion
+      if (global.imagePaths.length > 0) {
+        await insertImagePaths(global.imagePaths, counterValue);
+        global.imagePaths = []; // Clear image paths after insertion
         console.log('Session images successfully saved to MongoDB and cleared from memory.');
         res.status(200).json({ message: 'Session images saved to MongoDB' });
       } else {

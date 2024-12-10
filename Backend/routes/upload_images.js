@@ -41,7 +41,7 @@ const uploadsRoute = ({ getCurrentCounterValue, imageCount, imagePaths }) => {
   
         // Generate relative path for MongoDB storage
         const relativePath = `http://localhost:7000/pi/${filename}`;
-        imagePaths.push(relativePath);
+        global.imagePaths.push(relativePath);
   
         console.log(`User image saved as ${filename}, added to session paths.`);
   
