@@ -1,3 +1,78 @@
+
+import React, { useState,useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import './Analysis.css';
+import List from './List.jsx';
+import Overall from './Overall.jsx';
+import Instances from './Instances.jsx';
+
+function Analysis() {
+  const location = useLocation();
+  const [over, setOver] = useState(true);
+  const { session } = location.state || {};
+  const [rd, setRD] = useState({
+    em: [],
+    pi: "",
+    ts: "",
+    gs: "",
+  });
+  const [ovc, setOvc] = useState("Overall");
+  const [text,setText]=useState("Detailed Analysis");
+  
+  const [layout, setLayout] = useState({
+    leftFlexBasis: "69vw",
+    rightFlexBasis: "30vw",
+    ovFlexBasis: "12vh",
+    listFlexBasis: "75vh",
+  });
+  useEffect(()=>{
+    if(text==="Brief Analysis"){
+      setLayout({
+        leftFlexBasis:"69vw",
+        rightFlexBasis:"30vw",
+        ovFlexBasis:"12vh",
+        listFlexBasis:"75vh",
+      });
+    } else{
+      setLayout({
+        leftFlexBasis:"30vw",
+        rightFlexBasis:"69vw",
+        ovFlexBasis:"12vh",
+        listFlexBasis:"75vh",
+      })
+    }
+  },[text]);
+
+  function detailed() {
+    
+    setText((prevValue)=>(prevValue==="Detailed Analysis"?"Brief Analysis":"Detailed Analysis"));
+  }
+
+  const { Time_stamps, Emotions, Player_images, Game_screenshots } = session;
+
+  return (
+    <div className="analysisPageLayout">
+      <div className="Head">Analysis</div>
+      <div className="Flex">
+        <div className="leftContainer" style={{ flexBasis: layout.leftFlexBasis }}>
+          <div className="Overall" style={{ flexBasis: layout.ovFlexBasis }} onClick={() => {setOver(true); }}>
+            {ovc}
+          </div>
+          <div className="instancesList" style={{ flexBasis: layout.listFlexBasis }}>
+            {Time_stamps && Time_stamps.map((ts, index) => (
+              <List key={index} ts={ts} em={Emotions[index]} pi={Player_images[index]} gs={Game_screenshots[index]} onClick={() => { setOver(false); setRD({ em: Emotions[index], pi: Player_images[index], ts, gs: Game_screenshots[index] }); }} />
+            ))}
+          </div>
+        </div>
+        <div className="rightContainer" id="pdfpart" style={{ flexBasis: layout.rightFlexBasis }}>
+          {over ? <Overall total={session} onClick={detailed} text={text}/> : <Instances data={rd} onClick={detailed} text={text}/>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Analysis;
 // import React,{useState} from 'react';
 // import { useLocation } from 'react-router-dom';
 // import './dpa.css';
@@ -96,77 +171,3 @@
 // }
 
 // export default DpAnalysis;
-import React, { useState,useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import './Analysis.css';
-import List from './List.jsx';
-import Overall from './Overall.jsx';
-import Instances from './Instances.jsx';
-
-function Analysis() {
-  const location = useLocation();
-  const [over, setOver] = useState(true);
-  const { session } = location.state || {};
-  const [rd, setRD] = useState({
-    em: [],
-    pi: "",
-    ts: "",
-    gs: "",
-  });
-  const [ovc, setOvc] = useState("Overall");
-  const [text,setText]=useState("Detailed Analysis");
-  
-  const [layout, setLayout] = useState({
-    leftFlexBasis: "69vw",
-    rightFlexBasis: "30vw",
-    ovFlexBasis: "12vh",
-    listFlexBasis: "75vh",
-  });
-  useEffect(()=>{
-    if(text==="Brief Analysis"){
-      setLayout({
-        leftFlexBasis:"69vw",
-        rightFlexBasis:"30vw",
-        ovFlexBasis:"12vh",
-        listFlexBasis:"75vh",
-      });
-    } else{
-      setLayout({
-        leftFlexBasis:"30vw",
-        rightFlexBasis:"69vw",
-        ovFlexBasis:"12vh",
-        listFlexBasis:"75vh",
-      })
-    }
-  },[text]);
-
-  function detailed() {
-    
-    setText((prevValue)=>(prevValue==="Detailed Analysis"?"Brief Analysis":"Detailed Analysis"));
-  }
-
-  const { Time_stamps, Emotions, Player_images, Game_screenshots } = session;
-
-  return (
-    <div className="analysisPageLayout">
-      <div className="Head"></div>
-      <div className="Flex">
-        <div className="leftContainer" style={{ flexBasis: layout.leftFlexBasis }}>
-          <div className="Overall" style={{ flexBasis: layout.ovFlexBasis }} onClick={() => {setOver(true); }}>
-            {ovc}
-          </div>
-          <div className="instancesList" style={{ flexBasis: layout.listFlexBasis }}>
-            {Time_stamps && Time_stamps.map((ts, index) => (
-              <List key={index} ts={ts} em={Emotions[index]} pi={Player_images[index]} gs={Game_screenshots[index]} onClick={() => { setOver(false); setRD({ em: Emotions[index], pi: Player_images[index], ts, gs: Game_screenshots[index] }); }} />
-            ))}
-          </div>
-        </div>
-        <div className="rightContainer" style={{ flexBasis: layout.rightFlexBasis }}>
-          {over ? <Overall total={session} onClick={detailed} text={text}/> : <Instances data={rd} onClick={detailed} text={text}/>}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default Analysis;

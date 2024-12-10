@@ -1,9 +1,30 @@
-
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 
 function BC({ labels, dataPoints }) {
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth * 0.4, // 80% of viewport width
+    height: window.innerHeight * 0.5, // 60% of viewport height
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth * 0.4,
+        height: window.innerHeight * 0.5,
+      });
+    };
+
+    // Add resize event listener
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const chartData = labels.map((label, index) => {
     const colors = {
       angry: "var(--color-chrome)",
@@ -21,20 +42,21 @@ function BC({ labels, dataPoints }) {
   });
 
   return (
-    <div style={{ width: "100%", height: 400,paddingLeft:"50px"}}>
+    <div style={{ width: "100%" }}>
+      <p style={{marginLeft:"5vw",marginTop:"1vh",fontSize:"1.7rem"}}>Emotion-Bar</p>
       <BarChart
-        width={600}
-        height={300}
+        width={dimensions.width}
+        height={dimensions.height}
         data={chartData}
         layout="vertical"
-        margin={{ top: 20, right: 30, left: 50, bottom: 5 }}
+        margin={{ top: 20, right: 30, left: 10, bottom: 5 }}
       >
         <YAxis
           dataKey="browser"
           type="category"
           tickLine={false}
           axisLine={false}
-          tickMargin={10}
+          tickMargin={5}
         />
         <XAxis type="number" hide />
         <Tooltip />
@@ -45,6 +67,53 @@ function BC({ labels, dataPoints }) {
 }
 
 export default BC;
+// "use client";
+// import React from "react";
+// import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
+
+// function BC({ labels, dataPoints }) {
+//   const chartData = labels.map((label, index) => {
+//     const colors = {
+//       angry: "var(--color-chrome)",
+//       sad: "var(--color-safari)",
+//       happy: "var(--color-firefox)",
+//       surprise: "var(--color-edge)",
+//       fear: "var(--color-other)",
+//       neutral: "var(--color-opera)",
+//     };
+//     return {
+//       browser: label,
+//       level: dataPoints[index],
+//       fill: colors[label] || "var(--color-brave)", // Default to Brave color if no match
+//     };
+//   });
+
+//   return (
+//     <div style={{ width:"100%",height:"400"}}>
+//       <p>Emotion-Bar</p>
+//       <BarChart
+//        height={window.innerWidth*0.2}
+//        width={window.innerHeight*0.6}
+//         data={chartData}
+//         layout="vertical"
+//         margin={{ top: 20, right: 30, left: 10, bottom: 5 }}
+//       >
+//         <YAxis
+//           dataKey="browser"
+//           type="category"
+//           tickLine={false}
+//           axisLine={false}
+//           tickMargin={5}
+//         />
+//         <XAxis type="number" hide />
+//         <Tooltip />
+//         <Bar dataKey="level" layout="vertical" radius={5} />
+//       </BarChart>
+//     </div>
+//   );
+// }
+
+// export default BC;
 // "use client"
 // // import { Bar } from 'react-chartjs-2';
 // // import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
@@ -337,6 +406,3 @@ export default BC;
 // };
 
 // export default BarChart;
-
-
-
