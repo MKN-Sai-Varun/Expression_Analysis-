@@ -30,7 +30,7 @@ const uploadPaths = ({ getCurrentCounterValue, imagePaths, imageCount }) => {
     try {
       await client.connect();
       const database = client.db('test');
-      const collection = database.collection('datas');
+      const collection = database.collection('datas'); 
 
       // Check if a document already exists for the current session
       const existingDocument = await collection.findOne({ Session_Id: counterValue });
