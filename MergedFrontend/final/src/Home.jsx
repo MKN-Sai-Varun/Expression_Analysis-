@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import Analysis from './Analysis.jsx';
 import './Home.css';
 import Drop from "./Drop.jsx";
-const socket=io('http://localhost:8000');
+const socket=io(process.env.REACT_APP_ANALYSIS_URL);
 function Home() {
   const [database, setDatabase] = useState([]);
   const [filteredDatabase, setFilteredDatabase] = useState([]); 
