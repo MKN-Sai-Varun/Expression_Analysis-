@@ -21,7 +21,7 @@ function Sessions({ session, setCurrentSession }) {
     else if(!session.Emotions){
       const data={Session_Id:session.Session_Id};
       try {
-        const response=await fetch('http://localhost:7000/trigger-model',{
+        const response=await fetch(process.env.REACT_APP_TRIGMODEL_URL,{
           method:'POST',
           headers:{
             'Content-Type':"application/json",
