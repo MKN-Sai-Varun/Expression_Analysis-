@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import axios from 'axios';
-import './Login_Game.css';
+import '../CSS/Login_Game.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import {useNavigate} from "react-router-dom";

@@ -1,5 +1,5 @@
 import react,{useState,useEffect} from "react";
-import "./Home_Navbar.css";
+import "../CSS/Home_Navbar.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 function Home_Navbar(){
     return(<nav className="navbar fixed-top bg-transparent">

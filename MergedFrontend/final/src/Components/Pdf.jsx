@@ -1,8 +1,8 @@
 import React from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import images from "./image.js";
-import "./Pdf.css";
+import images from "../image.js";
+import "../CSS/Pdf.css";
 const Pdf = () => {
   const downloadPartialPDF = () => {
     const content = document.getElementById("pdfpart"); // Target specific element

@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
-import './Session.css';
+import '../CSS/Session.css';
 
 function Sessions({ session, setCurrentSession }) {
   const [name,setName]=useState("Fetch Analysis");//Intial name-->Fetch Analysis

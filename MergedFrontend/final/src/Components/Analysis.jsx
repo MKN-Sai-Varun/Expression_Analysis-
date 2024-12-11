@@ -1,7 +1,7 @@
 
 import React, { useState,useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import './Analysis.css';
+import '../CSS/Analysis.css';
 import List from './List.jsx';
 import Overall from './Overall.jsx';
 import Instances from './Instances.jsx';

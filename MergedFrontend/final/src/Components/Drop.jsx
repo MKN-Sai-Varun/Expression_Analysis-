@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import "./Drop.css";
+import "../CSS/Drop.css";
 import Sessions from './Sessions.jsx';
 function Drop({list_doc,key,setCurrentSession}){
     const [drop,setDrop]=useState(false);

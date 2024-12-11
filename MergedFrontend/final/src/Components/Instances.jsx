@@ -1,9 +1,7 @@
 import React,{useState,useEffect} from "react";
 import BC from "./Bar.jsx";
-import "./Instances.css";
+import "../CSS/Instances.css";
 import { Doughnut } from 'react-chartjs-2';
-import Pie from "./Pie.jsx";
-import images from "./image.js";
 import Pdf from "./Pdf.jsx";
 function Instances({data,onClick,text}){
     const pi=data.pi;

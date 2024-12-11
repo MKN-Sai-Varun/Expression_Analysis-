@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import './List.css';
+import '../CSS/List.css';
 
 function List({ ts, em, pi, gs ,onClick}){
     return <div className="listInstance" onClick={onClick}  >

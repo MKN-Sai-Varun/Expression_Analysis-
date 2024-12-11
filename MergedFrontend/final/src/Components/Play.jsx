@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import './Play.css';
+import '../CSS/Play.css';
 import Webcam from 'webcamjs';
 import Navbar from './Home_Navbar.jsx';
 import Game from './Game.jsx';

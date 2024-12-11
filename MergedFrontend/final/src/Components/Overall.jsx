@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from "react";
 import Pie from "./Pie.jsx";
 import BarChart from "./Bar.jsx";
-import './Overall.css';
-import images from "./image.js";
+import '../CSS/Overall.css';
+import images from "../image.js";
 import Pdf from "./Pdf.jsx";
 function Overall({total,onClick,text}){
     const dict=[
