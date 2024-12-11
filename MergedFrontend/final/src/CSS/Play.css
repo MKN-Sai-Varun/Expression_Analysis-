@@ -18,7 +18,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;  /* Full height to ensure vertical centering */
-    background-image: url('./Assets/PlayBackground2.png');
+    background-image: url('../Assets/PlayBackground2.png');
     background-size: cover;
     background-position: center;
     flex-direction: column;

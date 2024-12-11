@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {useNavigate} from "react-router-dom";
-import './Register.css'; // Ensure the styles are imported
-import "./Login_Game.css";
+import '../CSS/Register.css'; // Ensure the styles are imported
+import "../CSS/Login_Game.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 function Register() {

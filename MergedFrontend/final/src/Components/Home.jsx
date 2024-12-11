@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 import Analysis from './Analysis.jsx';
-import './Home.css';
+import '../CSS/Home.css';
 import Drop from "./Drop.jsx";
 const socket=io(process.env.REACT_APP_ANALYSIS_URL);
 function Home() {

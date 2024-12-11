@@ -1,12 +1,12 @@
 
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './Home.jsx';
-import Analysis from './Analysis.jsx';
-import Login_Game from './Login_Game.jsx';
-import Play from "./Play.jsx";
-import Game from "./Game.jsx";
-import Register from "./Register.jsx";
+import Home from './Components/Home.jsx';
+import Analysis from './Components/Analysis.jsx';
+import Login_Game from './Components/Login_Game.jsx';
+import Play from "./Components/Play.jsx";
+import Game from "./Components/Game.jsx";
+import Register from "./Components/Register.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './index.css';

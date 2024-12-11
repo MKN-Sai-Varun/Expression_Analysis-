@@ -79,7 +79,7 @@ function BC({ labels, dataPoints }) {
           tickLine={false}
           axisLine={false}
           tickMargin={5}
-          tick={{ fill: "white" }}
+          tick={{ fill: "green" }}
         />
         <XAxis type="number" hide />
         <Tooltip content={<CustomTooltip />} />

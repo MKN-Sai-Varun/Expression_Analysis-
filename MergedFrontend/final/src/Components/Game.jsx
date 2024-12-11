@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Game.css';
-import image from './Assets/images.js';
-import { triggerConfetti, stopConfetti } from './Confetti.js';
+import '../CSS/Game.css';
+import images from '../image.js';
+import { triggerConfetti, stopConfetti } from '../Confetti.js';
 function Game({ onExit , onGameComplete}) { // Accept onExit as a prop
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [submitted, setSubmitted] = useState(false);
@@ -136,7 +136,7 @@ function Game({ onExit , onGameComplete}) { // Accept onExit as a prop
         <div id="question1">
           <h1>Q1. Fill in the blank</h1>
           <div className="game">
-            <img className="questionImg" src={image.parrot} alt="Parrot" height="315px" />
+            <img className="questionImg" src={images.parrot} alt="Parrot" height="315px" />
             <p>_ a r r o t</p>
             <div className="choices">
               <button
@@ -164,16 +164,16 @@ function Game({ onExit , onGameComplete}) { // Accept onExit as a prop
         <div id="question2">
           <h1>Q2. Find The Animal</h1>
           <div className="game">
-            <img className="questionImg" src={image.Clion} alt="Lion" />
+            <img className="questionImg" src={images.Clion} alt="Lion" />
             <div className="imgChoices">
               <button className="imgchoice" onClick={() => handleChoiceClick('Bear')} style={getChoiceStyle('Bear', false)}>
-                <img src={image.bear} alt="Bear" />
+                <img src={images.bear} alt="Bear" />
               </button>
               <button className="imgchoice" onClick={() => handleChoiceClick('Lion')} style={getChoiceStyle('Lion', true)}>
-                <img src={image.lion} alt="Lion" />
+                <img src={images.lion} alt="Lion" />
               </button>
               <button className="imgchoice" onClick={() => handleChoiceClick('Tiger')} style={getChoiceStyle('Tiger', false)}>
-                <img src={image.tiger} alt="Tiger" />
+                <img src={images.tiger} alt="Tiger" />
               </button>
             </div>
           </div>
@@ -186,7 +186,7 @@ function Game({ onExit , onGameComplete}) { // Accept onExit as a prop
         <div id="question3">
           <h1>Q3. Guess The Word</h1>
           <div className="game">
-            <img className="SkillImage" src={image.skill} width="355.1px" alt="SkillImage" />
+            <img className="SkillImage" src={images.skill} width="355.1px" alt="SkillImage" />
             <div className="choices">
               <button className="choice" onClick={() => handleChoiceClick('Skill')} style={getChoiceStyle('Skill', true)}>
                 Skill
@@ -205,16 +205,16 @@ function Game({ onExit , onGameComplete}) { // Accept onExit as a prop
         <div id="question4">
           <h1>Q4. Find the Animal</h1>
           <div className="game">
-            <img className="questionImg" src={image.Czebra} alt="Zebra" />
+            <img className="questionImg" src={images.Czebra} alt="Zebra" />
             <div className="imgChoices">
               <button className="imgchoice" onClick={() => handleChoiceClick('Leopard')} style={getChoiceStyle('Leopard', false)}>
-                <img src={image.leapord} alt="Leopard" />
+                <img src={images.leapord} alt="Leopard" />
               </button>
               <button className="imgchoice" onClick={() => handleChoiceClick('Giraffe')} style={getChoiceStyle('Giraffe', false)}>
-                <img src={image.giraffe} alt="Giraffe" />
+                <img src={images.giraffe} alt="Giraffe" />
               </button>
               <button className="imgchoice" onClick={() => handleChoiceClick('Zebra')} style={getChoiceStyle('Zebra', true)}>
-                <img src={image.zebra} alt="Zebra" />
+                <img src={images.zebra} alt="Zebra" />
               </button>
             </div>
           </div>
@@ -227,7 +227,7 @@ function Game({ onExit , onGameComplete}) { // Accept onExit as a prop
         <div id="question5">
           <h1>Q5. Fill in the blank</h1>
           <div className="game">
-            <img className="questionImg" src={image.horse} width="355.1px" alt="Horse" />
+            <img className="questionImg" src={images.horse} width="355.1px" alt="Horse" />
             <p>_ o r s e</p>
             <div className="choices">
               <button className="choice" onClick={() => handleChoiceClick('n')} style={getChoiceStyle('n', false)}>
