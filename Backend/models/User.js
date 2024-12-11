@@ -7,11 +7,7 @@ const UserSchema = new mongoose.Schema({
     role: { type: String, required: true, enum: ['admin', 'kid'] },  // Creating a user schema consisting of Usename,Pass,role
 });
 
-UserSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next();
-    this.password = await bcrypt.hash(this.password, 10); // Encrypts the password and saves it
-    next();
-});
+
 
 const User = mongoose.model('User', UserSchema); // Creating the schema
 export default User; // Exporting
