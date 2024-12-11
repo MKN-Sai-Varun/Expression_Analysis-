@@ -1,8 +1,11 @@
 /* Question Pages */
 body{
-  background-image: url('./Assets/backgroundImage.png');
+  background-image: url('./Assets/backgroundImage.png') !important;
+  height:100vh;
+  width:100vw;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-
 .game {
   text-align: center;
   flex-direction: column;
@@ -12,6 +15,7 @@ body{
   justify-content: center;
   position: relative;
   padding: 1rem;
+  /* background-image: url('./Assets/backgroundImage.png'); */
   /* overflow: hidden; */
 }
 .SkillImage{
