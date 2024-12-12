@@ -167,7 +167,7 @@ function Game({ onExit , onGameComplete}) { // Accept onExit as a prop
             <img className="questionImg" src={images.Clion} alt="Lion" />
             <div className="imgChoices">
               <button className="imgchoice" onClick={() => handleChoiceClick('Bear')} style={getChoiceStyle('Bear', false)}>
-                <img src={images.bear} alt="Bear" />
+                <img src={images.Bear} alt="Bear" />
               </button>
               <button className="imgchoice" onClick={() => handleChoiceClick('Lion')} style={getChoiceStyle('Lion', true)}>
                 <img src={images.lion} alt="Lion" />
@@ -205,16 +205,16 @@ function Game({ onExit , onGameComplete}) { // Accept onExit as a prop
         <div id="question4">
           <h1>Q4. Find the Animal</h1>
           <div className="game">
-            <img className="questionImg" src={images.Czebra} alt="Zebra" />
+            <img className="questionImg" src={images.CZebra} alt="Zebra" />
             <div className="imgChoices">
               <button className="imgchoice" onClick={() => handleChoiceClick('Leopard')} style={getChoiceStyle('Leopard', false)}>
-                <img src={images.leapord} alt="Leopard" />
+                <img src={images.leo} alt="Leopard" />
               </button>
               <button className="imgchoice" onClick={() => handleChoiceClick('Giraffe')} style={getChoiceStyle('Giraffe', false)}>
                 <img src={images.giraffe} alt="Giraffe" />
               </button>
               <button className="imgchoice" onClick={() => handleChoiceClick('Zebra')} style={getChoiceStyle('Zebra', true)}>
-                <img src={images.zebra} alt="Zebra" />
+                <img src={images.Zebra} alt="Zebra" />
               </button>
             </div>
           </div>
