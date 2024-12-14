@@ -1,12 +1,12 @@
 .navbar {
-  z-index: 10; /* Ensure it appears above other elements */
+  
   pointer-events: auto; /* Prevent clicks on the transparent area */
   background-color:transparent;
 }
 .navbar-toggler {
   pointer-events: auto; /* Ensure the button is clickable */
-  height:50px;
-  width:100px;
+  height:7vh;
+  width:6vw;
 }
 .custom-toggler .navbar-toggler-icon {
   background-image: none !important; /* Remove default Bootstrap background */

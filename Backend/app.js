@@ -80,11 +80,6 @@ const watchCollection=()=>{
         console.error('Error in change stream: ',err);
     });
 };
-
-
-
-
-
 app.get('/api/data',async(req,res)=>{
     try{
         let final_Database=await fetchFinalDatabase();

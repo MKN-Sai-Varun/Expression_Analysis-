@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import Analysis from './Analysis.jsx';
 import '../CSS/Home.css';
 import Drop from "./Drop.jsx";
+import Home_Navbar from "./Home_Navbar.jsx";
 const socket=io(process.env.REACT_APP_ANALYSIS_URL);
 function Home() {
   const [database, setDatabase] = useState([]);
@@ -52,6 +53,7 @@ function Home() {
       {/* Navbar */}
       
       {/* Main Content */}
+      <Home_Navbar page="Home"/>
       <div className="adminPageHeading">
         <div>Dashboard</div>
       </div>
