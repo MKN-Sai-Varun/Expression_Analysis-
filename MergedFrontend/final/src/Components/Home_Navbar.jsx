@@ -1,8 +1,28 @@
-import react,{useState,useEffect} from "react";
+import React,{useState,useEffect} from "react";
 import "../CSS/Home_Navbar.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-function Home_Navbar(){
-    return(<nav className="navbar fixed-top bg-transparent">
+import { useNavigate } from "react-router-dom";
+
+
+function Home_Navbar({page}) {
+  const navigate = useNavigate();
+  const [dimen,setDimen]=useState({
+    height:"7vh",
+    width:"7vw"
+  })
+  useEffect(()=>{
+      if(page=="Home"){
+        setDimen({height:"5vh",width:"4vw"})
+      }
+  },[]);
+  const handleLogout = () => {
+    console.log("User logged out");
+    navigate("/");
+  };
+
+
+  return (
+    <nav className="navbar fixed-top bg-transparent">
       <div className="container-fluid">
         <button
           className="navbar-toggler custom-toggler"
@@ -11,6 +31,7 @@ function Home_Navbar(){
           data-bs-target="#offcanvasNavbar"
           aria-controls="offcanvasNavbar"
           aria-label="Toggle navigation"
+          style={{height:dimen.height,width:dimen.width}}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -22,7 +43,7 @@ function Home_Navbar(){
         >
           <div className="offcanvas-header">
             <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
-              Offcanvas
+              Navbar
             </h5>
             <button
               type="button"
@@ -34,61 +55,19 @@ function Home_Navbar(){
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
-                </a>
-              </li>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+                <button
+                  className="btn btn-danger w-100"
+                  onClick={handleLogout}
                 >
-                  Dropdown
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Action
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Another action
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
-                  </li>
-                </ul>
+                  Logout
+                </button>
               </li>
             </ul>
-            <form className="d-flex mt-3" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
           </div>
         </div>
       </div>
-    </nav>);
+    </nav>
+  );
 }
+
 export default Home_Navbar;
