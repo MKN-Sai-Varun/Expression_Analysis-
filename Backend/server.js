@@ -89,5 +89,5 @@ mainApp.use(app2);
 // Start the server
 mainApp.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
-});
+}); 
 
